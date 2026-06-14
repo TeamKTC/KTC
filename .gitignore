@@ -427,3 +427,38 @@ FodyWeavers.xsd
 *.msix
 *.msm
 *.msp
+
+# ===== Backend .NET =====
+bin/
+obj/
+.vs/
+
+*.user
+*.suo
+
+appsettings.Development.json
+.env
+
+
+# ===== React =====
+node_modules/
+build/
+dist/
+
+.env.local
+.env.development
+.env.production
+
+
+# ===== Logs =====
+*.log
+
+
+# ===== Database =====
+*.mdf
+*.ldf
+
+
+# ===== OS =====
+Thumbs.db
+.DS_Store
