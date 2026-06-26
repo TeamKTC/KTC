@@ -18,10 +18,13 @@ namespace KTC.DAL.Entities
         public string Email { get; set; } = default!;
         public string PasswordHash { get; set; } = default!;
 
+        public string PhoneNumber { get; set; } = default!;
         public string RoleId { get; set; } = default!;
         public Role Role { get; set; } = default!;
 
         public virtual ICollection<OrderEntity> Orders { get; set; } = [];
         public virtual ICollection<NotificationEntity> Notifications { get; set; } = [];
+        public ICollection<CartEntity> Carts { get; set; } = new List<CartEntity>();
+        public ICollection<CommentEntity> Comments { get; set; } = new List<CommentEntity>();
     }
 }
