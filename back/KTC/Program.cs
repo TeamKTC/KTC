@@ -1,5 +1,6 @@
 using Microsoft.EntityFrameworkCore;
 using KTC.DAL;
+using KTC.DAL.Initializer;
 var builder = WebApplication.CreateBuilder(args);
 
 builder.Services.AddControllers();
@@ -24,5 +25,7 @@ app.UseHttpsRedirection();
 app.UseAuthorization();
 
 app.MapControllers();
+
+app.Seed();
 
 app.Run();
