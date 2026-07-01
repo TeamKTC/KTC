@@ -1,15 +1,15 @@
 ﻿using KTC.DAL.Entities;
+using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 
 namespace KTC.DAL;
 
-public class AppDbContext : DbContext
+public class AppDbContext : IdentityDbContext<UserEntity>
 {
     public AppDbContext(DbContextOptions<AppDbContext> options)
         : base(options)
     {
     }
-    public DbSet<UserEntity> Users { get; set; }
     public DbSet<ProductEntity> Products { get; set; }
     public DbSet<CategoryEntity> Categories { get; set; }
     public DbSet<OrderEntity> Orders { get; set; }
