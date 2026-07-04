@@ -1,24 +1,29 @@
 ﻿using KTC.DAL.Entities;
+using Microsoft.AspNetCore.Builder;
+using Microsoft.AspNetCore.Identity;
+using Microsoft.Extensions.DependencyInjection;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using Microsoft.AspNetCore.Builder;
-using Microsoft.Extensions.DependencyInjection;
 namespace KTC.DAL.Initializer
 {
     public static class DbSeeder
     {
-        public static void Seed(this IApplicationBuilder app)
+        public static async void Seed(this IApplicationBuilder app)
         {
             using var scope = app.ApplicationServices.CreateScope();
 
             var db = scope.ServiceProvider.GetRequiredService<AppDbContext>();
-
+            var userManager = scope.ServiceProvider.GetRequiredService<UserManager<UserEntity>>();
+            var roleManager = scope.ServiceProvider.GetRequiredService<RoleManager<IdentityRole>>();
             if (db.Users.Any()) return;
 
-
+            if (!await roleManager.RoleExistsAsync("User"))
+            {
+                await roleManager.CreateAsync(new IdentityRole("User"));
+            }
             var categoryId = Guid.NewGuid().ToString();
             var userId = Guid.NewGuid().ToString();
             var productId = Guid.NewGuid().ToString();
@@ -29,20 +34,21 @@ namespace KTC.DAL.Initializer
             var commentId = Guid.NewGuid().ToString();
             var notificationId = Guid.NewGuid().ToString();
 
-
             var user = new UserEntity
             {
-                Id = userId,
+                UserName = "john@gmail.com",
+                Email = "john@gmail.com",
                 FirstName = "John",
                 LastName = "Smith",
-                Email = "john@gmail.com",
-                PasswordHash = "123456",
-                PhoneNumber = "+380000000000",
-                Role = Role.User,
-                RoleId = Guid.NewGuid().ToString()
+                PhoneNumber = "+380000000000"
             };
 
+            var result = await userManager.CreateAsync(user, "123456");
 
+            if (result.Succeeded)
+            {
+                await userManager.AddToRoleAsync(user, "User");
+            }
             var category = new CategoryEntity
             {
                 Id = categoryId,

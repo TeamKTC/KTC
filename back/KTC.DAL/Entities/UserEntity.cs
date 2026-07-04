@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Microsoft.AspNetCore.Identity;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -11,20 +12,16 @@ namespace KTC.DAL.Entities
         User = 0,
         Admin = 1
     }
-    public class UserEntity : BaseEntity
+    public class UserEntity : IdentityUser
     {
         public string FirstName { get; set; } = default!;
         public string LastName { get; set; } = default!;
-        public string Email { get; set; } = default!;
-        public string PasswordHash { get; set; } = default!;
 
-        public string PhoneNumber { get; set; } = default!;
-        public string RoleId { get; set; } = default!;
-        public Role Role { get; set; } = default!;
+        public DateTime CreatedDate { get; set; } = DateTime.UtcNow;
 
-        public virtual ICollection<OrderEntity> Orders { get; set; } = [];
-        public virtual ICollection<NotificationEntity> Notifications { get; set; } = [];
-        public ICollection<CartEntity> Carts { get; set; } = new List<CartEntity>();
-        public ICollection<CommentEntity> Comments { get; set; } = new List<CommentEntity>();
+        public ICollection<OrderEntity> Orders { get; set; } = [];
+        public ICollection<NotificationEntity> Notifications { get; set; } = [];
+        public ICollection<CartEntity> Carts { get; set; } = [];
+        public ICollection<CommentEntity> Comments { get; set; } = [];
     }
 }
