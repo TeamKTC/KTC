@@ -12,15 +12,11 @@ namespace KTC.DAL.Repositories.CartItem
         : GenericRepository<CartItemEntity>, ICartItemRepository
     {
 
-
-
         public CartItemRepository(AppDbContext context)
             : base(context)
         {
 
         }
-
-
 
         public async Task DeleteByCartIdAsync(string cartId)
         {

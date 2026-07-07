@@ -10,18 +10,11 @@ namespace KTC.DAL.Repositories.Notification
     public class NotificationRepository
         : GenericRepository<NotificationEntity>, INotificationRepository
     {
-
-
-
-
         public NotificationRepository(AppDbContext context)
             : base(context)
         {
 
         }
-
-
-
         public async Task<List<NotificationEntity>> GetUserNotificationsAsync(
             string userId)
         {
@@ -30,9 +23,6 @@ namespace KTC.DAL.Repositories.Notification
                 .OrderByDescending(x => x.CreatedDate)
                 .ToListAsync();
         }
-
-
-
         public async Task MarkAsReadAsync(string id)
         {
             var notification = await GetByIdAsync(id);

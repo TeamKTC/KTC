@@ -11,18 +11,11 @@ namespace KTC.DAL.Repositories.Cart
     public class CartRepository
         : GenericRepository<CartEntity>, ICartRepository
     {
-
-
-
-
         public CartRepository(AppDbContext context)
             : base(context)
         {
 
         }
-
-
-
         public async Task<CartEntity?> GetUserCartAsync(string userId)
         {
             return await _context.Carts

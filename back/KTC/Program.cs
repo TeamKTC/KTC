@@ -4,6 +4,11 @@ using KTC.DAL.Entities;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using KTC.DAL.Initializer;
+using KTC.DAL.Repositories.User;
+using KTC.DAL.Repositories.Notification;
+using KTC.DAL.Repositories.Cart;
+using KTC.DAL.Repositories.CartItem;
+
 var builder = WebApplication.CreateBuilder(args);
 
 builder.Services.AddControllers();
@@ -43,6 +48,12 @@ builder.Services.AddAutoMapper(options =>
     options.LicenseKey = builder.Configuration["Automapper:LicenseKey"];
 }, AppDomain.CurrentDomain.GetAssemblies());
 // Add repositories
+builder.Services.AddScoped<IUserRepository, UserRepository>();
+builder.Services.AddScoped<INotificationRepository, NotificationRepository>();
+builder.Services.AddScoped<ICartRepository, CartRepository>();
+builder.Services.AddScoped<ICartItemRepository, CartItemRepository>();
+
+
 // Add service
 builder.Services.AddScoped<AuthService>();
 builder.Services.AddScoped<JwtService>();
