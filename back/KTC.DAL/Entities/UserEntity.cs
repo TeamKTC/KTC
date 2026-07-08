@@ -12,7 +12,7 @@ namespace KTC.DAL.Entities
         User = 0,
         Admin = 1
     }
-    public class UserEntity : IdentityUser
+    public class UserEntity : IdentityUser , IBaseEntity
     {
         public string FirstName { get; set; } = default!;
         public string LastName { get; set; } = default!;

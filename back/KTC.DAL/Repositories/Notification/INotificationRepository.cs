@@ -8,10 +8,8 @@ using System.Threading.Tasks;
 namespace KTC.DAL.Repositories.Notification
 {
     public interface INotificationRepository
-        : IGenericRepository<NotificationEntity>
-    {
+        : IGenericRepository<NotificationEntity>{
         Task<List<NotificationEntity>> GetUserNotificationsAsync(string userId);
-
         Task MarkAsReadAsync(string id);
     }
 }
