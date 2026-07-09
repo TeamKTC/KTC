@@ -86,7 +86,7 @@ namespace KTC.DAL.Initializer
 
                 CartId = cartId,
                 Cart = cart,
-
+                ProductId = productId,
                 ProductName = product.Name,
                 Price = product.Price,
                 Quantity = 2
