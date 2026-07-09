@@ -14,7 +14,10 @@ namespace KTC.BLL.MapperProfiles
                 .ForMember(dest => dest.ParentCommentId, opt => opt.Ignore())
                 .ForMember(dest => dest.UserId, opt => opt.Ignore());
 
-            CreateMap<UpdateCommentDto, CommentEntity>();
+            CreateMap<UpdateCommentDto, CommentEntity>()
+                .ForMember(dest => dest.ProductId, opt => opt.Ignore())
+                .ForMember(dest => dest.ParentCommentId, opt => opt.Ignore())
+                .ForMember(dest => dest.UserId, opt => opt.Ignore());
 
             CreateMap<CommentEntity, CommentDto>();
         }

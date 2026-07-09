@@ -7,6 +7,7 @@ using KTC.BLL.Dto.Product;
 using KTC.DAL.Entities;
 using KTC.DAL.Repositories.Comment;
 using KTC.DAL.Repositories.Product;
+using KTC.DAL.Repositories.User;
 using Microsoft.VisualBasic;
 using System.Net;
 
@@ -17,17 +18,20 @@ namespace KTC.BLL.Services.Comment
         private readonly IProductRepository _productRepository;
         private readonly ICommentRepository _commentRepository;
         private readonly IMapper _mapper;
-        public CommentService(ICommentRepository commentRepository, IMapper mapper, IProductRepository productRepository)
+        private readonly IUserRepository _userRepository;
+        public CommentService(ICommentRepository commentRepository, IMapper mapper, IProductRepository productRepository, IUserRepository userRepository)
         {
             _commentRepository = commentRepository;
             _mapper = mapper;
             _productRepository = productRepository;
+            _userRepository = userRepository;
         }
         public async Task<ServiceResponse> CreateAsync(CreateCommentDto dto)
         {
             var entity = _mapper.Map<CommentEntity>(dto);
             var product = await _productRepository.GetByIdAsync(dto.ProductId);
             var parentComment = await _commentRepository.GetByIdAsync(dto.ParentCommentId) ?? null;
+            var user = await _userRepository.GetByIdAsync(dto.UserId);
 
             if (product == null)
             {
@@ -40,6 +44,7 @@ namespace KTC.BLL.Services.Comment
             }
             entity.Product = product;
             entity.ParentComment = parentComment;
+            entity.User = user;
 
             await _commentRepository.CreateAsync(entity);
 
@@ -100,7 +105,13 @@ namespace KTC.BLL.Services.Comment
 
         public async Task<ServiceResponse> GetByUserID(string userId)
         {
-            throw new NotImplementedException();
+            return new ServiceResponse
+            {
+                IsSuccess = true,
+                StatusCode = HttpStatusCode.OK,
+                Message = "Коментарі успішно отримано",
+                Payload = _mapper.Map<List<CommentDto>>(_commentRepository.GetByUserID(userId)) ?? null
+            };
         }
 
         public async Task<ServiceResponse> GetCommentById(string commentId)
@@ -127,7 +138,28 @@ namespace KTC.BLL.Services.Comment
 
         public async Task<ServiceResponse> UpdateAsync(UpdateCommentDto dto)
         {
-            throw new NotImplementedException();
+            var entity = await _commentRepository.GetByIdAsync(dto.Id);
+
+            if (entity == null)
+            {
+                return new ServiceResponse
+                {
+                    IsSuccess = false,
+                    StatusCode = HttpStatusCode.NotFound,
+                    Message = $"Коментар з id '{dto.Id}' не знайдено"
+                };
+            }
+
+            entity = _mapper.Map(dto, entity);
+
+            await _commentRepository.UpdateAsync(entity);
+
+            return new ServiceResponse
+            {
+                IsSuccess = true,
+                StatusCode = HttpStatusCode.OK,
+                Message = "Коментар успішно оновлено"
+            };
         }
     }
 }
