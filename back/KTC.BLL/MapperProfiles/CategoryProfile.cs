@@ -11,7 +11,7 @@ namespace KTC.BLL.MapperProfiles
             CreateMap<CategoryEntity, CategoryDto>();
             CreateMap<CreateCategoryDto, CategoryEntity>()
                 .ForMember(dest => dest.CreatedDate, opt => opt.MapFrom(src => src.ReleaseDate.ToUniversalTime()));
-            CreateMap<UpdateCategoryDto, CategoryEntity>()
+            CreateMap<UpdateCategoryDto, CategoryEntity>();
         }
     }
 }
