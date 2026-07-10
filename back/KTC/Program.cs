@@ -8,7 +8,10 @@ using KTC.DAL.Repositories.User;
 using KTC.DAL.Repositories.Notification;
 using KTC.DAL.Repositories.Cart;
 using KTC.DAL.Repositories.CartItem;
-
+using KTC.BLL.Services.Notification;
+using KTC.BLL.Services.Cart;
+using KTC.BLL.Services.CartItem;
+using KTC.BLL.Services.User;
 var builder = WebApplication.CreateBuilder(args);
 
 builder.Services.AddControllers();
@@ -57,6 +60,10 @@ builder.Services.AddScoped<ICartItemRepository, CartItemRepository>();
 // Add service
 builder.Services.AddScoped<AuthService>();
 builder.Services.AddScoped<JwtService>();
+builder.Services.AddScoped<INotificationService, NotificationService>();
+builder.Services.AddScoped<ICartService, CartService>();    
+builder.Services.AddScoped<ICartItemService, CartItemService>();
+builder.Services.AddScoped<IUserService, UserService>();
 
 
 builder.Services.AddEndpointsApiExplorer();

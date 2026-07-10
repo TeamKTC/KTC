@@ -4,6 +4,7 @@ using KTC.DAL.Repositories.User;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -22,39 +23,86 @@ namespace KTC.BLL.Services.User
             _mapper = mapper;
         }
 
-        public async Task<List<UserDto>> GetAllUsersAsync()
+        public async Task<ServiceResponse> GetAllUsersAsync()
         {
             var users = await _repository.GetAllUsersAsync();
 
-            return _mapper.Map<List<UserDto>>(users);
+            return new ServiceResponse
+            {
+                IsSuccess = true,
+                Payload = _mapper.Map<List<UserDto>>(users),
+                StatusCode = HttpStatusCode.OK
+            };
         }
 
-        public async Task<UserDto?> GetByIdAsync(string id)
+        public async Task<ServiceResponse> GetByIdAsync(string id)
         {
             var user = await _repository.GetByIdAsync(id);
 
-            return _mapper.Map<UserDto?>(user);
+            if (user == null)
+            {
+                return new ServiceResponse
+                {
+                    IsSuccess = false,
+                    Message = "User not found",
+                    StatusCode = HttpStatusCode.NotFound
+                };
+            }
+
+            return new ServiceResponse
+            {
+                IsSuccess = true,
+                Payload = _mapper.Map<UserDto>(user),
+                StatusCode = HttpStatusCode.OK
+            };
         }
 
-        public async Task<UserDto?> GetByEmailAsync(string email)
+        public async Task<ServiceResponse> GetByEmailAsync(string email)
         {
             var user = await _repository.GetByEmailAsync(email);
 
-            return _mapper.Map<UserDto?>(user);
+            if (user == null)
+            {
+                return new ServiceResponse
+                {
+                    IsSuccess = false,
+                    Message = "User not found",
+                    StatusCode = HttpStatusCode.NotFound
+                };
+            }
+
+            return new ServiceResponse
+            {
+                IsSuccess = true,
+                Payload = _mapper.Map<UserDto>(user),
+                StatusCode = HttpStatusCode.OK
+            };
         }
 
-        public async Task<List<UserDto>> SearchAsync(string search)
+        public async Task<ServiceResponse> SearchAsync(string search)
         {
             var users = await _repository.SearchAsync(search);
 
-            return _mapper.Map<List<UserDto>>(users);
+            return new ServiceResponse
+            {
+                IsSuccess = true,
+                Payload = _mapper.Map<List<UserDto>>(users),
+                StatusCode = HttpStatusCode.OK
+            };
         }
 
-        public async Task<List<UserDto>> GetUsersCreatedAfterAsync(DateTime date)
+        public async Task<ServiceResponse> GetUsersCreatedAfterAsync(DateTime date)
         {
+            date = DateTime.SpecifyKind(date.Date, DateTimeKind.Utc);
+
             var users = await _repository.GetUsersCreatedAfterAsync(date);
 
-            return _mapper.Map<List<UserDto>>(users);
+            return new ServiceResponse
+            {
+                IsSuccess = true,
+                Payload = _mapper.Map<List<UserDto>>(users),
+                StatusCode = HttpStatusCode.OK
+            };
         }
     }
 }

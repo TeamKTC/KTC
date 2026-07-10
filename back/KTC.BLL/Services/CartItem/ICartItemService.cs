@@ -4,10 +4,10 @@ namespace KTC.BLL.Services.CartItem
 {
     public interface ICartItemService
     {
-        Task<CartItemDto?> GetByIdAsync(string id);
-        Task CreateAsync(CartItemDto dto);
-        Task UpdateAsync(CartItemDto dto);
-        Task DeleteAsync(string id);
-        Task DeleteByCartIdAsync(string cartId);
+        Task<ServiceResponse> GetByIdAsync(string id);
+        Task<ServiceResponse> CreateAsync(CartItemDto dto);
+        Task<ServiceResponse> UpdateAsync(CartItemDto dto);
+        Task<ServiceResponse> DeleteAsync(string id);
+        Task<ServiceResponse> DeleteByCartIdAsync(string cartId);
     }
 }
