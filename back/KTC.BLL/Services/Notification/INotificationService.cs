@@ -4,16 +4,11 @@ namespace KTC.BLL.Services.Notification
 {
     public interface INotificationService
     {
-        Task<NotificationDto?> GetByIdAsync(string id);
-
-        Task<List<NotificationDto>> GetUserNotificationsAsync(string userId);
-
-        Task CreateAsync(NotificationDto dto);
-
-        Task UpdateAsync(NotificationDto dto);
-
-        Task DeleteAsync(string id);
-
-        Task MarkAsReadAsync(string id);
+        Task<ServiceResponse> GetByIdAsync(string id);
+        Task<ServiceResponse> GetUserNotificationsAsync(string userId);
+        Task<ServiceResponse> CreateAsync(NotificationDto dto);
+        Task<ServiceResponse> UpdateAsync(NotificationDto dto);
+        Task<ServiceResponse> DeleteAsync(string id);
+        Task<ServiceResponse> MarkAsReadAsync(string id);
     }
 }

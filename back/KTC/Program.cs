@@ -14,6 +14,10 @@ using Microsoft.OpenApi.Models;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.IdentityModel.Tokens;
 using System.Text;
+using KTC.BLL.Services.Notification;
+using KTC.BLL.Services.Cart;
+using KTC.BLL.Services.CartItem;
+using KTC.BLL.Services.User;
 var builder = WebApplication.CreateBuilder(args);
 
 builder.Services.AddControllers();
@@ -90,6 +94,10 @@ builder.Services.AddScoped<ICartItemRepository, CartItemRepository>();
 builder.Services.AddScoped<IEmailService, EmailService>();
 builder.Services.AddScoped<AuthService>();
 builder.Services.AddScoped<JwtService>();
+builder.Services.AddScoped<INotificationService, NotificationService>();
+builder.Services.AddScoped<ICartService, CartService>();    
+builder.Services.AddScoped<ICartItemService, CartItemService>();
+builder.Services.AddScoped<IUserService, UserService>();
 
 
 builder.Services.AddEndpointsApiExplorer();
@@ -102,7 +110,7 @@ builder.Services.AddSwaggerGen(options =>
         Scheme = "bearer",
         BearerFormat = "JWT",
         In = ParameterLocation.Header,
-        Description = "Введіть JWT токен"
+        Description = "пїЅпїЅпїЅпїЅпїЅпїЅ JWT пїЅпїЅпїЅпїЅпїЅ"
     });
 
     options.AddSecurityRequirement(new OpenApiSecurityRequirement
