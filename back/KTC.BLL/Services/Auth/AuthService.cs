@@ -51,33 +51,35 @@ public class AuthService
 
         await _userManager.AddToRoleAsync(user, "User");
 
-        var token = await _userManager.GenerateEmailConfirmationTokenAsync(user);
-
-        var confirmationLink =
-            $"https://localhost:7120/api/auth/confirm-email?email={Uri.EscapeDataString(user.Email!)}&token={Uri.EscapeDataString(token)}";
+       
 
         await _emailService.SendEmailAsync(
-            user.Email!,
-            "Підтвердження електронної пошти",
-            $@"
-            <h2>Вітаємо!</h2>
+         user.Email!,
+             "Акаунт успішно створено",
+             $@"
+            <h2>Вітаємо, {user.FirstName}!</h2>
 
             <p>Ваш акаунт успішно створено.</p>
 
-            <p>Для завершення реєстрації підтвердіть свою електронну пошту.</p>
-
             <p>
-                <a href='{confirmationLink}'
-                   style='background:#0d6efd;color:white;padding:12px 20px;
-                          text-decoration:none;border-radius:6px;'>
-                    Підтвердити Email
-                </a>
+                Ви вже можете користуватися нашим сайтом.
             </p>
 
-            <p>Якщо кнопку не видно, відкрийте це посилання:</p>
+            <p>
+                Для отримання сповіщень про замовлення, відновлення доступу 
+                та додаткової безпеки акаунта рекомендуємо підтвердити 
+                електронну пошту.
+            </p>
 
-            <p>{confirmationLink}</p>
-            ");
+            <p>
+                Підтвердити Email можна у вашому особистому кабінеті, 
+                натиснувши кнопку <b>«Підтвердити Email»</b>.
+            </p>
+
+            <p>
+                Дякуємо, що користуєтесь нашим сайтом!
+            </p>"
+            );
 
         return new ServiceResponse
         {
@@ -223,7 +225,7 @@ public class AuthService
         var token = await _userManager.GenerateEmailConfirmationTokenAsync(user);
 
         var confirmationLink =
-            $"http://localhost:5173/confirm-email?email={Uri.EscapeDataString(user.Email!)}&token={Uri.EscapeDataString(token)}";
+            $"https://localhost:7120/api/auth/confirm-email?email={Uri.EscapeDataString(user.Email!)}&token={Uri.EscapeDataString(token)}";
 
         await _emailService.SendEmailAsync(
             user.Email!,
