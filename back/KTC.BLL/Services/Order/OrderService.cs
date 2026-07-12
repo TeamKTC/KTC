@@ -1,5 +1,6 @@
 ﻿using AutoMapper;
 using KTC.BLL.Dto.Order;
+using KTC.BLL.Dto.OrderItem;
 using KTC.DAL.Entities;
 using KTC.DAL.Repositories.Order;
 using KTC.DAL.Repositories.User;
@@ -93,7 +94,12 @@ namespace KTC.BLL.Services.Order
 
         public async Task<ServiceResponse> GetOrderItemsByOrderId(string orderId)
         {
-            throw new NotImplementedException();
+            return new ServiceResponse
+            {
+                IsSuccess = true,
+                StatusCode = HttpStatusCode.OK,
+                Payload = _mapper.Map<List<OrderItemDto>>(_orderRepository.GetOrderItemsByOrderId(orderId).Result) ?? null
+            };
         }
 
         public async Task<ServiceResponse> GetOrdersByUserId(string userId)
