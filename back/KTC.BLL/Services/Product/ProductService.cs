@@ -97,7 +97,7 @@ namespace KTC.BLL.Services.Product
                 IsSuccess = true,
                 StatusCode = HttpStatusCode.OK,
                 Message = "Продукт успішно отримано",
-                Payload = _mapper.Map<ProductDto>(_productRepository.GetByName(productName)) ?? null
+                Payload = _mapper.Map <List<ProductDto>>(await _productRepository.GetByName(productName)) ?? null
             };
         }
 
@@ -108,7 +108,7 @@ namespace KTC.BLL.Services.Product
                 IsSuccess = true,
                 StatusCode = HttpStatusCode.OK,
                 Message = "Продукти успішно отримано",
-                Payload = _mapper.Map<List<ProductDto>>(_productRepository.GetByPriceRange(min, max)) ?? null
+                Payload = _mapper.Map<List<ProductDto>>(await _productRepository.GetByPriceRange(min, max)) ?? null
             };
         }
 

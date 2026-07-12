@@ -1,23 +1,33 @@
+using KTC.BLL.Services.Cart;
+using KTC.BLL.Services.CartItem;
+using KTC.BLL.Services.Catagory;
+using KTC.BLL.Services.Comment;
 using KTC.BLL.Services.Email;
 using KTC.BLL.Services.Jwt;
+using KTC.BLL.Services.Notification;
+using KTC.BLL.Services.Order;
+using KTC.BLL.Services.OrderItem;
+using KTC.BLL.Services.Product;
+using KTC.BLL.Services.User;
 using KTC.BLL.Settings;
 using KTC.DAL;
 using KTC.DAL.Entities;
 using KTC.DAL.Initializer;
 using KTC.DAL.Repositories.Cart;
 using KTC.DAL.Repositories.CartItem;
+using KTC.DAL.Repositories.Category;
+using KTC.DAL.Repositories.Comment;
 using KTC.DAL.Repositories.Notification;
+using KTC.DAL.Repositories.Order;
+using KTC.DAL.Repositories.OrderItem;
+using KTC.DAL.Repositories.Product;
 using KTC.DAL.Repositories.User;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.OpenApi.Models;
-using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.IdentityModel.Tokens;
+using Microsoft.OpenApi.Models;
 using System.Text;
-using KTC.BLL.Services.Notification;
-using KTC.BLL.Services.Cart;
-using KTC.BLL.Services.CartItem;
-using KTC.BLL.Services.User;
 var builder = WebApplication.CreateBuilder(args);
 
 builder.Services.AddControllers();
@@ -88,6 +98,11 @@ builder.Services.AddScoped<IUserRepository, UserRepository>();
 builder.Services.AddScoped<INotificationRepository, NotificationRepository>();
 builder.Services.AddScoped<ICartRepository, CartRepository>();
 builder.Services.AddScoped<ICartItemRepository, CartItemRepository>();
+builder.Services.AddScoped<IProductRepository, ProductRepository>();
+builder.Services.AddScoped<IOrderRepository, OrderRepository>();
+builder.Services.AddScoped<IOrderItemRepository, OrderItemRepository>();
+builder.Services.AddScoped<ICommentRepository, CommentRepository>();
+builder.Services.AddScoped<ICategoryRepository, CategoryRepository>();
 
 
 // Add service
@@ -98,6 +113,11 @@ builder.Services.AddScoped<INotificationService, NotificationService>();
 builder.Services.AddScoped<ICartService, CartService>();    
 builder.Services.AddScoped<ICartItemService, CartItemService>();
 builder.Services.AddScoped<IUserService, UserService>();
+builder.Services.AddScoped<IProductService, ProductService>();
+builder.Services.AddScoped<IOrderService, OrderService>();
+builder.Services.AddScoped<ICommentService, CommentService>();
+builder.Services.AddScoped<ICategoryService, CategoryService>();
+builder.Services.AddScoped<IOrderItemService, OrderItemService>();
 
 
 builder.Services.AddEndpointsApiExplorer();

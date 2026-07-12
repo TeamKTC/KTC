@@ -52,8 +52,7 @@ namespace KTC.BLL.Services.Comment
             {
                 IsSuccess = true,
                 StatusCode = HttpStatusCode.Created,
-                Message = "Коментар успішно створено",
-                Payload = entity
+                Message = "Коментар успішно створено"
             };
         }
 
@@ -99,7 +98,7 @@ namespace KTC.BLL.Services.Comment
                 IsSuccess = true,
                 StatusCode = HttpStatusCode.OK,
                 Message = "Коментарі успішно отримано",
-                Payload = _mapper.Map<CommentDto>(_commentRepository.GetByProductID(productId)) ?? null
+                Payload = _mapper.Map <List<CommentDto>>(await _commentRepository.GetByProductID(productId)) ?? null
             };
         }
 
@@ -110,7 +109,7 @@ namespace KTC.BLL.Services.Comment
                 IsSuccess = true,
                 StatusCode = HttpStatusCode.OK,
                 Message = "Коментарі успішно отримано",
-                Payload = _mapper.Map<List<CommentDto>>(_commentRepository.GetByUserID(userId)) ?? null
+                Payload = _mapper.Map<List<CommentDto>>(await _commentRepository.GetByUserID(userId)) ?? null
             };
         }
 
@@ -132,7 +131,7 @@ namespace KTC.BLL.Services.Comment
                 IsSuccess = true,
                 StatusCode = HttpStatusCode.OK,
                 Message = "Відповіді на коментар успішно отримано",
-                Payload = _mapper.Map<List<CommentDto>>(_commentRepository.GetRepliesByCommentID(commentId)) ?? null
+                Payload = _mapper.Map<List<CommentDto>>(await _commentRepository.GetRepliesByCommentID(commentId)) ?? null
             };
         }
 
