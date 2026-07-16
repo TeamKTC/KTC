@@ -19,5 +19,6 @@ namespace KTC.DAL.Entities
         public virtual ICollection<OrderItemEntity> OrderItems { get; set; } = [];
 
         public ICollection<CommentEntity> Comments { get; set; } = new List<CommentEntity>();
+        public ICollection<ProductAttributeEntity> ProductAttributes { get; set; } = new List<ProductAttributeEntity>();
     }
 }

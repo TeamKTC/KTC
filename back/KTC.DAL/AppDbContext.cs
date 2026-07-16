@@ -18,6 +18,8 @@ public class AppDbContext : IdentityDbContext<UserEntity>
     public DbSet<CartEntity> Carts { get; set; }
     public DbSet<CartItemEntity> CartItems { get; set; }
     public DbSet<CommentEntity> Comments { get; set; }
+    public DbSet<AttributeDefinitionEntity> AttributeDefinitions { get; set; }
+    public DbSet<ProductAttributeEntity> ProductAttributes { get; set; }
 
     protected override void OnModelCreating(ModelBuilder builder)
     {
@@ -98,5 +100,34 @@ public class AppDbContext : IdentityDbContext<UserEntity>
             .WithMany()
             .HasForeignKey(x => x.SenderId)
             .OnDelete(DeleteBehavior.Restrict);
+
+
+        // =======================
+        // PRODUCT ATTRIBUTE
+        // =======================
+
+        builder.Entity<ProductAttributeEntity>()
+            .HasOne(x => x.Product)
+            .WithMany(x => x.ProductAttributes)
+            .HasForeignKey(x => x.ProductId)
+            .OnDelete(DeleteBehavior.Cascade);
+
+        builder.Entity<ProductAttributeEntity>()
+            .HasOne(x => x.AttributeDefinition)
+            .WithMany(x => x.ProductAttributes)
+            .HasForeignKey(x => x.AttributeDefinitionId)
+            .OnDelete(DeleteBehavior.Cascade);
+
+        builder.Entity<AttributeDefinitionEntity>()
+            .HasIndex(x => x.Name)
+            .IsUnique();
+
+        builder.Entity<ProductAttributeEntity>()
+            .HasIndex(x => new
+            {
+                x.ProductId,
+                x.AttributeDefinitionId
+            })
+            .IsUnique();
     }
 }
