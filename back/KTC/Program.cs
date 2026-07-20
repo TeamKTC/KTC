@@ -1,5 +1,6 @@
 using KTC.BLL.Interfaces;
 using KTC.BLL.Services;
+using KTC.BLL.Services.AttributeDefinition;
 using KTC.BLL.Services.Cart;
 using KTC.BLL.Services.CartItem;
 using KTC.BLL.Services.Catagory;
@@ -10,11 +11,13 @@ using KTC.BLL.Services.Notification;
 using KTC.BLL.Services.Order;
 using KTC.BLL.Services.OrderItem;
 using KTC.BLL.Services.Product;
+using KTC.BLL.Services.ProductAttribute;
 using KTC.BLL.Services.User;
 using KTC.BLL.Settings;
 using KTC.DAL;
 using KTC.DAL.Entities;
 using KTC.DAL.Initializer;
+using KTC.DAL.Repositories.AttributeDefinition;
 using KTC.DAL.Repositories.Cart;
 using KTC.DAL.Repositories.CartItem;
 using KTC.DAL.Repositories.Category;
@@ -24,6 +27,7 @@ using KTC.DAL.Repositories.Notification;
 using KTC.DAL.Repositories.Order;
 using KTC.DAL.Repositories.OrderItem;
 using KTC.DAL.Repositories.Product;
+using KTC.DAL.Repositories.ProductAttribute;
 using KTC.DAL.Repositories.User;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Identity;
@@ -107,6 +111,9 @@ builder.Services.AddScoped<IOrderItemRepository, OrderItemRepository>();
 builder.Services.AddScoped<ICommentRepository, CommentRepository>();
 builder.Services.AddScoped<ICategoryRepository, CategoryRepository>();
 builder.Services.AddScoped<IMediaRepository, MediaRepository>();    
+builder.Services.AddScoped<IProductAttributeRepository, ProductAttributeRepository>();
+builder.Services.AddScoped<IAttributeDefinitionRepository, AttributeDefinitionRepository>();
+
 
 // Add service
 builder.Services.AddScoped<IEmailService, EmailService>();
@@ -123,6 +130,8 @@ builder.Services.AddScoped<ICategoryService, CategoryService>();
 builder.Services.AddScoped<IOrderItemService, OrderItemService>();
 builder.Services.AddScoped<IBlobStorageService, BlobStorageService>();
 
+builder.Services.AddScoped<IProductAttributeService, ProductAttributeService>();
+builder.Services.AddScoped<IAttibuteDefinitionService, AttibuteDefinitionService>();
 
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen(options =>

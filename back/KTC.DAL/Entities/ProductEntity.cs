@@ -20,5 +20,6 @@ namespace KTC.DAL.Entities
 
         public ICollection<CommentEntity> Comments { get; set; } = new List<CommentEntity>();
         public ICollection<MediaEntity> Media { get; set; } = [];
+        public ICollection<ProductAttributeEntity> ProductAttributes { get; set; } = new List<ProductAttributeEntity>();
     }
 }

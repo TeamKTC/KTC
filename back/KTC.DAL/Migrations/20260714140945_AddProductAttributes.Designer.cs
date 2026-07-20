@@ -3,6 +3,7 @@ using System;
 using KTC.DAL;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 
@@ -11,9 +12,11 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace KTC.DAL.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    partial class AppDbContextModelSnapshot : ModelSnapshot
+    [Migration("20260714140945_AddProductAttributes")]
+    partial class AddProductAttributes
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -31,10 +34,6 @@ namespace KTC.DAL.Migrations
                         .HasColumnType("timestamp with time zone");
 
                     b.Property<string>("Name")
-                        .IsRequired()
-                        .HasColumnType("text");
-
-                    b.Property<string>("Type")
                         .IsRequired()
                         .HasColumnType("text");
 
@@ -123,6 +122,7 @@ namespace KTC.DAL.Migrations
                         .HasColumnType("text");
 
                     b.Property<string>("ProductId")
+                        .IsRequired()
                         .HasColumnType("text");
 
                     b.Property<string>("Text")
@@ -142,42 +142,6 @@ namespace KTC.DAL.Migrations
                     b.HasIndex("UserId");
 
                     b.ToTable("Comments");
-                });
-
-            modelBuilder.Entity("KTC.DAL.Entities.MediaEntity", b =>
-                {
-                    b.Property<string>("Id")
-                        .HasColumnType("text");
-
-                    b.Property<string>("ContentType")
-                        .IsRequired()
-                        .HasColumnType("text");
-
-                    b.Property<DateTime>("CreatedDate")
-                        .HasColumnType("timestamp with time zone");
-
-                    b.Property<string>("FileName")
-                        .IsRequired()
-                        .HasColumnType("text");
-
-                    b.Property<string>("ProductId")
-                        .HasColumnType("text");
-
-                    b.Property<long>("Size")
-                        .HasColumnType("bigint");
-
-                    b.Property<int>("Type")
-                        .HasColumnType("integer");
-
-                    b.Property<string>("Url")
-                        .IsRequired()
-                        .HasColumnType("text");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("ProductId");
-
-                    b.ToTable("Media");
                 });
 
             modelBuilder.Entity("KTC.DAL.Entities.NotificationEntity", b =>
@@ -569,7 +533,9 @@ namespace KTC.DAL.Migrations
 
                     b.HasOne("KTC.DAL.Entities.ProductEntity", "Product")
                         .WithMany("Comments")
-                        .HasForeignKey("ProductId");
+                        .HasForeignKey("ProductId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
                     b.HasOne("KTC.DAL.Entities.UserEntity", "User")
                         .WithMany("Comments")
@@ -582,16 +548,6 @@ namespace KTC.DAL.Migrations
                     b.Navigation("Product");
 
                     b.Navigation("User");
-                });
-
-            modelBuilder.Entity("KTC.DAL.Entities.MediaEntity", b =>
-                {
-                    b.HasOne("KTC.DAL.Entities.ProductEntity", "Product")
-                        .WithMany("Media")
-                        .HasForeignKey("ProductId")
-                        .OnDelete(DeleteBehavior.Cascade);
-
-                    b.Navigation("Product");
                 });
 
             modelBuilder.Entity("KTC.DAL.Entities.NotificationEntity", b =>
@@ -751,8 +707,6 @@ namespace KTC.DAL.Migrations
             modelBuilder.Entity("KTC.DAL.Entities.ProductEntity", b =>
                 {
                     b.Navigation("Comments");
-
-                    b.Navigation("Media");
 
                     b.Navigation("OrderItems");
 
