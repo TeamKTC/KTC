@@ -1,8 +1,12 @@
 ﻿using AutoMapper;
+using KTC.BLL.Dto.Media;
 using KTC.BLL.Dto.Product;
+using KTC.BLL.Interfaces;
 using KTC.DAL.Entities;
 using KTC.DAL.Repositories.Category;
+using KTC.DAL.Repositories.Media;
 using KTC.DAL.Repositories.Product;
+using Microsoft.AspNetCore.Http;
 using System.Net;
 
 namespace KTC.BLL.Services.Product
@@ -12,18 +16,27 @@ namespace KTC.BLL.Services.Product
         private readonly IProductRepository _productRepository;
         private readonly IMapper _mapper;
         private readonly ICategoryRepository _categoryRepository;
-
-        public ProductService(IProductRepository productRepository, IMapper mapper, ICategoryRepository categoryRepository)
+        private readonly IMediaRepository _mediaRepository;
+        private readonly IBlobStorageService _blobStorageService;
+        public ProductService(
+            IProductRepository productRepository,
+            IMapper mapper,
+            ICategoryRepository categoryRepository,
+            IMediaRepository mediaRepository,
+            IBlobStorageService blobStorageService)
         {
             _productRepository = productRepository;
             _mapper = mapper;
             _categoryRepository = categoryRepository;
-        }   
-        
+            _mediaRepository = mediaRepository;
+            _blobStorageService = blobStorageService;
+        }
         public async Task<ServiceResponse> CreateAsync(CreateProductDto dto)
         {
-            var entity = _mapper.Map<ProductEntity>(dto);   
-            var category = await  _categoryRepository.GetByIdAsync(dto.CategoryId);
+            var entity = _mapper.Map<ProductEntity>(dto);
+
+            var category = await _categoryRepository.GetByIdAsync(dto.CategoryId);
+
             if (category == null)
             {
                 return new ServiceResponse
@@ -38,6 +51,26 @@ namespace KTC.BLL.Services.Product
 
             await _productRepository.CreateAsync(entity);
 
+            foreach (var file in dto.Files)
+            {
+                var upload = await _blobStorageService.UploadAsync(file);
+
+                if (!upload.IsSuccess)
+                    return upload;
+
+                var media = (MediaDto)upload.Payload!;
+
+                await _mediaRepository.CreateAsync(new MediaEntity
+                {
+                    ProductId = entity.Id,
+                    FileName = media.FileName,
+                    Url = media.Url,
+                    ContentType = media.ContentType,
+                    Type = media.Type,
+                    Size = media.Size
+                });
+            }
+
             return new ServiceResponse
             {
                 IsSuccess = true,
@@ -45,7 +78,6 @@ namespace KTC.BLL.Services.Product
                 Message = "Продукт успішно додано"
             };
         }
-
         public async Task<ServiceResponse> DeleteAsync(string id)
         {
             var entity = _productRepository.GetByIdAsync(id).Result;

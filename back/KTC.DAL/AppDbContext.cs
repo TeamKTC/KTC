@@ -18,6 +18,7 @@ public class AppDbContext : IdentityDbContext<UserEntity>
     public DbSet<CartEntity> Carts { get; set; }
     public DbSet<CartItemEntity> CartItems { get; set; }
     public DbSet<CommentEntity> Comments { get; set; }
+    public DbSet<MediaEntity> Media { get; set; }
 
     protected override void OnModelCreating(ModelBuilder builder)
     {
@@ -49,6 +50,11 @@ public class AppDbContext : IdentityDbContext<UserEntity>
             .HasOne(x => x.Category)
             .WithMany(x => x.Products)
             .HasForeignKey(x => x.CategoryId);
+       builder.Entity<MediaEntity>()
+            .HasOne(x => x.Product)
+            .WithMany(x => x.Media)
+            .HasForeignKey(x => x.ProductId)
+            .OnDelete(DeleteBehavior.Cascade);
 
 
         // =======================

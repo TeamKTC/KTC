@@ -4,6 +4,7 @@ using KTC.BLL.Dto.Product;
 using KTC.DAL.Entities;
 using KTC.DAL.Repositories.Category;
 using Microsoft.VisualBasic;
+using System.Runtime.CompilerServices;
 
 namespace KTC.BLL.Services.Catagory
 {
