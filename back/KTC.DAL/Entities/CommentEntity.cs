@@ -13,7 +13,7 @@ namespace KTC.DAL.Entities
         public string UserId { get; set; } = default!;
         public UserEntity User { get; set; } = default!;
 
-        public string ProductId { get; set; }
+        public string? ProductId { get; set; }
         public ProductEntity Product { get; set; } = default!;
 
         public string? ParentCommentId { get; set; }

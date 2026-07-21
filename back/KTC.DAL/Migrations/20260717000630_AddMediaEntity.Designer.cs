@@ -3,6 +3,7 @@ using System;
 using KTC.DAL;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 
@@ -11,9 +12,11 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace KTC.DAL.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    partial class AppDbContextModelSnapshot : ModelSnapshot
+    [Migration("20260717000630_AddMediaEntity")]
+    partial class AddMediaEntity
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -21,30 +24,6 @@ namespace KTC.DAL.Migrations
                 .HasAnnotation("Relational:MaxIdentifierLength", 63);
 
             NpgsqlModelBuilderExtensions.UseIdentityByDefaultColumns(modelBuilder);
-
-            modelBuilder.Entity("KTC.DAL.Entities.AttributeDefinitionEntity", b =>
-                {
-                    b.Property<string>("Id")
-                        .HasColumnType("text");
-
-                    b.Property<DateTime>("CreatedDate")
-                        .HasColumnType("timestamp with time zone");
-
-                    b.Property<string>("Name")
-                        .IsRequired()
-                        .HasColumnType("text");
-
-                    b.Property<string>("Type")
-                        .IsRequired()
-                        .HasColumnType("text");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("Name")
-                        .IsUnique();
-
-                    b.ToTable("AttributeDefinitions");
-                });
 
             modelBuilder.Entity("KTC.DAL.Entities.CartEntity", b =>
                 {
@@ -267,36 +246,6 @@ namespace KTC.DAL.Migrations
                     b.HasIndex("ProductId");
 
                     b.ToTable("OrderItems");
-                });
-
-            modelBuilder.Entity("KTC.DAL.Entities.ProductAttributeEntity", b =>
-                {
-                    b.Property<string>("Id")
-                        .HasColumnType("text");
-
-                    b.Property<string>("AttributeDefinitionId")
-                        .IsRequired()
-                        .HasColumnType("text");
-
-                    b.Property<DateTime>("CreatedDate")
-                        .HasColumnType("timestamp with time zone");
-
-                    b.Property<string>("ProductId")
-                        .IsRequired()
-                        .HasColumnType("text");
-
-                    b.Property<string>("Value")
-                        .IsRequired()
-                        .HasColumnType("text");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("AttributeDefinitionId");
-
-                    b.HasIndex("ProductId", "AttributeDefinitionId")
-                        .IsUnique();
-
-                    b.ToTable("ProductAttributes");
                 });
 
             modelBuilder.Entity("KTC.DAL.Entities.ProductEntity", b =>
@@ -642,25 +591,6 @@ namespace KTC.DAL.Migrations
                     b.Navigation("Product");
                 });
 
-            modelBuilder.Entity("KTC.DAL.Entities.ProductAttributeEntity", b =>
-                {
-                    b.HasOne("KTC.DAL.Entities.AttributeDefinitionEntity", "AttributeDefinition")
-                        .WithMany("ProductAttributes")
-                        .HasForeignKey("AttributeDefinitionId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("KTC.DAL.Entities.ProductEntity", "Product")
-                        .WithMany("ProductAttributes")
-                        .HasForeignKey("ProductId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("AttributeDefinition");
-
-                    b.Navigation("Product");
-                });
-
             modelBuilder.Entity("KTC.DAL.Entities.ProductEntity", b =>
                 {
                     b.HasOne("KTC.DAL.Entities.CategoryEntity", "Category")
@@ -723,11 +653,6 @@ namespace KTC.DAL.Migrations
                         .IsRequired();
                 });
 
-            modelBuilder.Entity("KTC.DAL.Entities.AttributeDefinitionEntity", b =>
-                {
-                    b.Navigation("ProductAttributes");
-                });
-
             modelBuilder.Entity("KTC.DAL.Entities.CartEntity", b =>
                 {
                     b.Navigation("Items");
@@ -755,8 +680,6 @@ namespace KTC.DAL.Migrations
                     b.Navigation("Media");
 
                     b.Navigation("OrderItems");
-
-                    b.Navigation("ProductAttributes");
                 });
 
             modelBuilder.Entity("KTC.DAL.Entities.UserEntity", b =>

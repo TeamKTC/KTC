@@ -16,9 +16,11 @@ namespace KTC.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> CreateProduct([FromBody] CreateProductDto productDto)
+        public async Task<IActionResult> CreateProduct(
+        [FromForm] CreateProductDto dto)
         {
-            var response = await _productService.CreateAsync(productDto);
+            var response = await _productService.CreateAsync(dto);
+
             return this.ToActionResult(response);
         }
         [HttpPut]
