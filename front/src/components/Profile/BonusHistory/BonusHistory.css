@@ -1,0 +1,79 @@
+.bonus-history {
+    background: #fff;
+    border: 1px solid #E5E5E5;
+    border-radius: 8px;
+    padding: 12px;
+    width: 100%;
+    height: 403px;
+    box-sizing: border-box;
+}
+
+.history-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding-bottom: 8px;
+    border-bottom: 1px solid #EAEAEA;
+}
+
+.history-header h2 {
+    margin: 0;
+    font-size: 18px;
+    font-weight: 700;
+    color: #202020;
+}
+
+.history-header button {
+    background: transparent;
+    border: none;
+    color: #444;
+    font-size: 12px;
+    cursor: pointer;
+    padding: 0;
+}
+
+.history-header button:hover {
+    text-decoration: underline;
+}
+
+.bonus-history table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 6px;
+}
+
+.bonus-history th {
+    text-align: left;
+    font-size: 13px;
+    font-weight: 600;
+    color: #444;
+    padding: 10px 8px;
+}
+
+.bonus-history td {
+    padding: 12px 8px;
+    font-size: 13px;
+    color: #333;
+    border-top: 1px solid #EEEEEE;
+}
+
+.plus,
+.minus {
+    color: #333;
+    font-weight: 400;
+}
+
+.status {
+    background: transparent;
+    padding: 0;
+    border-radius: 0;
+    font-size: 13px;
+    color: #444;
+    font-weight: 400;
+}
+
+.success,
+.used {
+    background: transparent;
+    color: #444;
+}

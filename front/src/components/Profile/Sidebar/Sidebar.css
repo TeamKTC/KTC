@@ -1,0 +1,169 @@
+.sidebar{
+    width: 100%;
+    height:596px;
+    background:#fff;
+    border:1px solid #e7e7e7;
+    border-radius:8px;
+    overflow:hidden;
+}
+
+.user-card{
+    display:flex;
+    align-items:center;
+    gap:36px;
+    padding:24px 18px;
+}
+
+.avatar{
+    width:126px;
+    height:126px;
+    min-width:96px;
+
+    background:#EEF3FB;
+
+    display:flex;
+    align-items:center;
+    justify-content:center;
+
+    font-size:64px;
+    font-weight:700;
+
+    border-radius:8px;
+}
+
+.user-info{
+    display:flex;
+    flex-direction:column;
+    justify-content:center;
+}
+
+.user-info h3{
+    margin:0 0 14px 0;
+    font-size:30px;
+    font-weight:500;
+    line-height:1.2;
+    color:#000;
+}
+
+.user-info p{
+    margin:0 0 10px 0;
+    font-size:18px;
+    font-weight:500;
+    color:#000;
+}
+
+.user-info span{
+    margin:0;
+    font-size:18px;
+    font-weight:500;
+    color:#000;
+}
+/* ---------- BONUS CARD ---------- */
+
+.bonus-card-mini{
+    margin:0 18px 16px;
+    width:378px;
+    height:74px;
+
+    border:1px solid #3b82f6;
+    border-radius:6px;
+
+    padding:10px 14px;
+
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+}
+
+.bonus-text{
+    display:flex;
+    flex-direction:column;
+    justify-content:center;
+    gap:2px;
+
+    position: relative;
+    top: 14px;
+}
+
+.bonus-text small{
+    display:block;
+    margin:0 0 4px 0;
+    color:#000000;
+    font-size:11px;
+    line-height:1;
+    font-weight:500;
+}
+
+.bonus-text h4{
+    margin:0 0 3px 0;
+    font-size:12px;
+    font-weight:500;
+    line-height:1;
+}
+
+.bonus-text span{
+    margin:0;
+    font-size:11px;
+    color:#666;
+    line-height:1;
+}
+
+.wallet-icon{
+    width:24px;
+    height:24px;
+}
+
+/* ---------- MENU ---------- */
+
+.menu{
+    display:flex;
+    flex-direction:column;
+}
+
+.menu a{
+    display:flex;
+    align-items:center;
+    gap:12px;
+
+    padding:6px 18px;  
+
+    color:#222;
+    text-decoration:none;
+    cursor:pointer;
+    transition:.2s;
+
+    border-radius:6px;
+}
+
+.menu a:hover{
+    background:#f7f9fc;
+}
+
+.menu .active{
+    font-weight:600;
+}
+
+.logout{
+    display:flex;
+    align-items:center;
+    gap:12px;
+
+    padding:17px 18px;
+    margin-top:0;
+
+    cursor:pointer;
+
+    transition:.2s;
+    border-radius:6px;
+}
+
+.logout:hover{
+    background:#f7f9fc;
+}
+
+.menu-divider{
+    width:calc(100% - 36px);
+    height:1px;
+    background:#D7D7D7;
+    margin:8px auto;
+}
