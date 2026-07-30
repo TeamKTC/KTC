@@ -1,0 +1,55 @@
+.profile-page {
+
+
+    background: #FFFFFF;
+}
+
+.profile-content {
+    display: grid;
+    grid-template-columns: 414px 524px 594px;
+    gap: 24px;
+}
+
+
+
+.breadcrumbs {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    margin-bottom: 12px;
+
+    font-size: 11px;
+    color: #8A8A8A;
+}
+
+.breadcrumbs a {
+    color: #8A8A8A;
+    text-decoration: none;
+}
+
+.breadcrumbs a:hover {
+    text-decoration: underline;
+}
+
+.profile-title {
+    margin-bottom: 24px;
+    font-size: 24px;
+    font-weight: 700;
+    position: relative;
+    top: 10px;
+}
+
+.profile-content {
+    display: grid;
+    grid-template-columns: 414px minmax(0, 524px) minmax(0, 594px);
+    gap: 24px;
+    align-items: start;
+}
+
+.center-column,
+.right-column {
+    display: flex;
+    flex-direction: column;
+    gap: 24px;
+    margin: 0;
+}

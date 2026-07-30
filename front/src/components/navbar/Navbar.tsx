@@ -2,6 +2,7 @@ import "bootstrap/dist/css/bootstrap.min.css";
 import "bootstrap-icons/font/bootstrap-icons.css";
 import "./Narbar.css";
 import Logo from "../logo/Logo";
+import { Link } from "react-router-dom";
 
 const Navbar = () => {
     return (
@@ -80,10 +81,10 @@ const Navbar = () => {
                         {/* Icons */}
                         <div className="d-flex">
 
-                        <div className="icon-item">
+                        <Link to="/profile" className="icon-item text-decoration-none text-dark">
                             <i className="bi bi-person"></i>
                             <span>Профіль</span>
-                        </div>
+                        </Link>
 
                         <div className="icon-item">
                             <i className="bi bi-cart3 position-relative">
