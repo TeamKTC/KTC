@@ -29,6 +29,7 @@ public class MediaRepository : IMediaRepository
     {
         return await _context.Media
             .Where(x => x.ProductId == productId)
+            .OrderBy(x => x.DisplayOrder)
             .ToListAsync();
     }
 }

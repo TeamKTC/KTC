@@ -16,7 +16,7 @@ namespace KTC.BLL.Dto.Media
         public MediaType Type { get; set; }
 
         public string ContentType { get; set; } = default!;
-
+        public int DisplayOrder { get; set; }
         public long Size { get; set; }
     }
 }

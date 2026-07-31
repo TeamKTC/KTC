@@ -18,6 +18,8 @@ public class MediaEntity : BaseEntity
 
     public long Size { get; set; }
 
+    public int DisplayOrder { get; set; }
+
     public string? ProductId { get; set; }
     public ProductEntity? Product { get; set; }
 }

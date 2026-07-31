@@ -1,10 +1,34 @@
 import "bootstrap/dist/css/bootstrap.min.css";
 import "bootstrap-icons/font/bootstrap-icons.css";
 import "./Narbar.css";
+
 import Logo from "../logo/Logo";
-import { Link } from "react-router-dom";
+import { useState } from "react";
+import { useNavigate } from "react-router-dom";
+import { useAppSelector } from "../../hooks/redux";
+
+import Modal from "../Modal/Modal";
+import LoginPage from "../../pages/Auth/Login/LoginPage";
+import RegisterPage from "../../pages/Auth/Registr/RegisterPage";
 
 const Navbar = () => {
+    const navigate = useNavigate();
+
+    const isAuthenticated = useAppSelector(
+        (state) => state.auth.isAuthenticated
+    );
+
+    const [isLoginModalOpen, setIsLoginModalOpen] = useState(false);
+    const [isRegisterModalOpen, setIsRegisterModalOpen] = useState(false);
+
+    const handleProfileClick = () => {
+        if (isAuthenticated) {
+            navigate("/profile");
+        } else {
+            setIsLoginModalOpen(true);
+        }
+    };
+
     return (
         <>
             {/* Top bar */}
@@ -13,34 +37,34 @@ const Navbar = () => {
                     <div className="d-flex justify-content-between align-items-center">
 
                         <div className="d-flex gap-4">
-                        <a href="#" className="top-link">
-                            Місто
-                        </a>
+                            <a href="#" className="top-link">
+                                Місто
+                            </a>
 
-                        <a href="#" className="top-link">
-                            Доставка і оплата
-                        </a>
+                            <a href="#" className="top-link">
+                                Доставка і оплата
+                            </a>
 
-                        <a href="#" className="top-link">
-                            Підтримка
-                        </a>
+                            <a href="#" className="top-link">
+                                Підтримка
+                            </a>
 
-                        <a href="#" className="top-link">
-                            Гарантія
-                        </a>
+                            <a href="#" className="top-link">
+                                Гарантія
+                            </a>
 
-                        <a href="#" className="top-link">
-                            Про нас
-                        </a>
+                            <a href="#" className="top-link">
+                                Про нас
+                            </a>
 
-                        <a href="#" className="top-link">
-                            Магазин
-                        </a>
+                            <a href="#" className="top-link">
+                                Магазин
+                            </a>
                         </div>
 
                         <div className="top-link">
-                        <i className="bi bi-telephone me-2"></i>
-                        0 800 543 786
+                            <i className="bi bi-telephone me-2"></i>
+                            0 800 543 786
                         </div>
 
                     </div>
@@ -52,59 +76,84 @@ const Navbar = () => {
                 <div className="container">
                     <div className="d-flex align-items-center">
 
-                        {/* Logo */}
                         <div className="logo-placeholder me-4">
                             <Logo />
                         </div>
 
-                        {/* Catalog */}
                         <button className="btn btn-primary px-4 d-flex align-items-center me-3">
-                        <i className="bi bi-list me-2"></i>
-                        Каталог товарів
+                            <i className="bi bi-list me-2"></i>
+                            Каталог товарів
                         </button>
 
-                        {/* Search */}
                         <div className="flex-grow-1 me-4">
-                        <div className="input-group">
-                            <input
-                            type="text"
-                            className="form-control search-input"
-                            placeholder="Пошук товарів..."
-                            />
+                            <div className="input-group">
+                                <input
+                                    type="text"
+                                    className="form-control search-input"
+                                    placeholder="Пошук товарів..."
+                                />
 
-                            <button className="btn btn-light border">
-                            <i className="bi bi-search"></i>
-                            </button>
-                        </div>
-                        </div>
-
-                        {/* Icons */}
-                        <div className="d-flex">
-
-                        <Link to="/profile" className="icon-item text-decoration-none text-dark">
-                            <i className="bi bi-person"></i>
-                            <span>Профіль</span>
-                        </Link>
-
-                        <div className="icon-item">
-                            <i className="bi bi-cart3 position-relative">
-                            <span className="cart-badge">0</span>
-                            </i>
-                            <span>Кошик</span>
+                                <button className="btn btn-light border">
+                                    <i className="bi bi-search"></i>
+                                </button>
+                            </div>
                         </div>
 
-                        <div className="icon-item">
-                            <i className="bi bi-heart"></i>
-                            <span>Обране</span>
-                        </div>
+                        <div className="d-flex">                            <div
+                                className="icon-item text-decoration-none text-dark"
+                                onClick={handleProfileClick}
+                                style={{ cursor: "pointer" }}
+                            >
+                                <i className="bi bi-person"></i>
+                                <span>Профіль</span>
+                            </div>
+
+                            <div className="icon-item">
+                                <i className="bi bi-cart3 position-relative">
+                                    <span className="cart-badge">0</span>
+                                </i>
+                                <span>Кошик</span>
+                            </div>
+
+                            <div className="icon-item">
+                                <i className="bi bi-heart"></i>
+                                <span>Обране</span>
+                            </div>
 
                         </div>
 
                     </div>
                 </div>
             </div>
+
+            <Modal
+                isOpen={isLoginModalOpen}
+                onClose={() => setIsLoginModalOpen(false)}
+            >
+                <LoginPage
+                    onClose={() => setIsLoginModalOpen(false)}
+                    onOpenRegister={() => {
+                        setIsLoginModalOpen(false);
+                        setIsRegisterModalOpen(true);
+                    }}
+                />
+            </Modal>
+
+            <Modal
+                isOpen={isRegisterModalOpen}
+                onClose={() => setIsRegisterModalOpen(false)}
+            >
+                <RegisterPage
+                    onClose={() => setIsRegisterModalOpen(false)}
+                    onOpenLogin={() => {
+                        setIsRegisterModalOpen(false);
+                        setIsLoginModalOpen(true);
+                    }}
+                />
+            </Modal>
+
         </>
     );
-}
+};
 
 export default Navbar;

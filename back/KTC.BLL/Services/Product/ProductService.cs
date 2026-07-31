@@ -51,6 +51,8 @@ namespace KTC.BLL.Services.Product
 
             await _productRepository.CreateAsync(entity);
 
+            int displayOrder = 1;
+
             foreach (var file in dto.Files)
             {
                 var upload = await _blobStorageService.UploadAsync(file);
@@ -67,7 +69,8 @@ namespace KTC.BLL.Services.Product
                     Url = media.Url,
                     ContentType = media.ContentType,
                     Type = media.Type,
-                    Size = media.Size
+                    Size = media.Size,
+                    DisplayOrder = displayOrder++
                 });
             }
 

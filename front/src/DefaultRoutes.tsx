@@ -3,18 +3,30 @@ import { useAppSelector } from "./hooks/redux";
 import { Route, Routes } from "react-router";
 import HomePage from "./pages/HomePage/HomePage";
 import ProfilePage from "./pages/Profile/ProfilePage";
+import { Navigate } from "react-router-dom";
+
+
 const DefaultRoutes = () => {
-   // const {isAuth, user} = useAppSelector((state) => state.auth);
+    const isAuthenticated = useAppSelector(
+        (state) => state.auth.isAuthenticated
+    );
 
     return (
         <Routes>
-             <Route path="/" element={<DefLayouts />}>
+            <Route path="/" element={<DefLayouts />}>
                 <Route index element={<HomePage />} />
-                <Route path="profile" element={<ProfilePage />} />
+
+                <Route
+                    path="profile"
+                    element={
+                        isAuthenticated
+                            ? <ProfilePage />
+                            : <Navigate to="/" replace />
+                    }
+                />
             </Route>
         </Routes>
     );
-
 };
 
 export default DefaultRoutes;
