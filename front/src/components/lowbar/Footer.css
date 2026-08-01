@@ -19,7 +19,6 @@
 
 .footer-logo {
     height: 90px;
-    border: 2px dashed rgba(255,255,255,.4);
     display: flex;
     justify-content: center;
     align-items: center;

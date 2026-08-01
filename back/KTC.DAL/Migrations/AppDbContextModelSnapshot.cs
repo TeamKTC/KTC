@@ -46,6 +46,26 @@ namespace KTC.DAL.Migrations
                     b.ToTable("AttributeDefinitions");
                 });
 
+            modelBuilder.Entity("KTC.DAL.Entities.BrandEntity", b =>
+                {
+                    b.Property<string>("Id")
+                        .HasColumnType("text");
+
+                    b.Property<DateTime>("CreatedDate")
+                        .HasColumnType("timestamp with time zone");
+
+                    b.Property<string>("Description")
+                        .HasColumnType("text");
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasColumnType("text");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Brands");
+                });
+
             modelBuilder.Entity("KTC.DAL.Entities.CartEntity", b =>
                 {
                     b.Property<string>("Id")
@@ -304,6 +324,9 @@ namespace KTC.DAL.Migrations
                     b.Property<string>("Id")
                         .HasColumnType("text");
 
+                    b.Property<string>("BrandId")
+                        .HasColumnType("text");
+
                     b.Property<string>("CategoryId")
                         .IsRequired()
                         .HasColumnType("text");
@@ -318,13 +341,21 @@ namespace KTC.DAL.Migrations
                         .IsRequired()
                         .HasColumnType("text");
 
-                    b.Property<decimal>("Price")
-                        .HasColumnType("numeric");
+                    b.Property<int>("Price")
+                        .HasColumnType("integer");
 
                     b.Property<int>("Quantity")
                         .HasColumnType("integer");
 
+                    b.Property<int>("Rate")
+                        .HasColumnType("integer");
+
+                    b.Property<int>("SoldPerMonth")
+                        .HasColumnType("integer");
+
                     b.HasKey("Id");
+
+                    b.HasIndex("BrandId");
 
                     b.HasIndex("CategoryId");
 
@@ -663,11 +694,18 @@ namespace KTC.DAL.Migrations
 
             modelBuilder.Entity("KTC.DAL.Entities.ProductEntity", b =>
                 {
+                    b.HasOne("KTC.DAL.Entities.BrandEntity", "Brand")
+                        .WithMany("Products")
+                        .HasForeignKey("BrandId")
+                        .OnDelete(DeleteBehavior.Restrict);
+
                     b.HasOne("KTC.DAL.Entities.CategoryEntity", "Category")
                         .WithMany("Products")
                         .HasForeignKey("CategoryId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
+
+                    b.Navigation("Brand");
 
                     b.Navigation("Category");
                 });
@@ -726,6 +764,11 @@ namespace KTC.DAL.Migrations
             modelBuilder.Entity("KTC.DAL.Entities.AttributeDefinitionEntity", b =>
                 {
                     b.Navigation("ProductAttributes");
+                });
+
+            modelBuilder.Entity("KTC.DAL.Entities.BrandEntity", b =>
+                {
+                    b.Navigation("Products");
                 });
 
             modelBuilder.Entity("KTC.DAL.Entities.CartEntity", b =>

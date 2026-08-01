@@ -8,5 +8,7 @@ namespace KTC.DAL.Repositories.Product
         Task<List<ProductEntity>> GetByPriceRange(int min, int max);
         Task<List<ProductEntity>> GetByName(string name);
         Task<List<CommentEntity>> GetAllComments();
+        Task<List<ProductEntity>> WithHitghsRate();
+        Task<List<ProductEntity>> WithHitghestMothsPerSold();
     }
 }

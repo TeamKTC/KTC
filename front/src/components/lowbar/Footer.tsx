@@ -1,8 +1,28 @@
 import "./Footer.css";
 import Logo from "../logo/Logo";
+import { useGetAllCategoriesQuery } from "../../store/services/categoryApi";
 
 
 const Footer = () => {
+    const { data, isLoading, error } = useGetAllCategoriesQuery();
+
+    if (isLoading) { 
+      return ( 
+        <div className="recommended-products">
+            <h2>Рекомендовані категорії</h2>
+            <p>Завантаження...</p> 
+        </div> 
+      ); 
+    } 
+    if (error) { 
+      return ( 
+        <div className="recommended-products"> 
+            <h2>Рекомендовані категорії</h2> 
+            <p>Не вдалося завантажити категорії</p> 
+        </div> 
+      ); 
+    }
+
     return (
         <>
             <footer className="footer mt-5">
@@ -44,15 +64,7 @@ const Footer = () => {
                             <h5>Каталог товарів</h5>
 
                             <ul className="footer-list">
-                                <li>Смартфони</li>
-                                <li>Apple</li>
-                                <li>Ноутбуки</li>
-                                <li>Планшети</li>
-                                <li>Телевізори</li>
-                                <li>Відеокарти</li>
-                                <li>SSD-накопичувачі</li>
-                                <li>Принтери та БФП</li>
-                                <li>Навушники</li>
+                                {data?.payload?.map((category) => ( <li>{category.name}</li>))}
                             </ul>
 
                         </div>

@@ -1,0 +1,223 @@
+import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
+const apiUrl = "https://localhost:7120/api/" 
+
+import type {
+  Product,
+  CreateProductDto,
+  UpdateProductDto,
+  ServiceResponse,
+} from "../../types/types";
+
+export const productApi = createApi({
+  reducerPath: "productApi",
+
+  baseQuery: fetchBaseQuery({
+    baseUrl: apiUrl,
+
+    prepareHeaders: (headers) => {
+      const token = localStorage.getItem("token");
+
+      if (token) {
+        headers.set("Authorization", `Bearer ${token}`);
+      }
+
+      return headers;
+    },
+  }),
+
+  tagTypes: ["Product"],
+
+  endpoints: (build) => ({
+
+    // GET /api/product
+    // Payload -> List<ProductDto>
+    getAllProducts: build.query<
+      ServiceResponse<Product[]>,
+      void
+    >({
+      query: () => ({
+        url: "product",
+        method: "GET",
+      }),
+
+      providesTags: ["Product"],
+    }),
+
+    // GET /api/product/by-id?productId=...
+    // Payload -> ProductDto
+    getProductById: build.query<
+      ServiceResponse<Product>,
+      string
+    >({
+      query: (productId) => ({
+        url: "product/by-id",
+        method: "GET",
+        params: {
+          productId,
+        },
+      }),
+
+      providesTags: ["Product"],
+    }),
+
+    // GET /api/product/by-name?productName=...
+    // Payload -> ProductDto
+    getProductByName: build.query<
+      ServiceResponse<Product>,
+      string
+    >({
+      query: (productName) => ({
+        url: "product/by-name",
+        method: "GET",
+        params: {
+          productName,
+        },
+      }),
+
+      providesTags: ["Product"],
+    }),
+
+    // GET /api/product/by-price-range?min=...&max=...
+    // Payload -> List<ProductDto>
+    getProductsByPriceRange: build.query<
+      ServiceResponse<Product[]>,
+      { min: number; max: number }
+    >({
+      query: ({ min, max }) => ({
+        url: "product/by-price-range",
+        method: "GET",
+        params: {
+          min,
+          max,
+        },
+      }),
+
+      providesTags: ["Product"],
+    }),
+
+    // GET /api/product/with-highest-rate
+    // Payload -> List<ProductDto>
+    getProductWithHighestRate: build.query<
+      ServiceResponse<Product[]>,
+      void
+    >({
+      query: () => ({
+        url: "product/with-highest-rate",
+        method: "GET",
+      }),
+
+      providesTags: ["Product"],
+    }),
+
+    // GET /api/product/with-highest-months-per-sold
+    // Payload -> List<ProductDto>
+    getProductWithHighestSoldPerMonth: build.query<
+      ServiceResponse<Product[]>,
+      void
+    >({
+      query: () => ({
+        url: "product/with-highest-months-per-sold",
+        method: "GET",
+      }),
+
+      providesTags: ["Product"],
+    }),
+
+    // POST /api/product
+    // Payload -> ProductDto
+    createProduct: build.mutation<
+      ServiceResponse<Product>,
+      CreateProductDto
+    >({
+      query: (product) => {
+        const formData = new FormData();
+
+        formData.append("Name", product.Name);
+
+        if (product.Description) {
+          formData.append("Description", product.Description);
+        }
+
+        formData.append(
+          "Price",
+          product.Price.toString()
+        );
+
+        formData.append(
+          "Quantity",
+          product.Quantity.toString()
+        );
+
+        formData.append(
+          "Rate",
+          product.Rate.toString()
+        );
+
+        formData.append(
+          "SoldPerMonth",
+          product.SoldPerMonth.toString()
+        );
+
+        formData.append(
+          "CategoryId",
+          product.CategoryId
+        );
+
+        product.Files.forEach((file) => {
+          formData.append("Files", file);
+        });
+
+        return {
+          url: "product",
+          method: "POST",
+          body: formData,
+        };
+      },
+
+      invalidatesTags: ["Product"],
+    }),
+
+    // PUT /api/product
+    // Payload -> ProductDto
+    updateProduct: build.mutation<
+      ServiceResponse<Product>,
+      UpdateProductDto
+    >({
+      query: (product) => ({
+        url: "product",
+        method: "PUT",
+        body: product,
+      }),
+
+      invalidatesTags: ["Product"],
+    }),
+
+    // DELETE /api/product?productId=...
+    deleteProduct: build.mutation<
+      ServiceResponse<unknown>,
+      string
+    >({
+      query: (productId) => ({
+        url: "product",
+        method: "DELETE",
+        params: {
+          productId,
+        },
+      }),
+
+      invalidatesTags: ["Product"],
+    }),
+  }),
+});
+
+export const {
+  useGetAllProductsQuery,
+  useGetProductByIdQuery,
+  useGetProductByNameQuery,
+  useGetProductsByPriceRangeQuery,
+  useGetProductWithHighestRateQuery,
+  useGetProductWithHighestSoldPerMonthQuery,
+  useCreateProductMutation,
+  useUpdateProductMutation,
+  useDeleteProductMutation,
+} = productApi;

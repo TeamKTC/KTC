@@ -10,7 +10,8 @@ namespace KTC.BLL.MapperProfiles
         {
             CreateMap<CreateProductDto, ProductEntity>()
                 .ForMember(dest => dest.CreatedDate, opt => opt.MapFrom(src => src.ReleaseDate.ToUniversalTime()))
-                .ForMember(dest => dest.CategoryId, opt => opt.Ignore());
+                .ForMember(dest => dest.CategoryId, opt => opt.Ignore())
+                .ForMember(dest => dest.BrandId, opt => opt.Ignore());
 
             CreateMap<UpdateProductDto, ProductEntity>()
                 .ForMember(dest => dest.CreatedDate, opt => opt.MapFrom(src => DateTime.UtcNow));
