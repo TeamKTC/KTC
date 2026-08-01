@@ -7,6 +7,7 @@ using KTC.BLL.Services.Catagory;
 using KTC.BLL.Services.Comment;
 using KTC.BLL.Services.Email;
 using KTC.BLL.Services.Jwt;
+using KTC.BLL.Services.Media;
 using KTC.BLL.Services.Notification;
 using KTC.BLL.Services.Order;
 using KTC.BLL.Services.OrderItem;
@@ -132,6 +133,8 @@ builder.Services.AddScoped<IBlobStorageService, BlobStorageService>();
 
 builder.Services.AddScoped<IProductAttributeService, ProductAttributeService>();
 builder.Services.AddScoped<IAttibuteDefinitionService, AttibuteDefinitionService>();
+
+builder.Services.AddScoped<IMediaService, MediaService>();
 
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen(options =>

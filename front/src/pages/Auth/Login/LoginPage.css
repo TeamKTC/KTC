@@ -6,21 +6,14 @@
 
     body {
         font-family: Arial, Helvetica, sans-serif;
-        background: #000000;
+
     }
 
-    .login-page {
-        width: 100%;
-        min-height: 100vh;
 
-        display: flex;
-        justify-content: center;
-        align-items: center;
-    }
 
     .login-card {
         width: 546px;
-        height: 700px;
+        height: 740px;
         background: #E6EBF2;
         border-radius: 8px;
         color: #000;
@@ -266,3 +259,24 @@
         height: 76px;
         object-fit: contain;
     }
+
+
+    .close-btn {
+    position: absolute;
+    top: 15px;
+    right: 15px;
+
+    border: none;
+    background: transparent;
+
+    font-size: 24px;
+    cursor: pointer;
+}
+
+.login-card {
+    position: relative;
+}
+
+.register span {
+    cursor: pointer;
+}

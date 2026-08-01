@@ -19,5 +19,7 @@ namespace KTC.DAL.Entities
         public UserEntity? Sender { get; set; }
 
         public string Type { get; set; } = default!;
+
+
     }
 }

@@ -6,21 +6,13 @@
 
 body {
     font-family: Arial, Helvetica, sans-serif;
-    background: #000000;
 }
 
-.login-page {
-    width: 100%;
-    min-height: 100vh;
+.register-card {
+    position: relative;
 
-    display: flex;
-    justify-content: center;
-    align-items: center;
-}
-
-.login-card {
     width: 548px;
-    height: 908px;
+    height: 928px;
 
     background: #E6EBF2;
     border-radius: 8px;
@@ -54,7 +46,7 @@ body {
     color: #2060E8;
 }
 
-.login-title {
+.register-title {
     text-align: center;
     font-size: 36px;
     font-weight: 600;
@@ -73,12 +65,15 @@ body {
     margin-bottom: 30px;
 }
 
-.login-card input[type="text"],
-.login-card input[type="password"],
-.login-card input[type="email"],
-.login-card input[type="tel"] {
+.register-card input[type="text"],
+.register-card input[type="password"],
+.register-card input[type="email"],
+.register-card input[type="tel"] {
     width: 349px;
     height: 44px;
+
+    display: block;
+    margin: 0 auto 18px;
 
     background: #fff;
     color: #000;
@@ -93,12 +88,10 @@ body {
 
     outline: none;
 
-    margin-bottom: 18px;
-
     text-align: center;
 }
 
-.login-card input::placeholder {
+.register-card input::placeholder {
     color: #2563EB;
 }
 
@@ -142,12 +135,15 @@ input[type="checkbox"]:checked::after {
     align-items: flex-start;
     gap: 10px;
 
-    margin: 8px 0 28px;
+    width: 349px;
+    margin: 8px auto 28px;
 
     color: #27292E;
     font-size: 15px;
     font-weight: 600;
     line-height: 1.4;
+
+    text-align: left;
 }
 
 .terms input {
@@ -155,7 +151,7 @@ input[type="checkbox"]:checked::after {
     flex-shrink: 0;
 }
 
-.login-btn {
+.register-btn {
     display: block;
 
     width: 349px;
@@ -176,7 +172,7 @@ input[type="checkbox"]:checked::after {
     transition: .2s;
 }
 
-.login-btn:hover {
+.register-btn:hover {
     background: #1C49C4;
 }
 
@@ -246,7 +242,7 @@ input[type="checkbox"]:checked::after {
     object-fit: contain;
 }
 
-.register {
+.register-footer {
     margin-top: 30px;
 
     text-align: center;
@@ -255,14 +251,33 @@ input[type="checkbox"]:checked::after {
     font-size: 16px;
 }
 
-.register span {
+.register-footer span {
     color: #000;
     font-weight: 600;
     cursor: pointer;
 }
 
+.close-btn {
+    position: absolute;
 
-.terms {
-    text-align: left;
+    top: 15px;
+    right: 15px;
+
+    width: 36px;
+    height: 36px;
+
+    border: none;
+    border-radius: 50%;
+
+    background: transparent;
+
+    font-size: 24px;
+
+    cursor: pointer;
+
+    transition: .2s;
 }
 
+.close-btn:hover {
+    background: rgba(0, 0, 0, 0.08);
+}
