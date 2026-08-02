@@ -3,10 +3,12 @@ using KTC.BLL.Dto.Media;
 using KTC.BLL.Dto.Product;
 using KTC.BLL.Interfaces;
 using KTC.DAL.Entities;
+using KTC.DAL.Repositories.Brand;
 using KTC.DAL.Repositories.Category;
 using KTC.DAL.Repositories.Media;
 using KTC.DAL.Repositories.Product;
 using Microsoft.AspNetCore.Http;
+using Microsoft.VisualBasic;
 using System.Net;
 
 namespace KTC.BLL.Services.Product
@@ -18,24 +20,28 @@ namespace KTC.BLL.Services.Product
         private readonly ICategoryRepository _categoryRepository;
         private readonly IMediaRepository _mediaRepository;
         private readonly IBlobStorageService _blobStorageService;
+        private readonly IBrandRepository _brandRepository;
         public ProductService(
             IProductRepository productRepository,
             IMapper mapper,
             ICategoryRepository categoryRepository,
             IMediaRepository mediaRepository,
-            IBlobStorageService blobStorageService)
+            IBlobStorageService blobStorageService,
+            IBrandRepository brandRepository)
         {
             _productRepository = productRepository;
             _mapper = mapper;
             _categoryRepository = categoryRepository;
             _mediaRepository = mediaRepository;
             _blobStorageService = blobStorageService;
+            _brandRepository = brandRepository;
         }
         public async Task<ServiceResponse> CreateAsync(CreateProductDto dto)
         {
             var entity = _mapper.Map<ProductEntity>(dto);
 
             var category = await _categoryRepository.GetByIdAsync(dto.CategoryId);
+            var brand = await _brandRepository.GetByIdAsync(dto.BrandId);
 
             if (category == null)
             {
@@ -46,8 +52,18 @@ namespace KTC.BLL.Services.Product
                     Message = $"Category з id '{dto.CategoryId}' не знайдено"
                 };
             }
+            if (brand == null)
+            {
+                return new ServiceResponse
+                {
+                    IsSuccess = false,
+                    StatusCode = HttpStatusCode.NotFound,
+                    Message = $"Brand з id '{dto.BrandId}' не знайдено"
+                };
+            }
 
             entity.Category = category;
+            entity.Brand = brand;
 
             await _productRepository.CreateAsync(entity);
 
@@ -169,6 +185,28 @@ namespace KTC.BLL.Services.Product
                 IsSuccess = true,
                 StatusCode = HttpStatusCode.OK,
                 Message = "Продукт успішно оновлено"
+            };
+        }
+
+        public async Task<ServiceResponse> WithHitghestMothsPerSold()
+        {
+            return new ServiceResponse
+            {
+                IsSuccess = true,
+                StatusCode = HttpStatusCode.OK,
+                Message = "Продукти успішно отримано",
+                Payload = _mapper.Map<List<ProductDto>>(await _productRepository.WithHitghestMothsPerSold()) ?? null
+            };
+        }
+
+        public async Task<ServiceResponse> WithHitghestRate()
+        {
+            return new ServiceResponse
+            {
+                IsSuccess = true,
+                StatusCode = HttpStatusCode.OK,
+                Message = "Продукти успішно отримано",
+                Payload = _mapper.Map<List<ProductDto>>(await _productRepository.WithHitghsRate()) ?? null
             };
         }
     }

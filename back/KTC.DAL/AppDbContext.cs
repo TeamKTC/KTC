@@ -21,6 +21,7 @@ public class AppDbContext : IdentityDbContext<UserEntity>
     public DbSet<MediaEntity> Media { get; set; }
     public DbSet<AttributeDefinitionEntity> AttributeDefinitions { get; set; }
     public DbSet<ProductAttributeEntity> ProductAttributes { get; set; }
+    public DbSet<BrandEntity> Brands { get; set; }
 
     protected override void OnModelCreating(ModelBuilder builder)
     {
@@ -135,5 +136,15 @@ public class AppDbContext : IdentityDbContext<UserEntity>
                 x.AttributeDefinitionId
             })
             .IsUnique();
+
+        // =======================
+        // BRAND
+        // =======================
+
+        builder.Entity<BrandEntity>()
+            .HasMany(x => x.Products)
+            .WithOne(x => x.Brand)
+            .HasForeignKey(x => x.BrandId)
+            .OnDelete(DeleteBehavior.Restrict);
     }
 }

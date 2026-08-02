@@ -11,5 +11,7 @@ namespace KTC.BLL.Services.Product
         Task<ServiceResponse> GetAllProducts();
         Task<ServiceResponse> GetProductByName(string productName);
         Task<ServiceResponse> GetProductByPriceRange(int min, int max);
+        Task<ServiceResponse> WithHitghestRate();
+        Task<ServiceResponse> WithHitghestMothsPerSold();
     }
 }

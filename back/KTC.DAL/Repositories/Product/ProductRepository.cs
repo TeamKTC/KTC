@@ -26,5 +26,15 @@ namespace KTC.DAL.Repositories.Product
         {
             return _context.Set<ProductEntity>().Where(p => p.Price >= min && p.Price <= max).ToListAsync();
         }
+
+        public Task<List<ProductEntity>> WithHitghestMothsPerSold()
+        {
+            return _context.Set<ProductEntity>().OrderByDescending(p => p.SoldPerMonth).Take(6).ToListAsync();
+        }
+
+        public Task<List<ProductEntity>> WithHitghsRate()
+        {
+            return _context.Set<ProductEntity>().OrderByDescending(p => p.Rate).Take(6).ToListAsync();
+        }
     }
 }

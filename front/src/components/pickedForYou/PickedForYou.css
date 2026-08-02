@@ -1,0 +1,193 @@
+.picked-section {
+  width: 100%;
+  padding: 16px 0;
+  box-sizing: border-box;
+}
+
+.picked-title {
+  font-size: 26px;
+  font-weight: 700;
+  color: #111827;
+  margin-bottom: 20px;
+}
+
+/* 4 рівноцінні колонки сітки */
+.picked-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr) 1.1fr;
+  gap: 16px;
+  width: 100%;
+}
+
+/* Загальні стилі для всіх карточок */
+.card {
+  position: relative;
+  border-radius: 16px;
+  padding: 24px 20px;
+  height: 360px; /* Єдина чітка висота для всіх великих карточок */
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  overflow: hidden; /* Обрізає SVG та фони строго по радіусу 16px */
+  box-sizing: border-box;
+}
+
+/* ================= ФОНИ КАРТОЧОК (ЗАТИРАЮТЬ БІЛІ СМУГИ) ================= */
+.card-yellow {
+  background-color: #ffcc00; /* Гарантує жовтий колір під SVG, усуваючи білі прогалини */
+}
+
+.card-gamer-bg {
+  background: linear-gradient(135deg, #06b6d4 0%, #a855f7 100%); /* Фоновий градієнт під геймінг */
+}
+
+.card-blue-bg {
+  background-color: #cddcfa; /* Стандартний блакитний фон */
+}
+
+/* ================= МАСШТАБУВАННЯ SVG ФОНУ ================= */
+.card-bg-layer {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 1;
+  pointer-events: none;
+}
+
+.card-bg-layer svg {
+  width: 100% !important;
+  height: 100% !important;
+  display: block;
+  object-fit: cover !important;
+  /* scale(1.04) злегка виводить SVG за межі, закриваючи білі рамки зсередини */
+  transform: scale(1.04);
+  transform-origin: center;
+}
+
+/* Якщо всередині HeadPhones SVG є внутрішній прямокутник з білою рамкою чи відступами */
+.card-bg-layer svg rect {
+  rx: 0 !important;
+  ry: 0 !important;
+}
+
+/* ================= ОКРЕМІ ІКОНКИ (Периферія, Дім, Смарт) ================= */
+.card-item-icon {
+  position: absolute;
+  z-index: 1;
+  pointer-events: none;
+}
+
+.card-item-icon svg {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+}
+
+.icon-peripherals {
+  right: 12px;
+  bottom: 12px;
+  width: 210px;
+  height: 140px;
+}
+
+.icon-home {
+  right: 8px;
+  bottom: 4px;
+  width: 130px;
+  height: 125px;
+}
+
+.icon-smart {
+  right: 8px;
+  bottom: 4px;
+  width: 110px;
+  height: 125px;
+}
+
+/* ================= ТЕКСТ ТА КНОПКИ ================= */
+.card-content {
+  position: relative;
+  z-index: 2;
+  max-width: 200px;
+}
+
+.card-content h3 {
+  font-size: 24px;
+  font-weight: 700;
+  line-height: 1.25;
+  margin-bottom: 10px;
+  color: #111827;
+}
+
+.card-content p {
+  font-size: 13px;
+  line-height: 1.35;
+  margin-bottom: 20px;
+  color: #4b5563;
+}
+
+/* Права колонка з малими картками */
+.right-column {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.card-small {
+  height: calc(180px - 8px); /* Рівно половина від 360px */
+  padding: 18px 20px;
+}
+
+.card-small .card-content h3 {
+  font-size: 20px;
+  margin-bottom: 6px;
+}
+
+.card-small .card-content p {
+  font-size: 12px;
+  margin-bottom: 14px;
+}
+
+/* Стилі кнопок */
+.btn-outline,
+.btn-blue-outline,
+.btn-teal-outline {
+  border-radius: 8px;
+  padding: 8px 16px;
+  font-size: 13px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  background: transparent;
+}
+
+.btn-outline {
+  border: 1px solid #111827;
+  color: #111827;
+}
+
+.btn-outline:hover {
+  background-color: rgba(0, 0, 0, 0.06);
+}
+
+.btn-blue-outline {
+  border: 1px solid #2563eb;
+  color: #2563eb;
+}
+
+.btn-blue-outline:hover {
+  background-color: #2563eb;
+  color: #ffffff;
+}
+
+.btn-teal-outline {
+  border: 1px solid #0284c7;
+  color: #0284c7;
+}
+
+.btn-teal-outline:hover {
+  background-color: #0284c7;
+  color: #ffffff;
+}

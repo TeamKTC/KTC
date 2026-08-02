@@ -59,5 +59,17 @@ namespace KTC.Controllers
             var response = await _productService.GetProductByPriceRange(min, max);
             return this.ToActionResult(response);
         }
+        [HttpGet("with-highest-rate")]
+        public async Task<IActionResult> WithHitghestRate()
+        {
+            var response = await _productService.WithHitghestRate();
+            return this.ToActionResult(response);
+        }
+        [HttpGet("with-highest-months-per-sold")]
+        public async Task<IActionResult> WithHitghestMothsPerSold()
+        {
+            var response = await _productService.WithHitghestMothsPerSold();
+            return this.ToActionResult(response);
+        }
     }
 }

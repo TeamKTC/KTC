@@ -1,6 +1,7 @@
 using KTC.BLL.Interfaces;
 using KTC.BLL.Services;
 using KTC.BLL.Services.AttributeDefinition;
+using KTC.BLL.Services.Brand;
 using KTC.BLL.Services.Cart;
 using KTC.BLL.Services.CartItem;
 using KTC.BLL.Services.Catagory;
@@ -19,6 +20,7 @@ using KTC.DAL;
 using KTC.DAL.Entities;
 using KTC.DAL.Initializer;
 using KTC.DAL.Repositories.AttributeDefinition;
+using KTC.DAL.Repositories.Brand;
 using KTC.DAL.Repositories.Cart;
 using KTC.DAL.Repositories.CartItem;
 using KTC.DAL.Repositories.Category;
@@ -114,6 +116,7 @@ builder.Services.AddScoped<ICategoryRepository, CategoryRepository>();
 builder.Services.AddScoped<IMediaRepository, MediaRepository>();    
 builder.Services.AddScoped<IProductAttributeRepository, ProductAttributeRepository>();
 builder.Services.AddScoped<IAttributeDefinitionRepository, AttributeDefinitionRepository>();
+builder.Services.AddScoped<IBrandRepository, BrandRepository>();
 
 
 // Add service
@@ -130,6 +133,7 @@ builder.Services.AddScoped<ICommentService, CommentService>();
 builder.Services.AddScoped<ICategoryService, CategoryService>();
 builder.Services.AddScoped<IOrderItemService, OrderItemService>();
 builder.Services.AddScoped<IBlobStorageService, BlobStorageService>();
+builder.Services.AddScoped<IBrandService,  BrandService>();
 
 builder.Services.AddScoped<IProductAttributeService, ProductAttributeService>();
 builder.Services.AddScoped<IAttibuteDefinitionService, AttibuteDefinitionService>();
