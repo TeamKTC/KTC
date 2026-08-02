@@ -15,5 +15,9 @@ namespace KTC.DAL.Entities
         public UserEntity User { get; set; } = default!;
 
         public virtual ICollection<OrderItemEntity> Items { get; set; } = [];
+
+        public decimal TotalPrice { get; set; }
+
+        public int UsedBonuses { get; set; }
     }
 }
