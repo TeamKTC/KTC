@@ -9,5 +9,7 @@
 
         public string ProductId { get; set; } = default!;
         public ProductEntity Product { get; set; } = default!;
+
+        public decimal Price { get; set; }
     }
 }

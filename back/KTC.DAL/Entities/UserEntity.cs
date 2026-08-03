@@ -23,5 +23,9 @@ namespace KTC.DAL.Entities
         public ICollection<NotificationEntity> Notifications { get; set; } = [];
         public ICollection<CartEntity> Carts { get; set; } = [];
         public ICollection<CommentEntity> Comments { get; set; } = [];
+
+        public ICollection<BonusEntity> Bonuses { get; set; } = [];
+
+        public int BonusBalance { get; set; }
     }
 }

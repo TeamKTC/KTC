@@ -22,7 +22,7 @@ public class AppDbContext : IdentityDbContext<UserEntity>
     public DbSet<AttributeDefinitionEntity> AttributeDefinitions { get; set; }
     public DbSet<ProductAttributeEntity> ProductAttributes { get; set; }
     public DbSet<BrandEntity> Brands { get; set; }
-
+    public DbSet<BonusEntity> Bonuses { get; set; }
     protected override void OnModelCreating(ModelBuilder builder)
     {
         base.OnModelCreating(builder);
@@ -146,5 +146,13 @@ public class AppDbContext : IdentityDbContext<UserEntity>
             .WithOne(x => x.Brand)
             .HasForeignKey(x => x.BrandId)
             .OnDelete(DeleteBehavior.Restrict);
+
+        // =======================
+        // BONUS
+        // =======================
+        builder.Entity<BonusEntity>()
+        .HasOne(x => x.User)
+        .WithMany(x => x.Bonuses)
+    .    HasForeignKey(x => x.UserId);
     }
 }
