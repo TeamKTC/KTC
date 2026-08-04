@@ -16,10 +16,12 @@ using KTC.BLL.Services.OrderItem;
 using KTC.BLL.Services.Product;
 using KTC.BLL.Services.ProductAttribute;
 using KTC.BLL.Services.User;
+using KTC.BLL.Services.Favorite;
 using KTC.BLL.Settings;
 using KTC.DAL;
 using KTC.DAL.Entities;
 using KTC.DAL.Initializer;
+using KTC.DAL.Repositories;
 using KTC.DAL.Repositories.AttributeDefinition;
 using KTC.DAL.Repositories.Bonus;
 using KTC.DAL.Repositories.Brand;
@@ -27,6 +29,7 @@ using KTC.DAL.Repositories.Cart;
 using KTC.DAL.Repositories.CartItem;
 using KTC.DAL.Repositories.Category;
 using KTC.DAL.Repositories.Comment;
+using KTC.DAL.Repositories.Interfaces;
 using KTC.DAL.Repositories.Media;
 using KTC.DAL.Repositories.Notification;
 using KTC.DAL.Repositories.Order;
@@ -120,7 +123,7 @@ builder.Services.AddScoped<IProductAttributeRepository, ProductAttributeReposito
 builder.Services.AddScoped<IAttributeDefinitionRepository, AttributeDefinitionRepository>();
 builder.Services.AddScoped<IBrandRepository, BrandRepository>();
 builder.Services.AddScoped<IBonusRepository, BonusRepository>();
-
+builder.Services.AddScoped<IFavoriteRepository, FavoriteRepository>();
 
 
 // Add service
@@ -141,7 +144,7 @@ builder.Services.AddScoped<IBrandService,  BrandService>();
 builder.Services.AddScoped<IBonusService, BonusService>();
 builder.Services.AddScoped<IProductAttributeService, ProductAttributeService>();
 builder.Services.AddScoped<IAttibuteDefinitionService, AttibuteDefinitionService>();
-
+builder.Services.AddScoped<IFavoriteService, FavoriteService>();
 builder.Services.AddScoped<IMediaService, MediaService>();
 
 builder.Services.AddEndpointsApiExplorer();
