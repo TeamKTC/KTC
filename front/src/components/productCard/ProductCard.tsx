@@ -9,7 +9,7 @@ interface ProductCardProps {
 
 const ProductCard = ({ product }: ProductCardProps) => {
   const rate = Math.max(0, Math.min(5, product.rate));
-
+  console.log(product);
   return (
     <div className="product-card">
 
