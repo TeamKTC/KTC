@@ -1,0 +1,301 @@
+.order-summary {
+  width: 610px;
+  height: 866px;
+  padding: 16px;
+  box-sizing: border-box;
+
+  background: #fff;
+  border: 1px solid #e1e1e1;
+  border-radius: 6px;
+}
+
+.order-summary h2 {
+  margin: 0 0 18px;
+
+  color: #222;
+  font-size: 22px;
+  line-height: 1.2;
+  font-weight: 700;
+}
+
+.summary-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+
+  margin-bottom: 13px;
+
+  font-size: 12px;
+  line-height: 1.2;
+}
+
+.summary-row span {
+  color: #333;
+}
+
+.summary-row strong {
+  color: #222;
+  font-weight: 600;
+  white-space: nowrap;
+}
+
+.summary-divider {
+  height: 1px;
+  margin: 16px 0;
+
+  background: #e5e5e5;
+}
+
+.summary-total {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.summary-total span {
+  color: #222;
+  font-size: 16px;
+  font-weight: 600;
+}
+
+.summary-total strong {
+  color: #222;
+  font-size: 16px;
+  font-weight: 600;
+}
+
+.vat {
+  margin-top: 4px;
+  margin-bottom: 14px;
+
+  color: #999;
+  font-size: 10px;
+  line-height: 1.2;
+}
+
+.promo-title {
+  margin: 0 0 6px;
+
+  color: #222;
+  font-size: 12px;
+  line-height: 1.2;
+  font-weight: 500;
+}
+
+.promo {
+  display: flex;
+  gap: 8px;
+  margin-bottom: 12px;
+}
+
+.promo input {
+  flex: 1;
+  min-width: 0;
+  height: 34px;
+  padding: 0 9px;
+
+  box-sizing: border-box;
+
+  border: 1px solid #8db0ff;
+  border-radius: 5px;
+  outline: none;
+
+  background: #fff;
+  color: #2872ff;
+
+  font-size: 12px;
+  font-weight: 600;
+  text-align: center;
+}
+
+.promo input::placeholder {
+  color: #2872ff;
+  opacity: 1;
+}
+
+.promo input:focus {
+  border-color: #8db0ff;
+  outline: none;
+  box-shadow: none;
+}
+
+.promo button {
+  width: 82px;
+  height: 34px;
+
+  border: 1px solid #2864e8;
+  border-radius: 5px;
+
+  background: #fff;
+  color: #2864e8;
+
+  font-size: 11px;
+  font-weight: 600;
+  text-align: center;
+
+  cursor: pointer;
+}
+
+.bonus-block {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+
+  padding: 10px;
+  margin-bottom: 12px;
+
+  border: 1px solid #e5e5e5;
+  border-radius: 5px;
+}
+
+.bonus-block div {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.bonus-block strong {
+  color: #333;
+  font-size: 12px;
+  font-weight: 600;
+}
+
+.bonus-block span {
+  color: #999;
+  font-size: 10px;
+}
+
+.switch {
+  position: relative;
+
+  width: 34px;
+  height: 18px;
+
+  flex-shrink: 0;
+}
+
+.switch input {
+  width: 0;
+  height: 0;
+  opacity: 0;
+}
+
+.switch span {
+  position: absolute;
+  inset: 0;
+
+  border-radius: 20px;
+  background: #ddd;
+
+  cursor: pointer;
+}
+
+.switch span::before {
+  content: "";
+
+  position: absolute;
+
+  width: 14px;
+  height: 14px;
+
+  left: 2px;
+  top: 2px;
+
+  border-radius: 50%;
+  background: #fff;
+
+  transition: 0.2s;
+}
+
+.switch input:checked + span {
+  background: #2864e8;
+}
+
+.switch input:checked + span::before {
+  transform: translateX(16px);
+}
+
+.checkout-button {
+  width: 100%;
+  height: 36px;
+
+  margin-bottom: 8px;
+
+  border: none;
+  border-radius: 5px;
+
+  background: #2864e8;
+  color: #fff;
+
+  font-size: 11px;
+  font-weight: 600;
+
+  cursor: pointer;
+}
+
+.checkout-button:hover {
+  background: #194aad;
+}
+
+.continue-button {
+  width: 100%;
+  height: 36px;
+
+  border: 1px solid #2864e8;
+  border-radius: 5px;
+
+  background: #fff;
+  color: #2864e8;
+
+  font-size: 11px;
+  font-weight: 600;
+
+  cursor: pointer;
+}
+
+.continue-button:hover {
+  background: #2872ff;
+  color: #fff;
+}
+
+.safe-payment {
+  display: flex;
+  align-items: flex-start;
+  gap: 10px;
+
+  margin-top: 18px;
+  padding-top: 14px;
+
+  border-top: 1px solid #eee;
+}
+
+.safe-icon {
+  flex-shrink: 0;
+  margin-top: 1px;
+
+  color: #777;
+}
+
+.safe-payment strong {
+  display: block;
+
+  margin-bottom: 4px;
+
+  color: #222;
+  font-size: 14px;
+  font-weight: 700;
+}
+
+.safe-payment p {
+  margin: 0;
+
+  color: #999;
+  font-size: 10px;
+  font-weight: 400;
+  line-height: 1.4;
+}
+
+.promo button:hover {
+  background: #2872ff;
+  color: #fff;
+}
