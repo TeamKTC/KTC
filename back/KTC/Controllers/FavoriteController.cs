@@ -1,13 +1,13 @@
-﻿using KTC.BLL.Interfaces;
-using KTC.BLL.Services.Favorite;
+﻿using KTC.BLL.Services.Favorite;
+using KTC.Extensions;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using System.Security.Claims;
 
-namespace KTC.API.Controllers
+namespace KTC.Controllers
 {
     [ApiController]
-    [Route("api/[controller]")]
+    [Route("api/favorite")]
     [Authorize]
     public class FavoriteController : ControllerBase
     {
@@ -19,33 +19,33 @@ namespace KTC.API.Controllers
         }
 
         [HttpGet]
-        public async Task<IActionResult> Get()
+        public async Task<IActionResult> GetFavorites()
         {
             var userId = User.FindFirstValue(ClaimTypes.NameIdentifier)!;
 
-            var favorites = await _favoriteService.GetAllAsync(userId);
+            var response = await _favoriteService.GetAllAsync(userId);
 
-            return Ok(favorites);
+            return this.ToActionResult(response);
         }
 
-        [HttpPost("{productId}")]
-        public async Task<IActionResult> Add(string productId)
+        [HttpPost]
+        public async Task<IActionResult> AddFavorite([FromQuery] string productId)
         {
             var userId = User.FindFirstValue(ClaimTypes.NameIdentifier)!;
 
-            await _favoriteService.AddAsync(userId, productId);
+            var response = await _favoriteService.AddAsync(userId, productId);
 
-            return NoContent();
+            return this.ToActionResult(response);
         }
 
-        [HttpDelete("{productId}")]
-        public async Task<IActionResult> Remove(string productId)
+        [HttpDelete]
+        public async Task<IActionResult> RemoveFavorite([FromQuery] string productId)
         {
             var userId = User.FindFirstValue(ClaimTypes.NameIdentifier)!;
 
-            await _favoriteService.RemoveAsync(userId, productId);
+            var response = await _favoriteService.RemoveAsync(userId, productId);
 
-            return NoContent();
+            return this.ToActionResult(response);
         }
     }
 }

@@ -8,6 +8,7 @@ import {cartApi} from "./services/cartApi";
 import { productApi } from "./services/productApi";
 import { brandApi } from "./services/brandApi";
 import { categoryApi } from "./services/categoryApi";
+import { favoriteApi } from "./services/favoriteApi";
 export const store = configureStore({
     reducer: {
         auth: authReducer,
@@ -20,6 +21,7 @@ export const store = configureStore({
         [productApi.reducerPath]: productApi.reducer,
         [brandApi.reducerPath]: brandApi.reducer,
         [categoryApi.reducerPath]: categoryApi.reducer,
+        [favoriteApi.reducerPath]: favoriteApi.reducer,
     },
 
     middleware: (getDefaultMiddleware) =>
@@ -32,6 +34,7 @@ export const store = configureStore({
             .concat(productApi.middleware)
             .concat(brandApi.middleware)
             .concat(categoryApi.middleware)
+            .concat(favoriteApi.middleware)
 });
 
 export type RootState = ReturnType<typeof store.getState>;

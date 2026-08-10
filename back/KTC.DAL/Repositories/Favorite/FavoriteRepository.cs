@@ -20,6 +20,7 @@ namespace KTC.DAL.Repositories
         public async Task<List<FavoriteEntity>> GetByUserIdAsync(string userId)
         {
             return await _context.Favorites
+                .Include(x => x.Product)
                 .Where(x => x.UserId == userId)
                 .ToListAsync();
         }

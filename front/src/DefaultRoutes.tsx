@@ -5,6 +5,7 @@ import HomePage from "./pages/HomePage/HomePage";
 import ProfilePage from "./pages/Profile/ProfilePage";
 import { Navigate } from "react-router-dom";
 import CartPage from "./pages/CartPage/CartPage";
+import FavoritesPage from "./pages/Favorites/FavoritesPage";
 
 
 const DefaultRoutes = () => {
@@ -17,8 +18,7 @@ const DefaultRoutes = () => {
             <Route path="/" element={<DefLayouts />}>
                 <Route index element={<HomePage />} />
 
-                <Route
-                    path="profile"
+                <Route path="profile"
                     element={
                         isAuthenticated
                             ? <ProfilePage />
@@ -30,6 +30,10 @@ const DefaultRoutes = () => {
                     element={
                         isAuthenticated
                             ? <CartPage />
+                <Route path="favorites"
+                    element={
+                        isAuthenticated
+                            ? <FavoritesPage />
                             : <Navigate to="/" replace />
                     }
                 />
