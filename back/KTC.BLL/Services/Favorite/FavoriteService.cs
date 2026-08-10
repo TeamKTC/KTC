@@ -1,16 +1,13 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using AutoMapper;
+using KTC.BLL.Dto.Favorite;
+using KTC.BLL.Dto.Product;
+using KTC.BLL.Services;
+using KTC.DAL.Entities;
+using KTC.DAL.Repositories.Interfaces;
+using System.Net;
 
 namespace KTC.BLL.Services.Favorite
 {
-    using AutoMapper;
-    using KTC.BLL.Dto.Favorite;
-    using KTC.DAL.Entities;
-    using KTC.DAL.Repositories.Interfaces;
-
     public class FavoriteService : IFavoriteService
     {
         private readonly IFavoriteRepository _favoriteRepository;
@@ -24,35 +21,63 @@ namespace KTC.BLL.Services.Favorite
             _mapper = mapper;
         }
 
-        public async Task AddAsync(string userId, string productId)
+        public async Task<ServiceResponse> AddAsync(string userId, string productId)
         {
             var favorite = await _favoriteRepository.GetAsync(userId, productId);
 
             if (favorite != null)
-                return;
+            {
+                return new ServiceResponse
+                {
+                    Message = "Product already in favorites"
+                };
+            }
 
             await _favoriteRepository.CreateAsync(new FavoriteEntity
             {
                 UserId = userId,
                 ProductId = productId
             });
+
+            return new ServiceResponse
+            {
+                Message = "Product added to favorites"
+            };
         }
 
-        public async Task RemoveAsync(string userId, string productId)
+        public async Task<ServiceResponse> RemoveAsync(string userId, string productId)
         {
             var favorite = await _favoriteRepository.GetAsync(userId, productId);
 
             if (favorite == null)
-                return;
+            {
+                return new ServiceResponse
+                {
+                    IsSuccess = false,
+                    Message = "Favorite not found"
+                };
+            }
 
             await _favoriteRepository.DeleteAsync(favorite);
+
+            return new ServiceResponse
+            {
+                Message = "Product removed from favorites"
+            };
         }
 
-        public async Task<List<FavoriteDto>> GetAllAsync(string userId)
+        public async Task<ServiceResponse> GetAllAsync(string userId)
         {
             var favorites = await _favoriteRepository.GetByUserIdAsync(userId);
 
-            return _mapper.Map<List<FavoriteDto>>(favorites);
+            return new ServiceResponse
+            {
+                IsSuccess = true,
+                StatusCode = HttpStatusCode.OK,
+                Payload = _mapper.Map<List<ProductDto>>(
+                    favorites.Select(x => x.Product).ToList()
+                )
+            };
         }
     }
 }
