@@ -2,16 +2,25 @@
 import { Heart, ShoppingCart, Star } from "lucide-react";
 import type { Product } from "../../types/types";
 import "../recommended/Recommended.css";
+import { useNavigate } from "react-router-dom";
 
 interface ProductCardProps {
   product: Product;
 }
 
 const ProductCard = ({ product }: ProductCardProps) => {
+  const navigate = useNavigate();
   const rate = Math.max(0, Math.min(5, product.rate));
 
+  const handleCardClick = () => {
+    navigate(`/details/${product.id}`);
+  };
+
   return (
-    <div className="product-card">
+    <div className="product-card"
+      onClick={handleCardClick}
+      style={{ cursor: "pointer" }}>
+
 
       {/* Favorite */}
       <button
@@ -59,7 +68,7 @@ const ProductCard = ({ product }: ProductCardProps) => {
             </span>
 
             <span className="reviews">
-              ({product.soldPerMonth})
+              ({product?.soldPerMonth})
             </span>
           </div>
         </div>

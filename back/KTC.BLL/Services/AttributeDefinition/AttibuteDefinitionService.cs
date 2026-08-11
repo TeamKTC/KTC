@@ -81,7 +81,7 @@ namespace KTC.BLL.Services.AttributeDefinition
             {
                 IsSuccess = true,
                 StatusCode = System.Net.HttpStatusCode.OK,
-                Payload = _mapper.Map<AttributeDefinitionDto>(_attributeDefinitionRepository.GetByProductId(productId)) ?? null
+                Payload = _mapper.Map<List<AttributeDefinitionDto>>(_attributeDefinitionRepository.GetByProductId(productId).Result) ?? null
             };
         }
         public async Task<ServiceResponse> GetByType(string type)

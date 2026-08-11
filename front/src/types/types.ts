@@ -51,3 +51,16 @@ export interface Category  {
   id: string;
   name: string;
 };
+
+export interface AttributeDefinition {
+  id: string;
+  name: string;
+  type: string;
+}
+
+export interface ProductAttribute {
+  id: string;
+  productId: string;
+  attributeDefinitionId: string;
+  value: string;
+}
