@@ -23,6 +23,7 @@ public class AppDbContext : IdentityDbContext<UserEntity>
     public DbSet<ProductAttributeEntity> ProductAttributes { get; set; }
     public DbSet<BrandEntity> Brands { get; set; }
     public DbSet<BonusEntity> Bonuses { get; set; }
+    public DbSet<FavoriteEntity> Favorites { get; set; }
     protected override void OnModelCreating(ModelBuilder builder)
     {
         base.OnModelCreating(builder);
@@ -154,5 +155,23 @@ public class AppDbContext : IdentityDbContext<UserEntity>
         .HasOne(x => x.User)
         .WithMany(x => x.Bonuses)
     .    HasForeignKey(x => x.UserId);
+
+        // =======================
+        // FAVORITE
+        // =======================
+
+        builder.Entity<FavoriteEntity>()
+        .HasOne(f => f.User)
+        .WithMany()
+        .HasForeignKey(f => f.UserId);
+
+        builder.Entity<FavoriteEntity>()
+         .HasOne(f => f.Product)
+         .WithMany()
+         .HasForeignKey(f => f.ProductId);
+
+        builder.Entity<FavoriteEntity>()
+         .HasIndex(f => new { f.UserId, f.ProductId })
+         .IsUnique();
     }
 }

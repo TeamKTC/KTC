@@ -63,4 +63,6 @@ export interface ProductAttribute {
   productId: string;
   attributeDefinitionId: string;
   value: string;
+export interface Favorite {
+    productId: string;
 }

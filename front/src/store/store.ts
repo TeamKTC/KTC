@@ -10,6 +10,7 @@ import { brandApi } from "./services/brandApi";
 import { categoryApi } from "./services/categoryApi";
 import { attributeDefinitionApi } from "./services/attributeDefinitionApi";
 import { productAttributeApi } from "./services/productAttributeApi";
+import { favoriteApi } from "./services/favoriteApi";
 export const store = configureStore({
     reducer: {
         auth: authReducer,
@@ -24,6 +25,7 @@ export const store = configureStore({
         [categoryApi.reducerPath]: categoryApi.reducer,
         [attributeDefinitionApi.reducerPath]: attributeDefinitionApi.reducer,
         [productAttributeApi.reducerPath]: productAttributeApi.reducer,
+        [favoriteApi.reducerPath]: favoriteApi.reducer,
     },
 
     middleware: (getDefaultMiddleware) =>
@@ -38,6 +40,7 @@ export const store = configureStore({
             .concat(categoryApi.middleware)
             .concat(attributeDefinitionApi.middleware)
             .concat(productAttributeApi.middleware),
+            .concat(favoriteApi.middleware)
 });
 
 export type RootState = ReturnType<typeof store.getState>;

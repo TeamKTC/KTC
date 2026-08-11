@@ -16,6 +16,7 @@ const ProductCard = ({ product }: ProductCardProps) => {
     navigate(`/details/${product.id}`);
   };
 
+  console.log(product);
   return (
     <div className="product-card"
       onClick={handleCardClick}

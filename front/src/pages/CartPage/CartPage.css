@@ -1,0 +1,20 @@
+.cart-layout {
+  display: grid;
+
+  grid-template-columns: 943px 330px;
+  gap: 12px;
+
+
+
+  margin: 0 auto 16px;
+
+  position: relative;
+  left: 50%;
+  transform: translateX(-50%);
+
+  align-items: start;
+}
+
+.cart-layout > * {
+  min-width: 0;
+}
