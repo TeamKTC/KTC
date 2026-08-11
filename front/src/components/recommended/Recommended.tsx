@@ -37,7 +37,7 @@ const Recommended = () => {
 
         {/* Products */}
         <div className="products-list">
-          {data?.payload?.map((product) => ( <ProductCard key={product.id} product={product} /> ))}
+          {data?.payload?.map((product) => ( <ProductCard key={product.id} product={product}  /> ))}
         </div>
 
     </section>
