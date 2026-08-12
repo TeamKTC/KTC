@@ -29,6 +29,14 @@ const Navbar = () => {
         }
     };
 
+    const handleFavoritesClick = () => {
+        if (isAuthenticated) {
+            navigate("/favorites");
+        } else {
+            setIsLoginModalOpen(true);
+        }
+    };
+
     return (
         <>
             {/* Top bar */}
@@ -37,29 +45,51 @@ const Navbar = () => {
                     <div className="d-flex justify-content-between align-items-center">
 
                         <div className="d-flex gap-4">
+
                             <a href="#" className="top-link">
                                 Місто
                             </a>
 
-                            <a href="#" className="top-link">
+                            <div
+                                className="top-link"
+                                onClick={() => navigate("/delivery")}
+                                style={{ cursor: "pointer" }}
+                            >
                                 Доставка і оплата
-                            </a>
+                            </div>
 
-                            <a href="#" className="top-link">
+                            <div
+                                className="top-link"
+                                onClick={() => navigate("/support")}
+                                style={{ cursor: "pointer" }}
+                            >
                                 Підтримка
-                            </a>
+                            </div>
 
-                            <a href="#" className="top-link">
+                            <div
+                                className="top-link"
+                                onClick={() => navigate("/warranty")}
+                                style={{ cursor: "pointer" }}
+                            >
                                 Гарантія
-                            </a>
+                            </div>
 
-                            <a href="#" className="top-link">
+                            <div
+                                className="top-link"
+                                onClick={() => navigate("/about")}
+                                style={{ cursor: "pointer" }}
+                            >
                                 Про нас
-                            </a>
+                            </div>
 
-                            <a href="#" className="top-link">
+                            <div
+                                className="top-link"
+                                onClick={() => navigate("/store")}
+                                style={{ cursor: "pointer" }}
+                            >
                                 Магазин
-                            </a>
+                            </div>
+
                         </div>
 
                         <div className="top-link">
@@ -99,7 +129,10 @@ const Navbar = () => {
                             </div>
                         </div>
 
-                        <div className="d-flex">                            <div
+                        <div className="d-flex">
+
+                            {/* Профіль */}
+                            <div
                                 className="icon-item text-decoration-none text-dark"
                                 onClick={handleProfileClick}
                                 style={{ cursor: "pointer" }}
@@ -108,14 +141,24 @@ const Navbar = () => {
                                 <span>Профіль</span>
                             </div>
 
-                            <div className="icon-item">
+                            {/* Кошик */}
+                            <div
+                                className="icon-item"
+                                onClick={() => navigate("/cart")}
+                                style={{ cursor: "pointer" }}
+                            >
                                 <i className="bi bi-cart3 position-relative">
                                     <span className="cart-badge">0</span>
                                 </i>
                                 <span>Кошик</span>
                             </div>
 
-                            <div className="icon-item">
+                            {/* Обране */}
+                            <div
+                                className="icon-item"
+                                onClick={handleFavoritesClick}
+                                style={{ cursor: "pointer" }}
+                            >
                                 <i className="bi bi-heart"></i>
                                 <span>Обране</span>
                             </div>
@@ -126,6 +169,7 @@ const Navbar = () => {
                 </div>
             </div>
 
+            {/* Login Modal */}
             <Modal
                 isOpen={isLoginModalOpen}
                 onClose={() => setIsLoginModalOpen(false)}
@@ -139,6 +183,7 @@ const Navbar = () => {
                 />
             </Modal>
 
+            {/* Register Modal */}
             <Modal
                 isOpen={isRegisterModalOpen}
                 onClose={() => setIsRegisterModalOpen(false)}
@@ -151,7 +196,6 @@ const Navbar = () => {
                     }}
                 />
             </Modal>
-
         </>
     );
 };

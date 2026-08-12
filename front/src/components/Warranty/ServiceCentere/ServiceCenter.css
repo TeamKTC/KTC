@@ -1,0 +1,127 @@
+.service-center-wrapper {
+    margin-bottom: 20px;
+}
+
+.service-center-wrapper > h2 {
+    margin: 0 0 16px;
+    font-size: 26px;
+    font-weight: 600;
+    color: #111;
+}
+
+.service-center {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr 1.2fr;
+    align-items: center;
+
+    min-height: 150px;
+    padding: 28px 32px;
+
+    border: 1px solid #d4d4d4;
+    border-radius: 6px;
+
+    background: #fff;
+}
+
+.service-center-item {
+    display: flex;
+    align-items: center;
+    gap: 20px;
+
+    min-height: 75px;
+    padding: 0 35px;
+
+    border-right: 1px solid #8eb8ff;
+}
+
+.service-center-item:first-child {
+    padding-left: 0;
+}
+
+.service-center-item > svg {
+    flex-shrink: 0;
+
+    width: 38px;
+    height: 38px;
+
+    color: #333;
+}
+
+.service-center-item span {
+    display: block;
+    margin-bottom: 7px;
+
+    font-size: 16px;
+    font-weight: 600;
+
+    color: #222;
+}
+
+.service-center-item p {
+    margin: 0;
+
+    font-size: 13px;
+    line-height: 1.5;
+
+    color: #333;
+}
+
+.service-center-contact {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: flex-end;
+
+    height: 100%;
+
+    padding-left: 35px;
+    padding-bottom: 2px;
+}
+
+.service-center-button {
+    width: 395px;
+    height: 44px;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    margin-top: 20px;
+    padding: 0;
+
+    border: 1px solid #1769ff;
+    border-radius: 5px;
+
+    background: #fff;
+    color: #1769ff;
+
+    font-size: 13px;
+    font-weight: 500;
+    line-height: 1;
+
+    text-align: center;
+
+    cursor: pointer;
+}
+
+.service-center-button:hover {
+    background: #f4f8ff;
+}
+
+.service-center-email {
+    margin-top: -13px;
+
+    text-align: center;
+}
+
+.service-center-email p {
+    margin: 0;
+
+    font-size: 13px;
+    color: #222;
+}
+
+.service-center-email strong {
+    margin-right: 4px;
+    font-weight: 600;
+}

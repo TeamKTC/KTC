@@ -1,0 +1,88 @@
+.delivery-section {
+    margin-top: 28px;
+    margin-bottom: 32px;
+}
+
+.delivery-section-title {
+    margin: 0 0 14px;
+
+    font-size: 24px;
+    line-height: 1.2;
+    font-weight: 600;
+    color: #292d32;
+}
+
+.delivery-methods-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 34px;
+}
+
+.delivery-method-card {
+    height: 116px;
+    box-sizing: border-box;
+
+    border: 1px solid #dfe2e6;
+    border-radius: 5px;
+
+    padding: 18px 20px;
+
+    display: flex;
+    align-items: center;
+    gap: 20px;
+
+    background: #fff;
+}
+
+.delivery-method-icon {
+    width: 48px;
+    min-width: 48px;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    color: #292d32;
+}
+
+.delivery-method-content {
+    flex: 1;
+    min-width: 0;
+}
+
+.delivery-method-content h3 {
+    margin: 0 0 7px;
+
+    font-size: 14px;
+    line-height: 1.2;
+    font-weight: 600;
+    color: #222;
+}
+
+.delivery-method-content p {
+    margin: 0;
+
+    font-size: 11px;
+    line-height: 1.4;
+    color: #444;
+}
+
+.delivery-method-content button {
+    margin-top: 9px;
+
+    display: flex;
+    align-items: center;
+    gap: 4px;
+
+    border: none;
+    padding: 0;
+
+    background: transparent;
+
+    color: #246bff;
+
+    font-size: 11px;
+    font-weight: 500;
+
+    cursor: pointer;
+}

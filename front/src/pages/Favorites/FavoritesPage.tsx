@@ -13,6 +13,7 @@ const FavoritesPage = () => {
     }
 
     if (error) {
+        console.error("Error fetching favorites:", error);
         return <div>Something went wrong.</div>;
     }
 

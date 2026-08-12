@@ -1,0 +1,72 @@
+.warranty-coverage {
+    width: 100%;
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 24px;
+    margin-bottom: 18px;
+}
+
+.warranty-coverage-card {
+    width: 100%;
+    min-height: 251px;
+    box-sizing: border-box;
+
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    padding: 18px 20px;
+
+    background: #fff;
+}
+
+.warranty-coverage-card h2 {
+    margin: 0 0 18px;
+
+    font-size: 22px;
+    line-height: 26px;
+    font-weight: 600;
+
+    color: #222;
+}
+
+.warranty-coverage-list {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+.warranty-coverage-list li {
+    display: flex;
+    align-items: center;
+
+    gap: 11px;
+
+    min-height: 31px;
+    margin-bottom: 6px;
+
+    font-size: 14px;
+    line-height: 18px;
+    font-weight: 400;
+
+    color: #333;
+}
+
+.warranty-coverage-list li:last-child {
+    margin-bottom: 0;
+}
+
+.warranty-coverage-list li svg {
+    width: 18px;
+    height: 18px;
+
+    flex: 0 0 18px;
+
+    stroke-width: 1.4;
+}
+
+.warranty-coverage-positive .warranty-coverage-list li svg {
+    color: #777;
+}
+
+.warranty-coverage-negative .warranty-coverage-list li svg {
+    color: #777;
+}
