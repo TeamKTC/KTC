@@ -8,6 +8,8 @@ import {cartApi} from "./services/cartApi";
 import { productApi } from "./services/productApi";
 import { brandApi } from "./services/brandApi";
 import { categoryApi } from "./services/categoryApi";
+import { attributeDefinitionApi } from "./services/attributeDefinitionApi";
+import { productAttributeApi } from "./services/productAttributeApi";
 import { favoriteApi } from "./services/favoriteApi";
 export const store = configureStore({
     reducer: {
@@ -21,6 +23,8 @@ export const store = configureStore({
         [productApi.reducerPath]: productApi.reducer,
         [brandApi.reducerPath]: brandApi.reducer,
         [categoryApi.reducerPath]: categoryApi.reducer,
+        [attributeDefinitionApi.reducerPath]: attributeDefinitionApi.reducer,
+        [productAttributeApi.reducerPath]: productAttributeApi.reducer,
         [favoriteApi.reducerPath]: favoriteApi.reducer,
     },
 
@@ -34,6 +38,8 @@ export const store = configureStore({
             .concat(productApi.middleware)
             .concat(brandApi.middleware)
             .concat(categoryApi.middleware)
+            .concat(attributeDefinitionApi.middleware)
+            .concat(productAttributeApi.middleware),
             .concat(favoriteApi.middleware)
 });
 

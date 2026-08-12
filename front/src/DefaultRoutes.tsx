@@ -5,6 +5,7 @@ import HomePage from "./pages/HomePage/HomePage";
 import ProfilePage from "./pages/Profile/ProfilePage";
 import { Navigate } from "react-router-dom";
 import CartPage from "./pages/Cart/CartPage";
+import DetailsPage from "./pages/DetailsPage/DetailsPage";
 import FavoritesPage from "./pages/Favorites/FavoritesPage";
 import DeliveryAndPaymentPage from "./pages/Delivery&Payment/Delivery&Payment";
 import WarrantyPage from "./pages/warranty/WarrantyPage";
@@ -18,6 +19,7 @@ const DefaultRoutes = () => {
         <Routes>
             <Route path="/" element={<DefLayouts />}>
                 <Route index element={<HomePage />} />
+                <Route path="/details/:id" element={<DetailsPage />} />
 
                 <Route
                     path="profile"

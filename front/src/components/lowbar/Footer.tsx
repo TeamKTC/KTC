@@ -1,6 +1,7 @@
 import "./Footer.css";
 import Logo from "../logo/Logo";
 import { useGetAllCategoriesQuery } from "../../store/services/categoryApi";
+import WhiteVersionOfLogo from "../logo/WhiteVersionOfLogo";
 
 
 const Footer = () => {
@@ -51,7 +52,7 @@ const Footer = () => {
 
                                 {/* Logo */}
                                 <div className="footer-logo">
-                                    <Logo />
+                                    <WhiteVersionOfLogo />
                                 </div>
 
                             </div>

@@ -10,7 +10,6 @@ import Recommended from "../../components/recommended/Recommended";
 const HomePage = () => {
     return (
         <>
-            <h1>Home Page</h1>
             <HeroSection/>
             <Recommended/>
             <MiddleSection/>
