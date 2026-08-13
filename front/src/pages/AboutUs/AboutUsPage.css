@@ -1,0 +1,46 @@
+.about-page {
+    position: relative;
+    width: 100%;
+}
+
+.about-page__top {
+    position: relative;
+    width: 100%;
+    min-height: 339px;
+}
+
+.about-page__top .about-sidebar {
+    position: absolute;
+    top: 0;
+    right: 0;
+}
+
+.about-benefits {
+    width: 100%;
+    margin-top: 32px;
+}
+
+.about-page__bottom {
+    width: 100%;
+    margin-top: 32px;
+    display: grid;
+    grid-template-columns: 1fr 260px;
+    gap: 0;
+    align-items: start;
+}
+
+.about-page__bottom .about-contacts {
+    transform: translateX(-400px);
+}
+.about-page__bottom .about-contacts {
+    grid-column: 2;
+    grid-row: 1;
+    width: 100%;
+    margin: 0;
+    padding: 0;
+}
+
+.about-page__bottom .about-description {
+    grid-column: 1;
+    grid-row: 1;
+}

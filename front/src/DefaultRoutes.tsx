@@ -4,11 +4,12 @@ import { Route, Routes } from "react-router";
 import HomePage from "./pages/HomePage/HomePage";
 import ProfilePage from "./pages/Profile/ProfilePage";
 import { Navigate } from "react-router-dom";
+import CartPage from "./pages/Cart/CartPage";
 import DetailsPage from "./pages/DetailsPage/DetailsPage";
-import CartPage from "./pages/CartPage/CartPage";
 import FavoritesPage from "./pages/Favorites/FavoritesPage";
-
-
+import DeliveryAndPaymentPage from "./pages/Delivery&Payment/Delivery&Payment";
+import WarrantyPage from "./pages/warranty/WarrantyPage";
+import AboutUsPage from "./pages/AboutUs/AboutUsPage";
 const DefaultRoutes = () => {
     const isAuthenticated = useAppSelector(
         (state) => state.auth.isAuthenticated
@@ -20,24 +21,44 @@ const DefaultRoutes = () => {
                 <Route index element={<HomePage />} />
                 <Route path="/details/:id" element={<DetailsPage />} />
 
-                <Route path="profile"
+                <Route
+                    path="profile"
                     element={
                         isAuthenticated
                             ? <ProfilePage />
                             : <Navigate to="/" replace />
                     }
                 />
+
                 <Route
                     path="cart"
                     element={
                         isAuthenticated
                             ? <CartPage />
-                <Route path="favorites"
+                            : <Navigate to="/" replace />
+                    }
+                />
+
+                <Route
+                    path="favorites"
                     element={
                         isAuthenticated
                             ? <FavoritesPage />
                             : <Navigate to="/" replace />
                     }
+                />
+
+                <Route
+                    path="delivery"
+                    element={<DeliveryAndPaymentPage />}
+                />
+                <Route
+                    path="warranty"
+                    element={<WarrantyPage />}
+                />
+                <Route
+                    path = "about"
+                    element={<AboutUsPage />}
                 />
             </Route>
         </Routes>

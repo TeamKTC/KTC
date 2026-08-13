@@ -1,0 +1,28 @@
+
+.breadcrumbs {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    margin-bottom: 15px;
+    font-size: 13px;
+    color: #777;
+}
+
+.breadcrumbs a {
+    color: #333;
+    text-decoration: none;
+}
+
+.breadcrumbs a:hover {
+    color: #1677ff;
+}
+
+.breadcrumbs span:last-child {
+    color: #777;
+}
+
+.profile-title {
+    margin: 0 0 20px;
+    font-size: 26px;
+    font-weight: 600;
+}

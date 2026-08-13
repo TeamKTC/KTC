@@ -1,0 +1,17 @@
+.about-description {
+    width: calc(100% - 420px);
+}
+
+
+.about-description p {
+    margin: 0 0 14px;
+    color: #111;
+    font-size: 14px;
+    line-height: 20px;
+    font-weight: 600;
+}
+
+
+.about-description p:last-child {
+    margin-bottom: 0;
+}

@@ -1,0 +1,31 @@
+.about-intro {
+    width: calc(100% - 290px);
+}
+
+.about-intro h1 {
+    margin: 0 0 15px;
+    color: #111;
+    font-size: 20px;
+    line-height: 24px;
+    font-weight: 600;
+}
+
+.about-intro h2 {
+    margin: 0 0 14px;
+    color: #111;
+    font-size: 18px;
+    line-height: 19px;
+    font-weight: 700;
+}
+
+.about-intro p {
+    margin: 0 0 14px;
+    color: #111;
+    font-size: 14px;
+    line-height: 30px;
+    font-weight: 600;
+}
+
+.about-intro p:last-child {
+    margin-bottom: 0;
+}

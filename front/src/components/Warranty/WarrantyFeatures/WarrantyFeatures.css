@@ -1,0 +1,52 @@
+.warranty-features {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 24px;
+    margin-bottom: 18px;
+}
+
+.warranty-feature-card {
+    min-height: 86px;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    padding: 14px 12px;
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    background: #fff;
+}
+
+.warranty-feature-icon {
+    width: 52px;
+    min-width: 52px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    color: #222;
+}
+
+.warranty-feature-content h3 {
+    margin: 0 0 6px;
+    font-size: 13px;
+    line-height: 1.2;
+    font-weight: 600;
+    color: #111;
+}
+
+.warranty-feature-content p {
+    margin: 0 0 8px;
+    font-size: 10px;
+    line-height: 1.4;
+    color: #222;
+}
+
+.warranty-feature-content a {
+    font-size: 10px;
+    color: #1769ff;
+    text-decoration: none;
+}
+
+.warranty-feature-content a span {
+    margin-left: 5px;
+    font-size: 14px;
+}

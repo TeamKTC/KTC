@@ -1,0 +1,63 @@
+.payment-section {
+    margin-top: 28px;
+    margin-bottom: 32px;
+}
+
+.payment-section-title {
+    margin: 0 0 14px;
+
+    font-size: 24px;
+    line-height: 1.2;
+    font-weight: 600;
+    color: #292d32;
+}
+
+.payment-methods-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 34px;
+}
+
+.payment-method-card {
+    height: 116px;
+    box-sizing: border-box;
+
+    border: 1px solid #dfe2e6;
+    border-radius: 5px;
+
+    padding: 18px 20px;
+
+    display: flex;
+    align-items: center;
+    gap: 20px;
+
+    background: #fff;
+}
+
+.payment-method-icon {
+    width: 48px;
+    min-width: 48px;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    color: #292d32;
+}
+
+.payment-method-card h3 {
+    margin: 0 0 7px;
+
+    font-size: 14px;
+    line-height: 1.2;
+    font-weight: 600;
+    color: #222;
+}
+
+.payment-method-card p {
+    margin: 0;
+
+    font-size: 11px;
+    line-height: 1.45;
+    color: #444;
+}
