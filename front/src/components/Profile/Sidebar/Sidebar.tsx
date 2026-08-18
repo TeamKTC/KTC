@@ -10,83 +10,127 @@ import {
     Wallet,
 } from "lucide-react";
 
+import { useGetMeQuery } from "../../../store/services/userApi";
+
 const Sidebar = () => {
+    const { data, isLoading, error } = useGetMeQuery();
+
+    const user = data?.payload;
+
+    if (isLoading) {
+        return (
+            <aside className="sidebar">
+                <div className="user-card">
+                    <div className="avatar">
+                        ...
+                    </div>
+
+                    <div className="user-info">
+                        <h3>Завантаження...</h3>
+                        <p>...</p>
+                        <span>...</span>
+                    </div>
+                </div>
+            </aside>
+        );
+    }
+
+    if (error || !user) {
+        return (
+            <aside className="sidebar">
+                <div className="user-card">
+                    <div className="avatar">
+                        ?
+                    </div>
+
+                    <div className="user-info">
+                        <h3>Не вдалося завантажити</h3>
+                    </div>
+                </div>
+            </aside>
+        );
+    }
+
     return (
-<aside className="sidebar">
+        <aside className="sidebar">
 
-    <div className="user-card">
+            <div className="user-card">
 
-        <div className="avatar">
-            H
-        </div>
+                <div className="avatar">
+                    {user.firstName.charAt(0).toUpperCase()}
+                </div>
 
-        <div className="user-info">
-            <h3>Ім'я Прізвище</h3>
-            <p>user123sdf@gmail.com</p>
-            <span>+380 60 345 455 67</span>
-        </div>
+                <div className="user-info">
+                    <h3>
+                        {user.firstName} {user.lastName}
+                    </h3>
 
-    </div>
+                    <p>{user.email}</p>
 
-    <div className="bonus-card-mini">
+                    <span>{user.phoneNumber}</span>
+                </div>
 
-        <div className="bonus-text">
-            <small>Бонусний баланс</small>
-            <h4>1 250 бонусів</h4>
-            <span>1 бонус = 1 грн</span>
-        </div>
+            </div>
 
-        <Wallet className="wallet-icon"/>
+            <div className="bonus-card-mini">
 
-    </div>
+                <div className="bonus-text">
+                    <small>Бонусний баланс</small>
+                    <h4>1 250 бонусів</h4>
+                    <span>1 бонус = 1 грн</span>
+                </div>
 
-    <div className="menu-divider"></div>
+                <Wallet className="wallet-icon" />
 
-    <nav className="menu">
-        
-        <a className="menu-item active">
-            <User />
-            <span>Мій профіль</span>
-        </a>
+            </div>
 
-        <a className="menu-item">
-            <Package />
-            <span>Мої замовлення</span>
-        </a>
+            <div className="menu-divider"></div>
 
-        <a className="menu-item">
-            <Heart />
-            <span>Обране</span>
-        </a>
+            <nav className="menu">
 
-        <a className="menu-item">
-            <MapPin />
-            <span>Адреси доставки</span>
-        </a>
+                <a className="menu-item active">
+                    <User />
+                    <span>Мій профіль</span>
+                </a>
 
-        <a className="menu-item">
-            <Gift />
-            <span>Бонуси</span>
-        </a>
+                <a className="menu-item">
+                    <Package />
+                    <span>Мої замовлення</span>
+                </a>
 
-        <a className="menu-item">
-            <Settings />
-            <span>Налаштування</span>
-        </a>
+                <a className="menu-item">
+                    <Heart />
+                    <span>Обране</span>
+                </a>
 
-    </nav>
+                <a className="menu-item">
+                    <MapPin />
+                    <span>Адреси доставки</span>
+                </a>
 
-    <div className="menu-divider"></div>
+                <a className="menu-item">
+                    <Gift />
+                    <span>Бонуси</span>
+                </a>
 
-    <div className="logout">
+                <a className="menu-item">
+                    <Settings />
+                    <span>Налаштування</span>
+                </a>
 
-        <LogOut />
+            </nav>
 
-        <span>Вийти</span>
+            <div className="menu-divider"></div>
 
-    </div>
+            <div className="logout">
 
-</aside>
+                <LogOut />
+
+                <span>Вийти</span>
+
+            </div>
+
+        </aside>
     );
 };
 

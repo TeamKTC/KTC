@@ -8,6 +8,8 @@ namespace KTC.DAL.Entities
 {
     public class OrderEntity : BaseEntity
     {
+        public string OrderNumber { get; set; } = string.Empty;
+
         public DateTime Date { get; set; }
         public string Status { get; set; } = default!;
 

@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using KTC.DAL.Entities;
 
 namespace KTC.BLL.Dto.Bonus
 {
@@ -12,7 +8,11 @@ namespace KTC.BLL.Dto.Bonus
 
         public int Amount { get; set; }
 
+        public BonusOperationType OperationType { get; set; }
+
         public string Description { get; set; } = default!;
+
+        public string? OrderNumber { get; set; }
 
         public DateTime CreatedDate { get; set; }
     }

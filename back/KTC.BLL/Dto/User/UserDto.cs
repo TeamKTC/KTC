@@ -18,6 +18,12 @@ namespace KTC.BLL.Dto.User
 
         public string? PhoneNumber { get; set; }
 
+        public string? BonusBalance { get; set; }
         public DateTime CreatedDate { get; set; }
+
+        public bool TwoFactorEnabled { get; set; }
+
+        public DateOnly BirthDate { get; set; }
+
     }
 }
