@@ -18,7 +18,7 @@ const BrandCard = ({brand}: BrandCardProps) =>{
       }}
     >
       <img
-        
+        src="https://ktcmediafoto.blob.core.windows.net/media/bba3a6c4-d6aa-40df-9eea-e93fd141074d.png"
         alt={brand.name}
         className="img-fluid"
         style={{

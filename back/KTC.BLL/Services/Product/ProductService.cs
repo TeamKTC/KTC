@@ -130,6 +130,17 @@ namespace KTC.BLL.Services.Product
             };
         }
 
+        public async Task<ServiceResponse> GetProductByCategoryId(string categoryId)
+        {
+            return new ServiceResponse
+            {
+                IsSuccess = true,
+                StatusCode = HttpStatusCode.OK,
+                Message = "Продукти успішно отримано",
+                Payload = _mapper.Map<List<ProductDto>>(await _productRepository.GetByCategory(categoryId)) ?? null
+            };
+        }
+
         public async Task<ServiceResponse> GetProductById(string productId)
         {
             return new ServiceResponse

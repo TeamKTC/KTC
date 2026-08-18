@@ -4,6 +4,8 @@ import { skipToken } from "@reduxjs/toolkit/query";
 import MainComponent from "../../components/Details/MainComponent/MainComponent";
 import FooterBenefits from "../../components/Profile/FooterBenefits/FooterBenefits";
 import DescriptionAndAttributes from "../../components/Details/DescriptionAndAttributes/DescriptionAndAttributes";
+import CommentsReviewsSection from "../../components/Details/commentsReviewSection/CommentsReviewSection";
+import SimilarProducts from "../../components/Details/similarProducts/SimilarProducts";
     
 
 const DetailsPage = () => {
@@ -32,10 +34,11 @@ const DetailsPage = () => {
 
   return (
     <>
-        <h1>Details Page</h1>
         <MainComponent product={product} />
         <FooterBenefits />
         <DescriptionAndAttributes product={product} />
+        <CommentsReviewsSection product={product} />
+        <SimilarProducts categoryId={product?.categoryId ?? ""} productId={product?.id ?? ""} />
     </>
     );
 };

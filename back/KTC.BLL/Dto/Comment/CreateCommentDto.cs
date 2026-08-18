@@ -3,6 +3,7 @@
     public class CreateCommentDto
     {
         public string Text { get; set; } = default!;
+        public int RateOfProduct { get; set; }
 
         public string UserId { get; set; } = default!;
 
