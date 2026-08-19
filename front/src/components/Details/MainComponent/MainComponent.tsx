@@ -4,6 +4,7 @@ import "./MainComponent.css";
 import { useGetProductAttributesByProductIdQuery } from "../../../store/services/productAttributeApi";
 import { useGetAttributeDefinitionsByProductIdQuery } from "../../../store/services/attributeDefinitionApi";
 import { useGetBrandByIdQuery } from "../../../store/services/brandApi";
+import { useGetMediaByProductIdQuery } from "../../../store/services/mediaApi";
 
 
 interface ProductCardProps {
@@ -14,6 +15,7 @@ const MainComponent = ({ product }: ProductCardProps) => {
     const rate = Math.max(0, Math.min(5, product?.rate ?? 0));
     const { data: dataProductAttributes } = useGetProductAttributesByProductIdQuery( product?.id ?? "",{ skip: !product?.id });
     const {data : dataAttributeDefinitions} = useGetAttributeDefinitionsByProductIdQuery(product?.id ?? "", { skip: !product?.id });
+    const mediaUrl = useGetMediaByProductIdQuery(product?.id ?? "", { skip: !product?.id });
     
 const { data: brand } = useGetBrandByIdQuery(
   product?.brandId ?? "", 
@@ -61,7 +63,7 @@ const { data: brand } = useGetBrandByIdQuery(
         <div className="product-main-image">
 
           {/* TODO: Тут буде головна картинка товару */}
-          {/* <img src={...} alt={product.name} /> */}
+          <img src={mediaUrl.data?.payload?.[0]?.url || "https://ktcmediafoto.blob.core.windows.net/media/bba3a6c4-d6aa-40df-9eea-e93fd141074d.png"} alt={product?.name} />
 
         </div>
 

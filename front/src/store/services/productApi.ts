@@ -1,5 +1,4 @@
 import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
-const apiUrl = "https://localhost:7120/api/" 
 
 import type {
   Product,
@@ -7,6 +6,8 @@ import type {
   UpdateProductDto,
   ServiceResponse,
 } from "../../types/types";
+
+const apiUrl = "https://localhost:7120/api/";
 
 export const productApi = createApi({
   reducerPath: "productApi",
@@ -28,7 +29,6 @@ export const productApi = createApi({
   tagTypes: ["Product"],
 
   endpoints: (build) => ({
-
     // GET /api/product
     // Payload -> List<ProductDto>
     getAllProducts: build.query<
@@ -54,6 +54,23 @@ export const productApi = createApi({
         method: "GET",
         params: {
           productId,
+        },
+      }),
+
+      providesTags: ["Product"],
+    }),
+
+    // GET /api/product/by-category-id?categoryId=...
+    // Payload -> List<ProductDto>
+    getProductsByCategoryId: build.query<
+      ServiceResponse<Product[]>,
+      string
+    >({
+      query: (categoryId) => ({
+        url: "product/by-category-id",
+        method: "GET",
+        params: {
+          categoryId,
         },
       }),
 
@@ -132,38 +149,38 @@ export const productApi = createApi({
       query: (product) => {
         const formData = new FormData();
 
-        formData.append("Name", product.Name);
+        formData.append("Name", product.name);
 
-        if (product.Description) {
-          formData.append("Description", product.Description);
+        if (product.description) {
+          formData.append("Description", product.description);
         }
 
         formData.append(
           "Price",
-          product.Price.toString()
+          product.price.toString()
         );
 
         formData.append(
           "Quantity",
-          product.Quantity.toString()
+          product.quantity.toString()
         );
 
         formData.append(
           "Rate",
-          product.Rate.toString()
+          product.rate.toString()
         );
 
         formData.append(
           "SoldPerMonth",
-          product.SoldPerMonth.toString()
+          product.soldPerMonth.toString()
         );
 
         formData.append(
           "CategoryId",
-          product.CategoryId
+          product.categoryId
         );
 
-        product.Files.forEach((file) => {
+        product.files.forEach((file) => {
           formData.append("Files", file);
         });
 
@@ -213,6 +230,7 @@ export const productApi = createApi({
 export const {
   useGetAllProductsQuery,
   useGetProductByIdQuery,
+  useGetProductsByCategoryIdQuery,
   useGetProductByNameQuery,
   useGetProductsByPriceRangeQuery,
   useGetProductWithHighestRateQuery,

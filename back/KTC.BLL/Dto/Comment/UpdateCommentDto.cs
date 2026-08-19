@@ -6,6 +6,7 @@ namespace KTC.BLL.Dto.Comment
     {
         public string Id { get; set; } = default!;
         public string Text { get; set; } = default!;
+        public int RateOfProduct { get; set; }
 
         public string UserId { get; set; } = default!;
 

@@ -8,6 +8,7 @@ namespace KTC.BLL.Services.Product
         Task<ServiceResponse> UpdateAsync(UpdateProductDto dto);
         Task<ServiceResponse> DeleteAsync(string id);
         Task<ServiceResponse> GetProductById(string productId);
+        Task<ServiceResponse> GetProductByCategoryId(string categoryId);
         Task<ServiceResponse> GetAllProducts();
         Task<ServiceResponse> GetProductByName(string productName);
         Task<ServiceResponse> GetProductByPriceRange(int min, int max);

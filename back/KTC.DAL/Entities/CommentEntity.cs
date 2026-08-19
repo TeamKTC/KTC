@@ -9,6 +9,7 @@ namespace KTC.DAL.Entities
     public class CommentEntity : BaseEntity
     {
         public string Text { get; set; } = default!;
+        public int RateOfProduct { get; set; }
 
         public string UserId { get; set; } = default!;
         public UserEntity User { get; set; } = default!;
