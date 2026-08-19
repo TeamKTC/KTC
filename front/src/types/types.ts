@@ -3,6 +3,7 @@ export interface Product {
   name: string;
   description: string | null;
   quantity: number;
+  amountOfComments: number;
   price: number;
   rate: number;
   soldPerMonth: number;
@@ -18,26 +19,26 @@ export interface ServiceResponse<T> {
 }
 
 export interface CreateProductDto {
-  Name: string;
-  Description?: string;
-  Price: number;
-  Quantity: number;
-  Rate: number;
-  SoldPerMonth: number;
-  CategoryId: string;
-  Files: File[];
+  name: string;
+  description?: string;
+  price: number;
+  quantity: number;
+  rate: number;
+  soldPerMonth: number;
+  categoryId: string;
+  files: File[];
   brandId: string;
 }
 
 export interface UpdateProductDto {
-  Id: string;
-  Name: string;
-  Description?: string;
-  Price: number;
-  Quantity: number;
-  Rate: number;
-  SoldPerMonth: number;
-  CategoryId: string;
+  id: string;
+  name: string;
+  description?: string;
+  price: number;
+  quantity: number;
+  rate: number;
+  soldPerMonth: number;
+  categoryId: string;
   brandId: string;
 }
 
@@ -63,6 +64,39 @@ export interface ProductAttribute {
   productId: string;
   attributeDefinitionId: string;
   value: string;
+}
 export interface Favorite {
     productId: string;
+}
+
+export interface Comment{
+  id: string;
+  text: string;
+  rateOfProduct: number;
+  productId: string;
+  userId: string;
+  parentCommentId: string;
+}
+
+export interface CreateCommentDto {
+  text: string;
+  rateOfProduct: number;
+  productId: string;
+  userId: string;
+  parentCommentId?: string | null;
+}
+
+export interface UpdateCommentDto {
+  id: string;
+  text: string;
+  rateOfProduct: number;
+}
+
+export interface MediaFile {
+  fileName: string;
+  url: string;
+  contentType: string;
+  displayOrder: number;
+  size: number;
+  type: string;
 }

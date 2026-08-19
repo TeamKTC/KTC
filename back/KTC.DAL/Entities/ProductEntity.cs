@@ -14,6 +14,7 @@ namespace KTC.DAL.Entities
         public int Quantity { get; set; }
         public int Rate { get; set; }
         public int SoldPerMonth { get; set; }
+        public int AmountOfComments { get; set; }
 
         public string? BrandId { get; set; } = default!;
         public BrandEntity? Brand { get; set; } = default!;

@@ -71,5 +71,11 @@ namespace KTC.Controllers
             var response = await _productService.WithHitghestMothsPerSold();
             return this.ToActionResult(response);
         }
+        [HttpGet("by-category-id")]
+        public async Task<IActionResult> GetProductByCategoryId([FromQuery] string categoryId)
+        {
+            var response = await _productService.GetProductByCategoryId(categoryId);
+            return this.ToActionResult(response);
+        }
     }
 }

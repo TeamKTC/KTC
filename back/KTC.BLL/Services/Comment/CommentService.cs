@@ -93,12 +93,15 @@ namespace KTC.BLL.Services.Comment
 
         public async Task<ServiceResponse> GetByProductID(string productId)
         {
+            var entities = await _commentRepository.GetByProductID(productId);
+            List<CommentDto> dtos = _mapper.Map<List<CommentDto>>(entities);
+
             return new ServiceResponse
             {
                 IsSuccess = true,
                 StatusCode = HttpStatusCode.OK,
                 Message = "Коментарі успішно отримано",
-                Payload = _mapper.Map <List<CommentDto>>(await _commentRepository.GetByProductID(productId)) ?? null
+                Payload = dtos
             };
         }
 

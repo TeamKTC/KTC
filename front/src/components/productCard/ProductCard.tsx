@@ -3,6 +3,7 @@ import { Heart, ShoppingCart, Star } from "lucide-react";
 import type { Product } from "../../types/types";
 import "../recommended/Recommended.css";
 import { useNavigate } from "react-router-dom";
+import { useGetMediaByProductIdQuery } from "../../store/services/mediaApi";
 
 interface ProductCardProps {
   product: Product;
@@ -11,6 +12,7 @@ interface ProductCardProps {
 const ProductCard = ({ product }: ProductCardProps) => {
   const navigate = useNavigate();
   const rate = Math.max(0, Math.min(5, product.rate));
+  const mediaUrl = useGetMediaByProductIdQuery(product.id, { skip: !product.id });
 
   const handleCardClick = () => {
     navigate(`/details/${product.id}`);
@@ -35,7 +37,7 @@ const ProductCard = ({ product }: ProductCardProps) => {
       {/* Image */}
       <div className="product-image-container">
         <img
-          src="/placeholder-product.png"
+          src={mediaUrl.data?.payload?.[0]?.url || "https://ktcmediafoto.blob.core.windows.net/media/bba3a6c4-d6aa-40df-9eea-e93fd141074d.png"}
           alt={product.name}
           className="product-image"
         />
