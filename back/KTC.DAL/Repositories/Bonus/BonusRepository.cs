@@ -12,6 +12,7 @@ namespace KTC.DAL.Repositories.Bonus
         public Task<List<BonusEntity>> GetByUserIdAsync(string userId)
         {
             return _context.Bonuses
+                .Include(x => x.Order)
                 .Where(x => x.UserId == userId)
                 .OrderByDescending(x => x.CreatedDate)
                 .ToListAsync();

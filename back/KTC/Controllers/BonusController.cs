@@ -1,5 +1,7 @@
 ﻿using KTC.BLL.Services.Bonus;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using System.Security.Claims;
 
 namespace KTC.API.Controllers
 {
@@ -14,17 +16,23 @@ namespace KTC.API.Controllers
             _bonusService = bonusService;
         }
 
-        [HttpGet("{userId}")]
-        public async Task<IActionResult> GetHistory(string userId)
+        [Authorize]
+        [HttpGet]
+        public async Task<IActionResult> GetHistory()
         {
+            var userId = User.FindFirstValue(ClaimTypes.NameIdentifier)!;
+
             var result = await _bonusService.GetUserBonuses(userId);
 
             return StatusCode((int)result.StatusCode, result);
         }
 
-        [HttpGet("balance/{userId}")]
-        public async Task<IActionResult> GetBalance(string userId)
+        [Authorize]
+        [HttpGet("balance")]
+        public async Task<IActionResult> GetBalance()
         {
+            var userId = User.FindFirstValue(ClaimTypes.NameIdentifier)!;
+
             var result = await _bonusService.GetBonusBalance(userId);
 
             return StatusCode((int)result.StatusCode, result);

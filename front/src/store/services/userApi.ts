@@ -7,7 +7,18 @@ export interface User {
     lastName: string;
     email: string;
     phoneNumber: string;
+    bonusBalance: number;
     createdDate: string;
+    twoFactorEnabled: boolean;
+    birthDate: string;
+}
+
+export interface UpdateProfileRequest {
+    firstName: string;
+    lastName: string;
+    email: string;
+    phoneNumber: string;
+    birthDate: string;
 }
 
 export interface UserResponse {
@@ -26,6 +37,8 @@ export interface UsersResponse {
 
 export const userApi = createApi({
     reducerPath: "userApi",
+
+    tagTypes: ["User"],
 
     baseQuery: fetchBaseQuery({
         baseUrl: "https://localhost:7120/api/",
@@ -46,35 +59,70 @@ export const userApi = createApi({
             query: () => "User",
         }),
 
+        getMe: builder.query<UserResponse, void>({
+            query: () => "User/me",
+            providesTags: ["User"],
+        }),
+
         getUserById: builder.query<UserResponse, string>({
             query: (id) => `User/${id}`,
         }),
+
         getUserByEmail: builder.query<UserResponse, string>({
-    query: (email) => `User/email/${encodeURIComponent(email)}`,
-}),
-searchUsers: builder.query<UsersResponse, string>({
-    query: (search) => ({
-        url: "User/search",
-        params: {
-            search,
-        },
-    }),
-}),
-getUsersCreatedAfter: builder.query<UsersResponse, string>({
-    query: (date) => ({
-        url: "User/created-after",
-        params: {
-            date,
-        },
-    }),
-}),
+            query: (email) => `User/email/${encodeURIComponent(email)}`,
+        }),
+
+        searchUsers: builder.query<UsersResponse, string>({
+            query: (search) => ({
+                url: "User/search",
+                params: {
+                    search,
+                },
+            }),
+        }),
+
+        getUsersCreatedAfter: builder.query<UsersResponse, string>({
+            query: (date) => ({
+                url: "User/created-after",
+                params: {
+                    date,
+                },
+            }),
+        }),
+
+        updateProfile: builder.mutation<
+            UserResponse,
+            UpdateProfileRequest
+        >({
+            query: (data) => ({
+                url: "User/profile",
+                method: "PUT",
+                body: data,
+            }),
+            invalidatesTags: ["User"],
+        }),
+
+        confirmEmailChange: builder.mutation<
+            UserResponse,
+            { code: string }
+        >({
+            query: (data) => ({
+                url: "User/profile/confirm-email",
+                method: "POST",
+                body: data,
+            }),
+            invalidatesTags: ["User"],
+        }),
     }),
 });
 
 export const {
     useGetUsersQuery,
+    useGetMeQuery,
     useGetUserByIdQuery,
     useGetUserByEmailQuery,
     useSearchUsersQuery,
     useGetUsersCreatedAfterQuery,
+    useUpdateProfileMutation,
+    useConfirmEmailChangeMutation,
 } = userApi;

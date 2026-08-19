@@ -8,6 +8,12 @@ public class BonusProfile : Profile
 {
     public BonusProfile()
     {
-        CreateMap<BonusEntity, BonusDto>();
+        CreateMap<BonusEntity, BonusDto>()
+            .ForMember(
+                dest => dest.OrderNumber,
+                opt => opt.MapFrom(src => src.Order != null
+                    ? src.Order.OrderNumber
+                    : null)
+            );
     }
 }

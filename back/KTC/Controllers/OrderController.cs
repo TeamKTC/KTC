@@ -1,8 +1,10 @@
 ﻿using KTC.BLL.Dto.Order;
 using KTC.BLL.Services.Order;
 using KTC.Extensions;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-
+using System.Security.Claims;
+using Microsoft.AspNetCore.Authorization;
 namespace KTC.Controllers
 {
     [ApiController]
@@ -54,6 +56,16 @@ namespace KTC.Controllers
         public async Task<IActionResult> GetOrderItemsByOrderId([FromQuery] string orderId)
         {
             var response = await _orderService.GetOrderItemsByOrderId(orderId);
+            return this.ToActionResult(response);
+        }
+        [Authorize]
+        [HttpGet("my")]
+        public async Task<IActionResult> GetMyOrders()
+        {
+            var userId = User.FindFirstValue(ClaimTypes.NameIdentifier)!;
+
+            var response = await _orderService.GetOrdersByUserId(userId);
+
             return this.ToActionResult(response);
         }
     }

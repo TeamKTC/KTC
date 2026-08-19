@@ -11,6 +11,8 @@ import { categoryApi } from "./services/categoryApi";
 import { attributeDefinitionApi } from "./services/attributeDefinitionApi";
 import { productAttributeApi } from "./services/productAttributeApi";
 import { favoriteApi } from "./services/favoriteApi";
+import { bonusApi } from "./services/bonusApi";
+import { orderApi } from "./services/orderApi";
 import { commentApi } from "./services/commentApi";
 import { mediaApi } from "./services/mediaApi";
 export const store = configureStore({
@@ -28,6 +30,8 @@ export const store = configureStore({
         [attributeDefinitionApi.reducerPath]: attributeDefinitionApi.reducer,
         [productAttributeApi.reducerPath]: productAttributeApi.reducer,
         [favoriteApi.reducerPath]: favoriteApi.reducer,
+        [bonusApi.reducerPath]: bonusApi.reducer,
+        [orderApi.reducerPath]: orderApi.reducer,
         [commentApi.reducerPath]: commentApi.reducer,
         [mediaApi.reducerPath]: mediaApi.reducer,
     },
@@ -45,6 +49,8 @@ export const store = configureStore({
             .concat(attributeDefinitionApi.middleware)
             .concat(productAttributeApi.middleware)
             .concat(favoriteApi.middleware)
+            .concat(bonusApi.middleware)
+            .concat(orderApi.middleware)
             .concat(commentApi.middleware)
             .concat(mediaApi.middleware)
 });

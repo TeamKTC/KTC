@@ -152,9 +152,15 @@ public class AppDbContext : IdentityDbContext<UserEntity>
         // BONUS
         // =======================
         builder.Entity<BonusEntity>()
-        .HasOne(x => x.User)
-        .WithMany(x => x.Bonuses)
-    .    HasForeignKey(x => x.UserId);
+            .HasOne(x => x.User)
+            .WithMany(x => x.Bonuses)
+            .HasForeignKey(x => x.UserId);
+
+        builder.Entity<BonusEntity>()
+            .HasOne(x => x.Order)
+            .WithMany()
+            .HasForeignKey(x => x.OrderId)
+            .OnDelete(DeleteBehavior.SetNull);
 
         // =======================
         // FAVORITE

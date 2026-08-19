@@ -8,6 +8,7 @@ using KTC.BLL.Services.CartItem;
 using KTC.BLL.Services.Catagory;
 using KTC.BLL.Services.Comment;
 using KTC.BLL.Services.Email;
+using KTC.BLL.Services.Favorite;
 using KTC.BLL.Services.Jwt;
 using KTC.BLL.Services.Media;
 using KTC.BLL.Services.Notification;
@@ -15,8 +16,8 @@ using KTC.BLL.Services.Order;
 using KTC.BLL.Services.OrderItem;
 using KTC.BLL.Services.Product;
 using KTC.BLL.Services.ProductAttribute;
+using KTC.BLL.Services.TwoFactor;
 using KTC.BLL.Services.User;
-using KTC.BLL.Services.Favorite;
 using KTC.BLL.Settings;
 using KTC.DAL;
 using KTC.DAL.Entities;
@@ -146,6 +147,8 @@ builder.Services.AddScoped<IProductAttributeService, ProductAttributeService>();
 builder.Services.AddScoped<IAttibuteDefinitionService, AttibuteDefinitionService>();
 builder.Services.AddScoped<IFavoriteService, FavoriteService>();
 builder.Services.AddScoped<IMediaService, MediaService>();
+builder.Services.AddMemoryCache();
+builder.Services.AddScoped<TwoFactorService>();
 
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen(options =>

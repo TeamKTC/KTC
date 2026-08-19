@@ -1,6 +1,43 @@
 import "./BonusCard.css";
+import {
+    useGetBonusBalanceQuery,
+    useGetBonusHistoryQuery,
+} from "../../../store/services/bonusApi";
 
 const BonusCard = () => {
+    const {
+        data: balanceData,
+        isLoading: balanceLoading,
+        error: balanceError,
+    } = useGetBonusBalanceQuery();
+
+    const {
+        data: historyData,
+        isLoading: historyLoading,
+        error: historyError,
+    } = useGetBonusHistoryQuery();
+
+    const bonusBalance = balanceData?.payload.bonusBalance ?? 0;
+    const bonuses = historyData?.payload ?? [];
+
+    if (balanceLoading || historyLoading) {
+        return (
+            <div className="bonus-card">
+                <h2>Бонусна програма</h2>
+                <p>Завантаження...</p>
+            </div>
+        );
+    }
+
+    if (balanceError || historyError) {
+        return (
+            <div className="bonus-card">
+                <h2>Бонусна програма</h2>
+                <p>Не вдалося завантажити бонуси</p>
+            </div>
+        );
+    }
+
     return (
         <div className="bonus-card">
 
@@ -11,7 +48,7 @@ const BonusCard = () => {
             </p>
 
             <h1 className="bonus-count">
-                390 бонусів
+                {bonusBalance} бонусів
             </h1>
 
             <p className="bonus-text">
@@ -19,25 +56,29 @@ const BonusCard = () => {
                 їх для оплати 30% вартості замовлення
             </p>
 
-            <h3>Останні нарахування</h3>
+            <h3>Останні операції</h3>
 
-            <div className="bonus-history-row">
-                <span>+ 150 бонусів</span>
-                <span>Покупка №104353</span>
-                <span>15.05.2026</span>
-            </div>
+            {bonuses.map((bonus) => (
+                <div
+                    className="bonus-history-row"
+                    key={bonus.id}
+                >
+                    <span>
+                        {bonus.operationType === 0 ? "+" : "-"}{" "}
+                        {bonus.amount} бонусів
+                    </span>
 
-            <div className="bonus-history-row">
-                <span>+ 80 бонусів</span>
-                <span>Покупка №123153</span>
-                <span>01.03.2026</span>
-            </div>
+                    <span>
+                        {bonus.description}
+                    </span>
 
-            <div className="bonus-history-row">
-                <span>+200 бонусів</span>
-                <span>Покупка №135896</span>
-                <span>25.12.2025</span>
-            </div>
+                    <span>
+                        {new Date(
+                            bonus.createdDate
+                        ).toLocaleDateString("uk-UA")}
+                    </span>
+                </div>
+            ))}
 
             <button>
                 Всі операції з бонусами

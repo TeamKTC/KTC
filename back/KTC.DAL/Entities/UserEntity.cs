@@ -19,6 +19,7 @@ namespace KTC.DAL.Entities
 
         public DateTime CreatedDate { get; set; } = DateTime.UtcNow;
 
+        public DateOnly BirthDate { get; set; }
         public ICollection<OrderEntity> Orders { get; set; } = [];
         public ICollection<NotificationEntity> Notifications { get; set; } = [];
         public ICollection<CartEntity> Carts { get; set; } = [];
