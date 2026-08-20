@@ -6,11 +6,16 @@ import FooterBenefits from "../../components/Profile/FooterBenefits/FooterBenefi
 import DescriptionAndAttributes from "../../components/Details/DescriptionAndAttributes/DescriptionAndAttributes";
 import CommentsReviewsSection from "../../components/Details/commentsReviewSection/CommentsReviewSection";
 import SimilarProducts from "../../components/Details/similarProducts/SimilarProducts";
+import { useEffect } from "react";
     
 
 const DetailsPage = () => {
   const { id } = useParams<{ id: string }>();
   const { data, isLoading, error } = useGetProductByIdQuery(id ?? skipToken); 
+
+  useEffect(() => {
+  window.scrollTo(0, 0);
+}, [id]);
 
   // const product: Product | null = data?.payload ?? null;
   const product = data?.payload;
@@ -34,7 +39,7 @@ const DetailsPage = () => {
 
   return (
     <>
-        <MainComponent product={product} />
+        <MainComponent key={product?.id} product={product} />
         <FooterBenefits />
         <DescriptionAndAttributes product={product} />
         <CommentsReviewsSection product={product} />
