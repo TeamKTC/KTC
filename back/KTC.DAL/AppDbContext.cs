@@ -24,6 +24,8 @@ public class AppDbContext : IdentityDbContext<UserEntity>
     public DbSet<BrandEntity> Brands { get; set; }
     public DbSet<BonusEntity> Bonuses { get; set; }
     public DbSet<FavoriteEntity> Favorites { get; set; }
+    public DbSet<PromoCodeEntity> PromoCodes { get; set; }
+    public DbSet<PromoCodeUsageEntity> PromoCodeUsages { get; set; }
     protected override void OnModelCreating(ModelBuilder builder)
     {
         base.OnModelCreating(builder);
@@ -54,11 +56,11 @@ public class AppDbContext : IdentityDbContext<UserEntity>
             .HasOne(x => x.Category)
             .WithMany(x => x.Products)
             .HasForeignKey(x => x.CategoryId);
-       builder.Entity<MediaEntity>()
-            .HasOne(x => x.Product)
-            .WithMany(x => x.Media)
-            .HasForeignKey(x => x.ProductId)
-            .OnDelete(DeleteBehavior.Cascade);
+        builder.Entity<MediaEntity>()
+             .HasOne(x => x.Product)
+             .WithMany(x => x.Media)
+             .HasForeignKey(x => x.ProductId)
+             .OnDelete(DeleteBehavior.Cascade);
 
 
         // =======================
@@ -179,5 +181,47 @@ public class AppDbContext : IdentityDbContext<UserEntity>
         builder.Entity<FavoriteEntity>()
          .HasIndex(f => new { f.UserId, f.ProductId })
          .IsUnique();
+
+        // =======================
+        // PROMO CODES
+        // =======================
+
+        builder.Entity<OrderEntity>()
+            .HasOne(x => x.PromoCode)
+            .WithMany()
+            .HasForeignKey(x => x.PromoCodeId)
+            .OnDelete(DeleteBehavior.SetNull);
+
+        builder.Entity<PromoCodeUsageEntity>()
+            .HasOne(x => x.PromoCode)
+            .WithMany(x => x.Usages)
+            .HasForeignKey(x => x.PromoCodeId)
+            .OnDelete(DeleteBehavior.Cascade);
+
+        builder.Entity<PromoCodeUsageEntity>()
+            .HasOne(x => x.User)
+            .WithMany()
+            .HasForeignKey(x => x.UserId)
+            .OnDelete(DeleteBehavior.Restrict);
+
+        builder.Entity<PromoCodeUsageEntity>()
+            .HasOne(x => x.Order)
+            .WithMany()
+            .HasForeignKey(x => x.OrderId)
+            .OnDelete(DeleteBehavior.Cascade);
+
+        // Один користувач не може використати один промокод двічі
+        builder.Entity<PromoCodeUsageEntity>()
+            .HasIndex(x => new
+            {
+                x.PromoCodeId,
+                x.UserId
+            })
+            .IsUnique();
+
+        // Сам код промокоду унікальний
+        builder.Entity<PromoCodeEntity>()
+            .HasIndex(x => x.Code)
+            .IsUnique();
     }
 }

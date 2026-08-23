@@ -15,6 +15,7 @@ import { bonusApi } from "./services/bonusApi";
 import { orderApi } from "./services/orderApi";
 import { commentApi } from "./services/commentApi";
 import { mediaApi } from "./services/mediaApi";
+import { promoCodeApi } from "./services/promoCodeApi";
 export const store = configureStore({
     reducer: {
         auth: authReducer,
@@ -34,6 +35,8 @@ export const store = configureStore({
         [orderApi.reducerPath]: orderApi.reducer,
         [commentApi.reducerPath]: commentApi.reducer,
         [mediaApi.reducerPath]: mediaApi.reducer,
+        [promoCodeApi.reducerPath]: promoCodeApi.reducer,
+
     },
 
     middleware: (getDefaultMiddleware) =>
@@ -53,6 +56,7 @@ export const store = configureStore({
             .concat(orderApi.middleware)
             .concat(commentApi.middleware)
             .concat(mediaApi.middleware)
+            .concat(promoCodeApi.middleware)
 });
 
 export type RootState = ReturnType<typeof store.getState>;

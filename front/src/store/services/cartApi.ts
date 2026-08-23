@@ -20,7 +20,7 @@ export interface Cart {
 export interface CartResponse {
     message: string;
     isSuccess: boolean;
-    payload: Cart;
+    payload: Cart | null;
     statusCode: number;
 }
 
@@ -48,13 +48,27 @@ export const cartApi = createApi({
         },
     }),
 
+    tagTypes: ["Cart"],
+
     endpoints: (builder) => ({
-        getCartById: builder.query<CartResponse, string>({
-            query: (id) => `Cart/${id}`,
+
+        // GET /api/cart
+        // Кошик поточного авторизованого користувача
+        getCart: builder.query<CartResponse, void>({
+            query: () => "Cart",
+            providesTags: ["Cart"],
         }),
 
+        // GET /api/cart/{id}
+        getCartById: builder.query<CartResponse, string>({
+            query: (id) => `Cart/${id}`,
+            providesTags: ["Cart"],
+        }),
+
+        // GET /api/cart/user/{userId}
         getCartByUserId: builder.query<CartResponse, string>({
             query: (userId) => `Cart/user/${userId}`,
+            providesTags: ["Cart"],
         }),
 
         createCart: builder.mutation<ServiceResponse, Cart>({
@@ -63,6 +77,7 @@ export const cartApi = createApi({
                 method: "POST",
                 body,
             }),
+            invalidatesTags: ["Cart"],
         }),
 
         updateCart: builder.mutation<ServiceResponse, Cart>({
@@ -71,6 +86,7 @@ export const cartApi = createApi({
                 method: "PUT",
                 body,
             }),
+            invalidatesTags: ["Cart"],
         }),
 
         deleteCart: builder.mutation<ServiceResponse, string>({
@@ -78,11 +94,13 @@ export const cartApi = createApi({
                 url: `Cart/${id}`,
                 method: "DELETE",
             }),
+            invalidatesTags: ["Cart"],
         }),
     }),
 });
 
 export const {
+    useGetCartQuery,
     useGetCartByIdQuery,
     useGetCartByUserIdQuery,
     useCreateCartMutation,

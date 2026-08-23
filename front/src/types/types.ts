@@ -9,6 +9,7 @@ export interface Product {
   soldPerMonth: number;
   categoryId: string;
   brandId: string;
+  oldPrice?: number | null;
 }
 
 export interface ServiceResponse<T> {
@@ -28,6 +29,7 @@ export interface CreateProductDto {
   categoryId: string;
   files: File[];
   brandId: string;
+  oldPrice?: number | null;
 }
 
 export interface UpdateProductDto {
@@ -40,6 +42,7 @@ export interface UpdateProductDto {
   soldPerMonth: number;
   categoryId: string;
   brandId: string;
+  oldPrice?: number | null;
 }
 
 export interface Brand  {

@@ -3,6 +3,7 @@ using System;
 using KTC.DAL;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 
@@ -11,9 +12,11 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace KTC.DAL.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    partial class AppDbContextModelSnapshot : ModelSnapshot
+    [Migration("20260820205347_AddOldPriceToProduct")]
+    partial class AddOldPriceToProduct
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -316,12 +319,6 @@ namespace KTC.DAL.Migrations
                         .IsRequired()
                         .HasColumnType("text");
 
-                    b.Property<string>("PromoCodeId")
-                        .HasColumnType("text");
-
-                    b.Property<decimal>("PromoDiscount")
-                        .HasColumnType("numeric");
-
                     b.Property<string>("Status")
                         .IsRequired()
                         .HasColumnType("text");
@@ -337,8 +334,6 @@ namespace KTC.DAL.Migrations
                         .HasColumnType("text");
 
                     b.HasKey("Id");
-
-                    b.HasIndex("PromoCodeId");
 
                     b.HasIndex("UserId");
 
@@ -453,88 +448,6 @@ namespace KTC.DAL.Migrations
                     b.HasIndex("CategoryId");
 
                     b.ToTable("Products");
-                });
-
-            modelBuilder.Entity("KTC.DAL.Entities.PromoCodeEntity", b =>
-                {
-                    b.Property<string>("Id")
-                        .HasColumnType("text");
-
-                    b.Property<string>("Code")
-                        .IsRequired()
-                        .HasColumnType("text");
-
-                    b.Property<DateTime>("CreatedDate")
-                        .HasColumnType("timestamp with time zone");
-
-                    b.Property<decimal>("DiscountValue")
-                        .HasColumnType("numeric");
-
-                    b.Property<DateTime?>("EndDate")
-                        .HasColumnType("timestamp with time zone");
-
-                    b.Property<bool>("IsActive")
-                        .HasColumnType("boolean");
-
-                    b.Property<bool>("IsPercentage")
-                        .HasColumnType("boolean");
-
-                    b.Property<decimal?>("MaxDiscountAmount")
-                        .HasColumnType("numeric");
-
-                    b.Property<int?>("MaxUsageCount")
-                        .HasColumnType("integer");
-
-                    b.Property<decimal?>("MinOrderAmount")
-                        .HasColumnType("numeric");
-
-                    b.Property<DateTime?>("StartDate")
-                        .HasColumnType("timestamp with time zone");
-
-                    b.Property<int>("UsageCount")
-                        .HasColumnType("integer");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("Code")
-                        .IsUnique();
-
-                    b.ToTable("PromoCodes");
-                });
-
-            modelBuilder.Entity("KTC.DAL.Entities.PromoCodeUsageEntity", b =>
-                {
-                    b.Property<string>("Id")
-                        .HasColumnType("text");
-
-                    b.Property<DateTime>("CreatedDate")
-                        .HasColumnType("timestamp with time zone");
-
-                    b.Property<decimal>("DiscountAmount")
-                        .HasColumnType("numeric");
-
-                    b.Property<string>("OrderId")
-                        .IsRequired()
-                        .HasColumnType("text");
-
-                    b.Property<string>("PromoCodeId")
-                        .IsRequired()
-                        .HasColumnType("text");
-
-                    b.Property<string>("UserId")
-                        .IsRequired()
-                        .HasColumnType("text");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("OrderId");
-
-                    b.HasIndex("UserId");
-
-                    b.HasIndex("PromoCodeId", "UserId")
-                        .IsUnique();
-
-                    b.ToTable("PromoCodeUsages");
                 });
 
             modelBuilder.Entity("KTC.DAL.Entities.UserEntity", b =>
@@ -863,18 +776,11 @@ namespace KTC.DAL.Migrations
 
             modelBuilder.Entity("KTC.DAL.Entities.OrderEntity", b =>
                 {
-                    b.HasOne("KTC.DAL.Entities.PromoCodeEntity", "PromoCode")
-                        .WithMany()
-                        .HasForeignKey("PromoCodeId")
-                        .OnDelete(DeleteBehavior.SetNull);
-
                     b.HasOne("KTC.DAL.Entities.UserEntity", "User")
                         .WithMany("Orders")
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
-
-                    b.Navigation("PromoCode");
 
                     b.Navigation("User");
                 });
@@ -933,33 +839,6 @@ namespace KTC.DAL.Migrations
                     b.Navigation("Brand");
 
                     b.Navigation("Category");
-                });
-
-            modelBuilder.Entity("KTC.DAL.Entities.PromoCodeUsageEntity", b =>
-                {
-                    b.HasOne("KTC.DAL.Entities.OrderEntity", "Order")
-                        .WithMany()
-                        .HasForeignKey("OrderId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("KTC.DAL.Entities.PromoCodeEntity", "PromoCode")
-                        .WithMany("Usages")
-                        .HasForeignKey("PromoCodeId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("KTC.DAL.Entities.UserEntity", "User")
-                        .WithMany()
-                        .HasForeignKey("UserId")
-                        .OnDelete(DeleteBehavior.Restrict)
-                        .IsRequired();
-
-                    b.Navigation("Order");
-
-                    b.Navigation("PromoCode");
-
-                    b.Navigation("User");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>
@@ -1052,11 +931,6 @@ namespace KTC.DAL.Migrations
                     b.Navigation("OrderItems");
 
                     b.Navigation("ProductAttributes");
-                });
-
-            modelBuilder.Entity("KTC.DAL.Entities.PromoCodeEntity", b =>
-                {
-                    b.Navigation("Usages");
                 });
 
             modelBuilder.Entity("KTC.DAL.Entities.UserEntity", b =>
