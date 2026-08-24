@@ -37,6 +37,10 @@ const Navbar = () => {
         }
     };
 
+    const handleCatalogClick = () => {
+        navigate("/cataloge");
+    }
+
     return (
         <>
             {/* Top bar */}
@@ -110,7 +114,9 @@ const Navbar = () => {
                             <Logo />
                         </div>
 
-                        <button className="btn btn-primary px-4 d-flex align-items-center me-3">
+                        <button className="btn btn-primary px-4 d-flex align-items-center me-3"
+                            onClick={handleCatalogClick}
+                            style={{ cursor: "pointer" }}>
                             <i className="bi bi-list me-2"></i>
                             Каталог товарів
                         </button>

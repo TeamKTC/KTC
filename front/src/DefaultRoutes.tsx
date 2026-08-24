@@ -10,6 +10,7 @@ import FavoritesPage from "./pages/Favorites/FavoritesPage";
 import DeliveryAndPaymentPage from "./pages/Delivery&Payment/Delivery&Payment";
 import WarrantyPage from "./pages/warranty/WarrantyPage";
 import AboutUsPage from "./pages/AboutUs/AboutUsPage";
+import CatalogePage from "./pages/CatalogePage/CatalogePage";
 const DefaultRoutes = () => {
     const isAuthenticated = useAppSelector(
         (state) => state.auth.isAuthenticated
@@ -20,6 +21,10 @@ const DefaultRoutes = () => {
             <Route path="/" element={<DefLayouts />}>
                 <Route index element={<HomePage />} />
                 <Route path="/details/:id" element={<DetailsPage />} />
+                <Route
+                    path="cataloge"
+                    element={<CatalogePage />}
+                />
 
                 <Route
                     path="profile"

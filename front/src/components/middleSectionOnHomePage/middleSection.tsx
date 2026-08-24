@@ -2,9 +2,13 @@
 import "./middleSection.css";
 import LaptopGuidePhoto from "./photos/LaptopGuidePhoto";
 import { useGetAllCategoriesQuery } from "../../store/services/categoryApi";
+import { useNavigate } from "react-router";
 
 const MiddleSection = () => {
-
+  const navigate = useNavigate();
+  const handleCatalogClick = () => {
+        navigate("/cataloge");
+    }
   const { data, isLoading, error } = useGetAllCategoriesQuery();
   
       if (isLoading) { 
@@ -36,7 +40,7 @@ const MiddleSection = () => {
             {data?.payload?.map((category) => ( <li>{category.name}</li>))}
           </ul>
 
-          <button className="catalog-link-btn">
+          <button className="catalog-link-btn" onClick={handleCatalogClick} style={{ cursor: "pointer" }}>
             Перейти в каталог
             <svg className="arrow-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
               <path d="M9 5l7 7-7 7" strokeLinecap="round" strokeLinejoin="round" />
