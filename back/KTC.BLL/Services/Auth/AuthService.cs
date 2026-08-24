@@ -113,6 +113,8 @@ public class AuthService
             };
         }
 
+
+
         var result = await _signInManager.CheckPasswordSignInAsync(
             user,
             dto.Password,
@@ -141,15 +143,13 @@ public class AuthService
                 };
             }
 
-            // Генеруємо 6-значний код
             var code = _twoFactorService.GenerateCode();
 
-            // Створюємо тимчасовий challenge
             var challenge = _twoFactorService.CreateChallenge(
                 user.Id,
                 code);
 
-            // Відправляємо код на Email
+
             await _emailService.SendEmailAsync(
                 user.Email,
                 "Код двофакторної автентифікації",
@@ -172,8 +172,6 @@ public class AuthService
                     Якщо це були не ви, просто проігноруйте цей лист.
                 </p>"
             );
-
-            // JWT поки НЕ видаємо
             return new ServiceResponse
             {
                 IsSuccess = true,
@@ -187,7 +185,7 @@ public class AuthService
             };
         }
 
-        // Якщо 2FA вимкнена — звичайний вхід
+
         var token = await _jwtService.GenerateToken(user);
 
         return new ServiceResponse

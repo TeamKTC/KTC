@@ -1,7 +1,9 @@
 ﻿using KTC.BLL.Dto.Cart;
 using KTC.BLL.Services.Cart;
 using KTC.Extensions;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using System.Security.Claims;
 
 namespace KTC.API.Controllers
 {
@@ -23,10 +25,17 @@ namespace KTC.API.Controllers
             return this.ToActionResult(response);
         }
 
-        [HttpGet("user/{userId}")]
-        public async Task<IActionResult> GetUserCart(string userId)
+        [HttpGet]
+        [Authorize]
+        public async Task<IActionResult> GetUserCart()
         {
+            var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
+
+            if (string.IsNullOrEmpty(userId))
+                return Unauthorized();
+
             var response = await _service.GetUserCartAsync(userId);
+
             return this.ToActionResult(response);
         }
 

@@ -2,6 +2,7 @@
 using KTC.BLL.Dto.User;
 using KTC.BLL.Services.Email;
 using KTC.DAL.Repositories.User;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.Extensions.Caching.Memory;
 using System.Net;
 using System.Security.Claims;
@@ -395,7 +396,8 @@ namespace KTC.BLL.Services.User
 
             user.Email = newEmail;
             user.UserName = newEmail;
-
+            user.NormalizedEmail = newEmail.ToUpperInvariant();
+            user.NormalizedUserName = newEmail.ToUpperInvariant();
             await _repository.UpdateAsync(user);
 
             _cache.Remove(codeKey);
