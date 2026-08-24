@@ -1,4 +1,5 @@
 
+import { useNavigate } from "react-router";
 import "./HeroSection.css";
 import LaptopPhoto from "./photos/LaptopPhoto";
 import MainPhoto from "./photos/MainPhotto";
@@ -6,6 +7,10 @@ import MiddlePhoto from "./photos/MiddlePhoto";
 import PhonesPhoto from "./photos/PhonesPhoto";
 
 const HeroSection = () => {
+  const navigate = useNavigate();
+  const handleCatalogClick = () => {
+        navigate("/cataloge");
+    }
   return (
     <section className="hero-section">
       <div className="hero-container">
@@ -23,7 +28,9 @@ const HeroSection = () => {
           </p>
 
           <div className="hero-buttons">
-            <button className="btn-primary">Перейти до каталогу</button>
+            <button className="btn-primary" onClick={handleCatalogClick} style={{ cursor: "pointer" }}>
+              Перейти до каталогу
+            </button>
             <button className="btn-secondary">Новинки</button>
           </div>
 
