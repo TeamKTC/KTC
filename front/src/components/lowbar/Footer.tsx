@@ -1,11 +1,25 @@
 import "./Footer.css";
-import Logo from "../logo/Logo";
 import { useGetAllCategoriesQuery } from "../../store/services/categoryApi";
 import WhiteVersionOfLogo from "../logo/WhiteVersionOfLogo";
+import { useGetProductsByCategoryIdQuery } from "../../store/services/productApi";
+import { useNavigate } from "react-router";
+import React from "react";
 
 
 const Footer = () => {
     const { data, isLoading, error } = useGetAllCategoriesQuery();
+    const navigate = useNavigate();
+    const [selectedCategoryId, setSelectedCategoryId] = React.useState<string | null>(null);
+    let { data: productsData } = useGetProductsByCategoryIdQuery(selectedCategoryId ?? "", { skip: !selectedCategoryId });
+
+    React.useEffect(() => {
+        if (productsData !== undefined && selectedCategoryId !== null) {
+            const filteredProducts = productsData?.payload ?? [];
+            navigate("/cataloge", { state: { products: filteredProducts } });
+            setSelectedCategoryId(null); // Reset selectedCategoryId after navigation
+            productsData = undefined; // Reset productsData after navigation
+        }
+    }, [selectedCategoryId, productsData, navigate]);
 
     if (isLoading) { 
       return ( 
@@ -65,7 +79,7 @@ const Footer = () => {
                             <h5>Каталог товарів</h5>
 
                             <ul className="footer-list">
-                                {data?.payload?.map((category) => ( <li>{category.name}</li>))}
+                                {data?.payload?.map((category) => ( <li key={category.id} onClick={() => setSelectedCategoryId(category.id)}>{category.name}</li>))}
                             </ul>
 
                         </div>

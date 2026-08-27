@@ -2,6 +2,7 @@ import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
 const apiUrl = "https://localhost:7120/api/";
 
 import type {
+  Product,
   ProductAttribute,
   ServiceResponse,
 } from "../../types/types";
@@ -95,7 +96,7 @@ export const productAttributeApi = createApi({
     // GET /api/product-attribute/by-range-of-value?attributeDefinitionId=...&min=...&max=...
     // Payload -> List<ProductAttributeDto>
     getProductAttributesByRangeOfValue: build.query<
-      ServiceResponse<ProductAttribute[]>,
+      ServiceResponse<Product[]>,
       { attributeDefinitionId: string; min: number; max: number }
     >({
       query: ({ attributeDefinitionId, min, max }) => ({
@@ -110,6 +111,24 @@ export const productAttributeApi = createApi({
 
       providesTags: ["ProductAttribute"],
     }),
+
+    // GET /api/product-attribute/by-string-value?attributeDefinitionId=...&value=...
+    // Payload -> List<ProductAttributeDto>
+    getProductAttributesByStringValue: build.query<
+      ServiceResponse<Product[]>,
+      { attributeDefinitionId: string; value: string }
+    >({
+      query: ({ attributeDefinitionId, value }) => ({
+        url: "product-attribute/by-string-value",
+        method: "GET",
+        params: {
+          attributeDefinitionId,
+          value,
+        },
+      }),
+
+      providesTags: ["ProductAttribute"],
+    }),
   }),
 });
 
@@ -119,4 +138,5 @@ export const {
   useGetProductAttributesByProductIdQuery,
   useGetProductAttributesByAttributeDefinitionIdQuery,
   useGetProductAttributesByRangeOfValueQuery,
+  useGetProductAttributesByStringValueQuery,
 } = productAttributeApi;

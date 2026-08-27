@@ -139,6 +139,16 @@ namespace KTC.BLL.Services.ProductAttribute
             };
         }
 
+        public async Task<ServiceResponse> GetByStringValue(string attributeDefinitionId, string value)
+        {
+            return new ServiceResponse
+            {
+                IsSuccess = true,
+                StatusCode = System.Net.HttpStatusCode.OK,
+                Payload = _mapper.Map<List<ProductDto>>(await _productAttributeRepository.GetByStringValue(attributeDefinitionId, value)) ?? null
+            };
+        }
+
         public async Task<ServiceResponse> GetProductAttributeById(string productAttributeId)
         {
             return new ServiceResponse
@@ -174,5 +184,7 @@ namespace KTC.BLL.Services.ProductAttribute
                 Message = "ProductAttribute успішно оновлено"
             };
         }
+
+
     }
 }
