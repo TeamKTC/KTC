@@ -12,5 +12,6 @@ namespace KTC.BLL.Services.ProductAttribute
         Task<ServiceResponse> GetByProductId(string productId);
         Task<ServiceResponse> GetByAttributeDefinitionId(string attributeDefinitionId);
         Task<ServiceResponse> GetByRangeOfValue(string attributeDefinitionId, int min, int max);
+        Task<ServiceResponse> GetByStringValue(string attributeDefinitionId, string value);
     }
 }

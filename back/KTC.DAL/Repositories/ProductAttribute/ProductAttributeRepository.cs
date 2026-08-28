@@ -31,5 +31,15 @@ namespace KTC.DAL.Repositories.ProductAttribute
                 .Distinct()
                 .ToList();
         }
+
+        public async Task<List<ProductEntity>> GetByStringValue(string attributeDefinitionId, string value)
+        {
+            return await _context.ProductAttributes
+                .Where(pa => pa.AttributeDefinitionId == attributeDefinitionId && pa.Value == value)
+                .Include(pa => pa.Product)
+                .Select(pa => pa.Product)
+                .Distinct()
+                .ToListAsync();
+        }
     }
 }

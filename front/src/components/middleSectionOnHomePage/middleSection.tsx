@@ -3,6 +3,8 @@ import "./middleSection.css";
 import LaptopGuidePhoto from "./photos/LaptopGuidePhoto";
 import { useGetAllCategoriesQuery } from "../../store/services/categoryApi";
 import { useNavigate } from "react-router";
+import { useGetProductsByCategoryIdQuery } from "../../store/services/productApi";
+import React from "react";
 
 const MiddleSection = () => {
   const navigate = useNavigate();
@@ -10,23 +12,34 @@ const MiddleSection = () => {
         navigate("/cataloge");
     }
   const { data, isLoading, error } = useGetAllCategoriesQuery();
-  
-      if (isLoading) { 
-        return ( 
-          <div className="recommended-products">
-              <h2>Рекомендовані категорії</h2>
-              <p>Завантаження...</p> 
-          </div> 
-        ); 
-      } 
-      if (error) { 
-        return ( 
-          <div className="recommended-products"> 
-              <h2>Рекомендовані категорії</h2> 
-              <p>Не вдалося завантажити категорії</p> 
-          </div> 
-        ); 
-      }
+    
+ const [selectedCategoryId, setSelectedCategoryId] = React.useState<string | null>(null);
+     const { data: productsData } = useGetProductsByCategoryIdQuery(selectedCategoryId ?? "", { skip: !selectedCategoryId });
+ 
+     React.useEffect(() => {
+         if (productsData !== undefined && selectedCategoryId !== null) {
+             const filteredProducts = productsData?.payload ?? [];
+             navigate("/cataloge", { state: { products: filteredProducts } });
+         }
+     }, [selectedCategoryId, productsData, navigate]);
+
+
+  if (isLoading) { 
+    return ( 
+      <div className="recommended-products">
+          <h2>Рекомендовані категорії</h2>
+          <p>Завантаження...</p> 
+      </div> 
+    ); 
+  } 
+  if (error) { 
+    return ( 
+      <div className="recommended-products"> 
+          <h2>Рекомендовані категорії</h2> 
+          <p>Не вдалося завантажити категорії</p> 
+      </div> 
+    ); 
+  }
 
   return (
     <section className="guide-section">
@@ -37,7 +50,7 @@ const MiddleSection = () => {
           <h2 className="categories-title">Категорії</h2>
           
           <ul className="categories-list">
-            {data?.payload?.map((category) => ( <li>{category.name}</li>))}
+            {data?.payload?.map((category) => ( <li style={{ cursor: "pointer" }} key={category.id} onClick={() => setSelectedCategoryId(category.id)}>{category.name}</li>))}
           </ul>
 
           <button className="catalog-link-btn" onClick={handleCatalogClick} style={{ cursor: "pointer" }}>

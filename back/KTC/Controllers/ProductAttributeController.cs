@@ -62,5 +62,11 @@ namespace KTC.Controllers
             var response = await _productAttributeService.GetByRangeOfValue(attributeDefinitionId, min, max);
             return this.ToActionResult(response);
         }
+        [HttpGet("by-string-value")]
+        public async Task<IActionResult> GetProductAttributesByStringValue([FromQuery] string attributeDefinitionId, [FromQuery] string value)
+        {
+            var response = await _productAttributeService.GetByStringValue(attributeDefinitionId, value);
+            return this.ToActionResult(response);
+        }
     }
 }
