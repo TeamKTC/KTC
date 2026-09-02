@@ -9,5 +9,7 @@ namespace KTC.DAL.Repositories.PromoCode
         Task<bool> HasUserUsedPromoCodeAsync(
             string promoCodeId,
             string userId);
+
+        Task AddUsageAsync(PromoCodeUsageEntity usage);
     }
 }

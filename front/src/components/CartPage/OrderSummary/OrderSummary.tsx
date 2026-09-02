@@ -1,9 +1,12 @@
 import "./OrderSummary.css";
+
 import {
     Shield,
     X,
 } from "lucide-react";
+
 import { useState } from "react";
+import { useNavigate } from "react-router-dom";
 
 import { useGetCartQuery } from "../../../store/services/cartApi";
 import { useGetAllProductsQuery } from "../../../store/services/productApi";
@@ -19,40 +22,26 @@ interface OrderSummaryProps {
 const OrderSummary = ({
     onCheckout,
 }: OrderSummaryProps) => {
+    const navigate = useNavigate();
 
-    /*
-     * КОШИК
-     */
     const {
         data: cartData,
         isLoading: isCartLoading,
         isError: isCartError,
     } = useGetCartQuery();
 
-
-    /*
-     * ТОВАРИ
-     */
     const {
         data: productsData,
         isLoading: isProductsLoading,
         isError: isProductsError,
     } = useGetAllProductsQuery();
 
-
-    /*
-     * ПОТОЧНИЙ КОРИСТУВАЧ
-     */
     const {
         data: userData,
         isLoading: isUserLoading,
         isError: isUserError,
     } = useGetMeQuery();
 
-
-    /*
-     * ПРОМОКОД
-     */
     const [
         validatePromoCode,
         {
@@ -60,29 +49,22 @@ const OrderSummary = ({
         },
     ] = useValidatePromoCodeMutation();
 
-
     const [promoCode, setPromoCode] =
         useState("");
-
 
     const [appliedPromoCode, setAppliedPromoCode] =
         useState("");
 
+    // ID застосованого промокоду
+    const [appliedPromoCodeId, setAppliedPromoCodeId] =
+        useState("");
 
     const [promoDiscount, setPromoDiscount] =
         useState(0);
 
-
-    /*
-     * БОНУСИ
-     */
     const [useBonuses, setUseBonuses] =
         useState(false);
 
-
-    /*
-     * LOADING
-     */
     if (
         isCartLoading ||
         isProductsLoading ||
@@ -90,7 +72,6 @@ const OrderSummary = ({
     ) {
         return (
             <div className="order-summary">
-
                 <h2>
                     Підсумок замовлення
                 </h2>
@@ -98,15 +79,10 @@ const OrderSummary = ({
                 <p>
                     Завантаження...
                 </p>
-
             </div>
         );
     }
 
-
-    /*
-     * ERROR
-     */
     if (
         isCartError ||
         isProductsError ||
@@ -114,7 +90,6 @@ const OrderSummary = ({
     ) {
         return (
             <div className="order-summary">
-
                 <h2>
                     Підсумок замовлення
                 </h2>
@@ -123,15 +98,10 @@ const OrderSummary = ({
                     Не вдалося завантажити
                     дані замовлення.
                 </p>
-
             </div>
         );
     }
 
-
-    /*
-     * ДАНІ
-     */
     const cart =
         cartData?.payload;
 
@@ -141,14 +111,9 @@ const OrderSummary = ({
     const user =
         userData?.payload;
 
-
-    /*
-     * ЯКЩО НЕМАЄ КОШИКА
-     */
     if (!cart) {
         return (
             <div className="order-summary">
-
                 <h2>
                     Підсумок замовлення
                 </h2>
@@ -156,23 +121,17 @@ const OrderSummary = ({
                 <p>
                     Кошик порожній
                 </p>
-
             </div>
         );
     }
 
-
-    /*
-     * ТОВАРИ КОШИКА
-     */
     const cartProducts =
-        cart.items
+        (cart.items ?? [])
             .map((cartItem) => {
-
                 const product =
                     products.find(
-                        (product) =>
-                            product.id ===
+                        (item) =>
+                            item.id ===
                             cartItem.productId
                     );
 
@@ -190,48 +149,31 @@ const OrderSummary = ({
                     item
                 ): item is {
                     cartItem:
-                        typeof cart.items[number];
+                        (typeof cart.items)[number];
                     product: Product;
                 } =>
                     item !== null
             );
 
-
-    /*
-     * КІЛЬКІСТЬ ТОВАРІВ
-     */
     const totalCount =
-        cart.items.reduce(
-            (total, item) =>
-                total + item.quantity,
+        (cart.items ?? []).reduce(
+            (sum, item) =>
+                sum + item.quantity,
             0
         );
 
-
-    /*
-     * СУМА ТОВАРІВ
-     *
-     * Ціна вже зі знижкою товару
-     */
     const totalPrice =
         cartProducts.reduce(
-            (total, item) =>
-                total +
+            (sum, item) =>
+                sum +
                 item.product.price *
-                item.cartItem.quantity,
+                    item.cartItem.quantity,
             0
         );
 
-
-    /*
-     * ЗНИЖКА ТОВАРІВ
-     *
-     * oldPrice - price
-     */
     const discount =
         cartProducts.reduce(
-            (total, item) => {
-
+            (sum, item) => {
                 const {
                     product,
                     cartItem,
@@ -243,35 +185,25 @@ const OrderSummary = ({
                         product.price
                 ) {
                     return (
-                        total +
+                        sum +
                         (
                             product.oldPrice -
                             product.price
                         ) *
-                        cartItem.quantity
+                            cartItem.quantity
                     );
                 }
 
-                return total;
+                return sum;
             },
             0
         );
 
-
-    /*
-     * БОНУСИ КОРИСТУВАЧА
-     */
     const bonusBalance =
         user?.bonusBalance ?? 0;
 
-
-    /*
-     * МАКСИМАЛЬНО МОЖНА
-     * СПИСАТИ 30% ВІД СУМИ
-     */
     const maxBonusUsage =
         totalPrice * 0.3;
-
 
     const usedBonuses =
         useBonuses
@@ -281,38 +213,22 @@ const OrderSummary = ({
             )
             : 0;
 
-
-    /*
-     * ФІНАЛЬНА СУМА
-     */
     const finalPrice =
         Math.max(
             0,
             totalPrice -
-            promoDiscount -
-            usedBonuses
+                promoDiscount -
+                usedBonuses
         );
 
-
-    /*
-     * ФОРМАТУВАННЯ ЦІНИ
-     */
     const formatPrice = (
-        price: number
-    ) => {
-
-        return `${price.toLocaleString(
+        value: number
+    ) =>
+        `${value.toLocaleString(
             "uk-UA"
         )} грн`;
 
-    };
-
-
-    /*
-     * ЗАСТОСУВАТИ ПРОМОКОД
-     */
     const handlePromo = async () => {
-
         const code =
             promoCode.trim();
 
@@ -321,26 +237,23 @@ const OrderSummary = ({
         }
 
         try {
-
             const result =
                 await validatePromoCode({
                     code,
-                    orderAmount:
-                        totalPrice,
+                    orderAmount: totalPrice,
                 }).unwrap();
 
-
-            /*
-             * ПРОМОКОД УСПІШНО
-             * ЗАСТОСОВАНИЙ
-             */
             if (
                 result.isSuccess &&
                 result.payload?.isValid
             ) {
-
                 setAppliedPromoCode(
                     result.payload.code
+                );
+
+                // ЗБЕРІГАЄМО ID ПРОМОКОДУ
+                setAppliedPromoCodeId(
+                    result.payload.promoCodeId
                 );
 
                 setPromoDiscount(
@@ -348,10 +261,9 @@ const OrderSummary = ({
                 );
 
                 setPromoCode("");
-
             } else {
-
                 setPromoDiscount(0);
+                setAppliedPromoCodeId("");
 
                 alert(
                     result.message ||
@@ -359,10 +271,9 @@ const OrderSummary = ({
                     "Промокод не можна використати"
                 );
             }
-
         } catch (error: any) {
-
             setPromoDiscount(0);
+            setAppliedPromoCodeId("");
 
             alert(
                 error?.data?.message ||
@@ -371,55 +282,34 @@ const OrderSummary = ({
         }
     };
 
-
-    /*
-     * СКАСУВАТИ ПРОМОКОД
-     */
     const handleRemovePromo = () => {
-
         setAppliedPromoCode("");
-
+        setAppliedPromoCodeId("");
         setPromoDiscount(0);
-
         setPromoCode("");
     };
 
-
-    /*
-     * ОФОРМЛЕННЯ
-     */
     const handleCheckout = () => {
-
         if (onCheckout) {
-
             onCheckout();
-
             return;
         }
 
-        console.log(
-            "Оформлення замовлення",
-            {
-                cartId: cart.id,
-
-                promoCode:
-                    appliedPromoCode || null,
-
-                promoDiscount,
-
-                useBonuses,
-
+        navigate("/cart/checkout", {
+            state: {
                 usedBonuses,
 
-                totalPrice,
+                promoCode:
+                    appliedPromoCode,
 
-                discount,
+                // ПЕРЕДАЄМО ID ПРОМОКОДУ
+                promoCodeId:
+                    appliedPromoCodeId,
 
-                finalPrice,
-            }
-        );
+                promoDiscount,
+            },
+        });
     };
-
 
     return (
         <div className="order-summary">
@@ -428,11 +318,7 @@ const OrderSummary = ({
                 Підсумок замовлення
             </h2>
 
-
-            {/* СУМА ТОВАРІВ */}
-
             <div className="summary-row">
-
                 <span>
                     Сума товарів ({totalCount})
                 </span>
@@ -442,14 +328,9 @@ const OrderSummary = ({
                         totalPrice
                     )}
                 </strong>
-
             </div>
 
-
-            {/* ДОСТАВКА */}
-
             <div className="summary-row">
-
                 <span>
                     Доставка
                 </span>
@@ -457,14 +338,9 @@ const OrderSummary = ({
                 <strong>
                     Безкоштовно
                 </strong>
-
             </div>
 
-
-            {/* ЗНИЖКА */}
-
             <div className="summary-row">
-
                 <span>
                     Знижка
                 </span>
@@ -476,19 +352,26 @@ const OrderSummary = ({
                         )}`
                         : "0 грн"}
                 </strong>
-
             </div>
 
+            {promoDiscount > 0 && (
+                <div className="summary-row">
+                    <span>
+                        Промокод
+                        {appliedPromoCode
+                            ? ` (${appliedPromoCode})`
+                            : ""}
+                    </span>
 
-
-
-           
-
-
-            {/* БОНУСИ */}
+                    <strong>
+                        -{formatPrice(
+                            promoDiscount
+                        )}
+                    </strong>
+                </div>
+            )}
 
             <div className="summary-row">
-
                 <span>
                     Бонусів використано
                 </span>
@@ -500,17 +383,11 @@ const OrderSummary = ({
                         )}`
                         : "0 грн"}
                 </strong>
-
             </div>
-
 
             <div className="summary-divider" />
 
-
-            {/* ДО СПЛАТИ */}
-
             <div className="summary-total">
-
                 <span>
                     До сплати
                 </span>
@@ -520,27 +397,17 @@ const OrderSummary = ({
                         finalPrice
                     )}
                 </strong>
-
             </div>
-
 
             <div className="vat">
                 Усі ціни вказані з ПДВ
             </div>
 
-
-            {/* ПРОМОКОД */}
-
             <div className="promo-title">
                 У вас є промокод
             </div>
 
-
             {appliedPromoCode ? (
-
-                /*
-                 * ПРОМОКОД ЗАСТОСОВАНИЙ
-                 */
                 <div className="applied-promo">
 
                     <div className="applied-promo-left">
@@ -565,14 +432,12 @@ const OrderSummary = ({
 
                     </div>
 
-
                     <button
                         type="button"
                         className="remove-promo-button"
                         onClick={
                             handleRemovePromo
                         }
-                        aria-label="Скасувати промокод"
                     >
                         <X
                             size={16}
@@ -581,12 +446,7 @@ const OrderSummary = ({
                     </button>
 
                 </div>
-
             ) : (
-
-                /*
-                 * ПРОМОКОД НЕ ЗАСТОСОВАНИЙ
-                 */
                 <div className="promo">
 
                     <input
@@ -599,20 +459,20 @@ const OrderSummary = ({
                             )
                         }
                         onKeyDown={(event) => {
-
                             if (
                                 event.key ===
                                 "Enter"
                             ) {
                                 handlePromo();
                             }
-
                         }}
                     />
 
                     <button
                         type="button"
-                        onClick={handlePromo}
+                        onClick={
+                            handlePromo
+                        }
                         disabled={
                             isPromoLoading ||
                             !promoCode.trim()
@@ -626,15 +486,13 @@ const OrderSummary = ({
                 </div>
             )}
 
-
-            {/* БОНУСИ */}
-
             <div className="bonus-block">
 
                 <div>
 
                     <strong>
-                        Доступно {bonusBalance} бонусів
+                        Доступно{" "}
+                        {bonusBalance} бонусів
                     </strong>
 
                     <span>
@@ -642,7 +500,6 @@ const OrderSummary = ({
                     </span>
 
                 </div>
-
 
                 <label className="switch">
 
@@ -662,22 +519,18 @@ const OrderSummary = ({
 
             </div>
 
-
-            {/* ОФОРМИТИ */}
-
             <button
                 type="button"
                 className="checkout-button"
-                onClick={handleCheckout}
+                onClick={
+                    handleCheckout
+                }
                 disabled={
                     cart.items.length === 0
                 }
             >
                 Оформити замовлення
             </button>
-
-
-            {/* ПРОДОВЖИТИ */}
 
             <button
                 type="button"
@@ -688,9 +541,6 @@ const OrderSummary = ({
             >
                 Продовжити покупку
             </button>
-
-
-            {/* БЕЗПЕЧНА ОПЛАТА */}
 
             <div className="safe-payment">
 

@@ -70,5 +70,11 @@ namespace KTC.DAL.Repositories.User
                 .AsNoTracking()
                 .ToListAsync();
         }
+
+        public async Task AddBonusAsync(BonusEntity bonus)
+        {
+            await _context.Bonuses.AddAsync(bonus);
+            await _context.SaveChangesAsync();
+        }
     }
 }

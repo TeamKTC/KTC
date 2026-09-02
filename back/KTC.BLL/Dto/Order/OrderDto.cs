@@ -17,4 +17,28 @@ public class OrderDto
     public virtual ICollection<OrderItemEntity> Items { get; set; } = [];
 
     public decimal TotalPrice { get; set; }
-}   
+
+    public int UsedBonuses { get; set; }
+
+    public string? PromoCodeId { get; set; }
+
+    public decimal PromoDiscount { get; set; }
+
+
+    // Delivery
+    public string? City { get; set; }
+
+    public string? Department { get; set; }
+
+    public string? Address { get; set; }
+
+
+    // Payment
+    public string PaymentType { get; set; } = "cash";
+
+    public string? InstallmentBank { get; set; }
+
+
+    // Additional
+    public string? Comment { get; set; }
+}

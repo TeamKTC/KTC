@@ -1,63 +1,63 @@
-﻿using KTC.BLL.Dto.Cart;
-using KTC.BLL.Services.Cart;
-using KTC.Extensions;
-using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Mvc;
-using System.Security.Claims;
+﻿    using KTC.BLL.Dto.Cart;
+    using KTC.BLL.Services.Cart;
+    using KTC.Extensions;
+    using Microsoft.AspNetCore.Authorization;
+    using Microsoft.AspNetCore.Mvc;
+    using System.Security.Claims;
 
-namespace KTC.API.Controllers
-{
-    [ApiController]
-    [Route("api/[controller]")]
-    public class CartController : ControllerBase
+    namespace KTC.API.Controllers
     {
-        private readonly ICartService _service;
-
-        public CartController(ICartService service)
+        [ApiController]
+        [Route("api/[controller]")]
+        public class CartController : ControllerBase
         {
-            _service = service;
-        }
+            private readonly ICartService _service;
 
-        [HttpGet("{id}")]
-        public async Task<IActionResult> GetById(string id)
-        {
-            var response = await _service.GetByIdAsync(id);
-            return this.ToActionResult(response);
-        }
+            public CartController(ICartService service)
+            {
+                _service = service;
+            }
 
-        [HttpGet]
-        [Authorize]
-        public async Task<IActionResult> GetUserCart()
-        {
-            var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
+            [HttpGet("{id}")]
+            public async Task<IActionResult> GetById(string id)
+            {
+                var response = await _service.GetByIdAsync(id);
+                return this.ToActionResult(response);
+            }
 
-            if (string.IsNullOrEmpty(userId))
-                return Unauthorized();
+            [HttpGet]
+            [Authorize]
+            public async Task<IActionResult> GetUserCart()
+            {
+                var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
 
-            var response = await _service.GetUserCartAsync(userId);
+                if (string.IsNullOrEmpty(userId))
+                    return Unauthorized();
 
-            return this.ToActionResult(response);
-        }
+                var response = await _service.GetUserCartAsync(userId);
 
-        [HttpPost]
-        public async Task<IActionResult> Create(CartDto dto)
-        {
-            var response = await _service.CreateAsync(dto);
-            return this.ToActionResult(response);
-        }
+                return this.ToActionResult(response);
+            }
 
-        [HttpPut]
-        public async Task<IActionResult> Update(CartDto dto)
-        {
-            var response = await _service.UpdateAsync(dto);
-            return this.ToActionResult(response);
-        }
+            [HttpPost]
+            public async Task<IActionResult> Create(CartDto dto)
+            {
+                var response = await _service.CreateAsync(dto);
+                return this.ToActionResult(response);
+            }
 
-        [HttpDelete("{id}")]
-        public async Task<IActionResult> Delete(string id)
-        {
-            var response = await _service.DeleteAsync(id);
-            return this.ToActionResult(response);
+            [HttpPut]
+            public async Task<IActionResult> Update(CartDto dto)
+            {
+                var response = await _service.UpdateAsync(dto);
+                return this.ToActionResult(response);
+            }
+
+            [HttpDelete("{id}")]
+            public async Task<IActionResult> Delete(string id)
+            {
+                var response = await _service.DeleteAsync(id);
+                return this.ToActionResult(response);
+            }
         }
     }
-}

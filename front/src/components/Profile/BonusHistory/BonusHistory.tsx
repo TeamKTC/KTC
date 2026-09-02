@@ -1,7 +1,10 @@
 import "./BonusHistory.css";
+import { useNavigate } from "react-router-dom";
 import { useGetMyOrdersQuery } from "../../../store/services/orderApi";
 
 const BonusHistory = () => {
+    const navigate = useNavigate();
+
     const {
         data,
         isLoading,
@@ -30,6 +33,7 @@ const BonusHistory = () => {
                 </div>
 
                 <p>Не вдалося завантажити замовлення</p>
+
             </div>
         );
     }
@@ -39,7 +43,12 @@ const BonusHistory = () => {
             <div className="history-header">
                 <h2>Мої замовлення</h2>
 
-                <button>Переглянути всі</button>
+                <button
+                    type="button"
+                    onClick={() => navigate("/orders")}
+                >
+                    Переглянути всі
+                </button>
             </div>
 
             <table>
@@ -55,22 +64,46 @@ const BonusHistory = () => {
 
                 <tbody>
                     {orders.map((order) => (
-                        <tr key={order.id}>
-                            <td>№{order.orderNumber}</td>
-
+                        <tr
+                            key={order.id}
+                            onClick={() =>
+                                navigate(
+                                    `/orders/${order.id}`
+                                )
+                            }
+                            style={{
+                                cursor: "pointer",
+                            }}
+                        >
                             <td>
-                                {new Date(
-                                    order.createdDate
-                                ).toLocaleDateString("uk-UA")}
+                                №{order.orderNumber}
                             </td>
 
-                            <td>{order.status}</td>
-
                             <td>
-                                {order.totalPrice?.toLocaleString("uk-UA")} грн
+                                {order.date
+                                    ? new Date(
+                                          order.date
+                                      ).toLocaleDateString(
+                                          "uk-UA"
+                                      )
+                                    : "—"}
                             </td>
 
-                            <td className="arrow">›</td>
+                            <td>
+                                {order.status}
+                            </td>
+
+                            <td>
+                                {order.totalPrice != null
+                                    ? `${order.totalPrice.toLocaleString(
+                                          "uk-UA"
+                                      )} грн`
+                                    : "—"}
+                            </td>
+
+                            <td className="arrow">
+                                ›
+                            </td>
                         </tr>
                     ))}
                 </tbody>
@@ -79,4 +112,4 @@ const BonusHistory = () => {
     );
 };
 
-export default BonusHistory;    
+export default BonusHistory;

@@ -2,6 +2,7 @@
 {
     public class PromoCodeResultDto
     {
+        public string PromoCodeId { get; set; } = string.Empty; 
         public bool IsValid { get; set; }
 
         public string Code { get; set; } = string.Empty;
