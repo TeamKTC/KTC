@@ -2,6 +2,7 @@ import { StrictMode } from "react";
 import { createRoot } from "react-dom/client";
 import { Provider } from "react-redux";
 import "./index.css";
+import './translating/i18n'; // Імпортуємо конфігурацію i18next
 import App from "./App";
 import { store } from "./store/store";
 import { BrowserRouter } from "react-router-dom";

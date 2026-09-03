@@ -11,11 +11,23 @@ import {
 } from "lucide-react";
 
 import { useGetMeQuery } from "../../../store/services/userApi";
+import { useNavigate } from "react-router";
+import { useTranslation } from "react-i18next";
 
 const Sidebar = () => {
     const { data, isLoading, error } = useGetMeQuery();
 
     const user = data?.payload;
+
+    const {t} = useTranslation();
+
+    const navigate = useNavigate();
+    const handleSettingsClick = () =>{
+        navigate("/settings")
+    }
+    const handleProfileClick =() =>{
+        navigate("/profile")
+    }
 
     if (isLoading) {
         return (
@@ -75,9 +87,9 @@ const Sidebar = () => {
             <div className="bonus-card-mini">
 
                 <div className="bonus-text">
-                    <small>Бонусний баланс</small>
-                    <h4>1 250 бонусів</h4>
-                    <span>1 бонус = 1 грн</span>
+                    <small>{t("profile.sidebar.bonusBalanceTitle")}</small>
+                    <h4>1 250 {t("profile.sidebar.bonusCount")}</h4>
+                    <span>{t("profile.sidebar.bonusRate")}</span>
                 </div>
 
                 <Wallet className="wallet-icon" />
@@ -88,34 +100,34 @@ const Sidebar = () => {
 
             <nav className="menu">
 
-                <a className="menu-item active">
+                <a className="menu-item active" onClick={handleProfileClick}>
                     <User />
-                    <span>Мій профіль</span>
+                    <span>{t("profile.sidebar.myProfile")}</span>
                 </a>
 
                 <a className="menu-item">
                     <Package />
-                    <span>Мої замовлення</span>
+                    <span>{t("profile.sidebar.myOrders")}</span>
                 </a>
 
                 <a className="menu-item">
                     <Heart />
-                    <span>Обране</span>
+                    <span>{t("profile.sidebar.favorites")}</span>
                 </a>
 
                 <a className="menu-item">
                     <MapPin />
-                    <span>Адреси доставки</span>
+                    <span>{t("profile.sidebar.deliveryAddresses")}</span>
                 </a>
 
                 <a className="menu-item">
                     <Gift />
-                    <span>Бонуси</span>
+                    <span>{t("profile.sidebar.bonuses")}</span>
                 </a>
 
-                <a className="menu-item">
+                <a className="menu-item" onClick={handleSettingsClick} >
                     <Settings />
-                    <span>Налаштування</span>
+                    <span>{t("profile.sidebar.settings")}</span>
                 </a>
 
             </nav>
@@ -126,7 +138,7 @@ const Sidebar = () => {
 
                 <LogOut />
 
-                <span>Вийти</span>
+                <span>{t("profile.sidebar.logout")}</span>
 
             </div>
 

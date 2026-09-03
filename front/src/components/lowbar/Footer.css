@@ -1,5 +1,5 @@
 .footer {
-    background: #f5f6f8;
+    background: var(--bg);
 }
 
 .subscribe-box {
@@ -30,6 +30,7 @@
 .footer h5 {
     font-weight: 700;
     margin-bottom: 20px;
+    color: var(--text-h);
 }
 
 .footer-list {

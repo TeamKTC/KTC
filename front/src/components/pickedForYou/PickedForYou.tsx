@@ -5,11 +5,13 @@ import HeadPhones from "./photos/HeadPhones";
 import KeyaboardAndMouse from "./photos/KeyboardAndMouse";
 import Watch from "./photos/Watch";
 import "./PickedForYou.css";
+import { Trans, useTranslation } from "react-i18next";
 
 const PickedForYou: React.FC = () => {
+  const { t } = useTranslation();
   return (
     <section className="picked-section">
-      <h2 className="picked-title">Підібрано для вас</h2>
+      <h2 className="picked-title">{t("main.sections.pickedForYou")}</h2>
 
       <div className="picked-grid">
         {/* ================= 1. Картка "Для роботи та навчання" ================= */}
@@ -19,16 +21,12 @@ const PickedForYou: React.FC = () => {
           </div>
           <div className="card-content">
             <h3>
-              Для роботи
-              <br />
-              та навчання
+             <Trans i18nKey="main.curated.workTitle" components={{ br: <br /> }} />
             </h3>
             <p>
-              Надійні пристрої для
-              <br />
-              продуктивності
-            </p>
-            <button className="btn-outline">Детальніше</button>
+              <Trans i18nKey="main.curated.workDesc" components={{ br: <br /> }} />
+              </p>
+            <button className="btn-outline">{t("main.curated.moreDetails")}</button>
           </div>
         </div>
 
@@ -36,16 +34,12 @@ const PickedForYou: React.FC = () => {
         <div className="card card-blue-bg">
           <div className="card-content">
             <h3>
-              Периферія
-              <br />
-              для комфорту
+              <Trans i18nKey="main.curated.peripheralsTitle" components={{ br: <br /> }} />
             </h3>
             <p>
-              Клавіатура, миші,
-              <br />
-              килимки та інше
+              <Trans i18nKey="main.curated.peripheralsDesc" components={{ br: <br /> }} />
             </p>
-            <button className="btn-blue-outline">Детальніше</button>
+            <button className="btn-blue-outline">{t("main.curated.moreDetails")}</button>
           </div>
           <div className="card-item-icon icon-peripherals">
             <KeyaboardAndMouse />
@@ -58,13 +52,13 @@ const PickedForYou: React.FC = () => {
             <ForGaming />
           </div>
           <div className="card-content">
-            <h3>Для геймерів</h3>
+            <h3>
+              <Trans i18nKey="main.curated.gamersTitle" components={{ br: <br /> }} />
+            </h3>
             <p>
-              Максимальна швидкість
-              <br />
-              та повне занурення
+              <Trans i18nKey="main.curated.gamersDesc" components={{ br: <br /> }} />
             </p>
-            <button className="btn-teal-outline">Детальніше</button>
+            <button className="btn-teal-outline">{t("main.curated.moreDetails")}</button>
           </div>
         </div>
 
@@ -73,13 +67,13 @@ const PickedForYou: React.FC = () => {
           {/* Мала картка 1: Для дому */}
           <div className="card card-small card-blue-bg">
             <div className="card-content">
-              <h3>Для дому</h3>
+              <h3>
+                <Trans i18nKey="main.curated.homeTitle" components={{ br: <br /> }} />
+              </h3>
               <p>
-                Техніка, яка
-                <br />
-                спрощує побут
+                <Trans i18nKey="main.curated.homeDesc" components={{ br: <br /> }} />
               </p>
-              <button className="btn-blue-outline">Переглянути</button>
+              <button className="btn-blue-outline">{t("main.curated.view")}</button>
             </div>
             <div className="card-item-icon icon-home">
               <ForHome />
@@ -89,12 +83,13 @@ const PickedForYou: React.FC = () => {
           {/* Мала картка 2: Смарт-пристрої */}
           <div className="card card-small card-blue-bg">
             <div className="card-content">
-              <h3>Смарт-пристрої</h3>
+              <h3>
+                <Trans i18nKey="main.curated.smartTitle" components={{ br: <br /> }} />
+              </h3>
               <p>
-                Все для розумного дому
-                <br />в одному місці
+                <Trans i18nKey="main.curated.smartDesc" components={{ br: <br /> }} />
               </p>
-              <button className="btn-blue-outline">Переглянути</button>
+              <button className="btn-blue-outline">{t("main.curated.view")}</button>
             </div>
             <div className="card-item-icon icon-smart">
               <Watch />

@@ -2,6 +2,7 @@ import React, { useRef } from 'react';
 import { useGetProductsByCategoryIdQuery } from '../../../store/services/productApi';
 import type { Product } from '../../../types/types';
 import ProductCard from '../../productCard/ProductCard';
+import { useTranslation } from 'react-i18next';
 
 
 interface SimilarProductsProps {
@@ -11,6 +12,7 @@ interface SimilarProductsProps {
 
 const SimilarProducts = ({ categoryId, productId }: SimilarProductsProps) => {
   const scrollContainerRef = useRef<HTMLDivElement>(null);
+  const {t } = useTranslation();
 
   // Виклик запиту прямо в компоненті
   const { data: productsData, isLoading } = useGetProductsByCategoryIdQuery(categoryId);
@@ -31,7 +33,7 @@ const SimilarProducts = ({ categoryId, productId }: SimilarProductsProps) => {
     <section className="py-4">
       {/* Шапка з кнопками скролу */}
       <div className="d-flex justify-content-between align-items-center mb-3">
-        <h2 className="fs-4 fw-bold m-0 text-dark">Схожі товари</h2>
+        <h2 className="fs-4 fw-bold m-0 text-dark">{t("productDetails.similarProducts")}</h2>
         
         <div className="d-flex gap-2">
           <button

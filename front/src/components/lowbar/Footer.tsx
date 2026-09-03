@@ -4,9 +4,11 @@ import WhiteVersionOfLogo from "../logo/WhiteVersionOfLogo";
 import { useGetProductsByCategoryIdQuery } from "../../store/services/productApi";
 import { useNavigate } from "react-router";
 import React from "react";
+import { Trans, useTranslation } from "react-i18next";
 
 
 const Footer = () => {
+    const {t} = useTranslation();
     const { data, isLoading, error } = useGetAllCategoriesQuery();
     const navigate = useNavigate();
     const [selectedCategoryId, setSelectedCategoryId] = React.useState<string | null>(null);
@@ -25,7 +27,7 @@ const Footer = () => {
       return ( 
         <div className="recommended-products">
             <h2>Рекомендовані категорії</h2>
-            <p>Завантаження...</p> 
+            <p>{t("forAll.loading")}</p> 
         </div> 
       ); 
     } 
@@ -50,9 +52,9 @@ const Footer = () => {
 
                             <div className="subscribe-box">
 
-                                <h4>Підписуйся на знижки!</h4>
+                                <h4>{t("footer.subscribe.title")}</h4>
 
-                                <p>Не турбуйся, ми не спамимо</p>
+                                <p>{t("footer.subscribe.subtitle")}</p>
 
                                 <input
                                     type="email"
@@ -61,7 +63,7 @@ const Footer = () => {
                                 />
 
                                 <button className="btn btn-primary w-100 mb-4">
-                                    Відправити
+                                    {t("footer.subscribe.submitBtn")}
                                 </button>
 
                                 {/* Logo */}
@@ -76,7 +78,7 @@ const Footer = () => {
                         {/* Catalog */}
                         <div className="col-lg-2 col-md-6 mb-4">
 
-                            <h5>Каталог товарів</h5>
+                            <h5>{t("footer.catalogTitle")}</h5>
 
                             <ul className="footer-list">
                                 {data?.payload?.map((category) => ( <li key={category.id} onClick={() => setSelectedCategoryId(category.id)}>{category.name}</li>))}
@@ -87,17 +89,17 @@ const Footer = () => {
                         {/* Shop */}
                         <div className="col-lg-3 col-md-6 mb-4">
 
-                            <h5>Інтернет-магазин</h5>
+                            <h5>{t("footer.onlineStore.title")}</h5>
 
                             <ul className="footer-list">
-                                <li>Про нас</li>
-                                <li>Акції</li>
-                                <li>Гарантії</li>
-                                <li>Доставка</li>
-                                <li>Оплата</li>
-                                <li>Контакти</li>
-                                <li>Магазин</li>
-                                <li>Політика конфіденційності</li>
+                                <li>{t("footer.onlineStore.aboutUs")}</li>
+                                <li>{t("footer.onlineStore.promotions")}</li>
+                                <li>{t("footer.onlineStore.warranty")}</li>
+                                <li>{t("footer.onlineStore.delivery")}</li>
+                                <li>{t("footer.onlineStore.payment")}</li>
+                                <li>{t("footer.onlineStore.contacts")}</li>
+                                <li>{t("footer.onlineStore.store")}</li>
+                                <li>{t("footer.onlineStore.privacyPolicy")}</li>
                                 <li>Black Friday</li>
                             </ul>
 
@@ -106,19 +108,17 @@ const Footer = () => {
                         {/* Service */}
                         <div className="col-lg-2 col-md-6 mb-4">
 
-                            <h5>Сервіс</h5>
+                            <h5>{t("footer.service.title")}</h5>
 
                             <ul className="footer-list">
-                                <li>Гарантійне обслуговування</li>
-                                <li>Авторизація Apple</li>
+                                <li>{t("footer.service.warrantyService")}</li>
+                                <li>{t("footer.service.appleAuthorization")}</li>
                             </ul>
 
-                            <h5 className="mt-5">Call-центр</h5>
+                            <h5 className="mt-5">{t("footer.callCenter.title")}</h5>
 
                             <p className="small text-muted">
-                                Call-центр працює по буднях з 9:00 до 20:00
-                                <br />
-                                та у вихідні з 9:00 до 20:00
+                               <Trans i18nKey="footer.callCenter.schedule" components={{ br: <br /> }} />
                             </p>
 
                         </div>
@@ -170,7 +170,7 @@ const Footer = () => {
                     <div className="footer-bottom">
 
                         <span>
-                            Мережа магазинів PixelRoom™ 2002-2026. Всі права захищені.
+                            {t("footer.callCenter.y")}
                         </span>
 
                         <div className="payments">

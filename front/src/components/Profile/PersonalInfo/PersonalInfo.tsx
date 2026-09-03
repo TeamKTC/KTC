@@ -6,8 +6,10 @@ import {
     useConfirmEmailChangeMutation,
 } from "../../../store/services/userApi";
 import EmailConfirmModal from "../../../pages/Auth/EmailConfirmModal/EmailConfirmModal";
+import { useTranslation } from "react-i18next";
 
 const PersonalInfo = () => {
+    const {t} = useTranslation();
     const { data, isLoading, error } = useGetMeQuery();
 
     const [updateProfile, { isLoading: isSaving }] =
@@ -40,8 +42,8 @@ const PersonalInfo = () => {
     if (isLoading) {
         return (
             <div className="personal-info">
-                <h2>Особисті дані</h2>
-                <p>Завантаження...</p>
+                <h2>{t("forAll.personalData")}</h2>
+                <p>{t("forAll.loading")}</p>
             </div>
         );
     }
@@ -49,8 +51,8 @@ const PersonalInfo = () => {
     if (error || !user) {
         return (
             <div className="personal-info">
-                <h2>Особисті дані</h2>
-                <p>Не вдалося завантажити дані користувача</p>
+                <h2>{t("forAll.personalData")}</h2>
+                <p>{t("forAll.failedToLoad")}</p>
             </div>
         );
     }
@@ -110,7 +112,7 @@ const PersonalInfo = () => {
 
     return (
         <div className="personal-info">
-            <h2>Особисті дані</h2>
+            <h2>{t("forAll.personalData")}</h2>
 
             <div className="inputs">
                 <input
@@ -167,7 +169,7 @@ const PersonalInfo = () => {
                 >
                     {isSaving
                         ? "Збереження..."
-                        : "Зберегти зміни"}
+                        : `${t("forAll.saveChanges")}`}
                 </button>
 
                 <button
@@ -175,7 +177,7 @@ const PersonalInfo = () => {
                     onClick={handleCancel}
                     disabled={isSaving}
                 >
-                    Скасувати
+                    {t("forAll.cancel")}
                 </button>
             </div>
 
