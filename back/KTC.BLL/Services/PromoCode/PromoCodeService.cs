@@ -161,6 +161,7 @@ namespace KTC.BLL.Services.PromoCode
                 Message = "Промокод успішно застосовано",
                 Payload = new PromoCodeResultDto
                 {
+                    PromoCodeId = promoCode.Id,
                     IsValid = true,
                     Code = promoCode.Code,
                     DiscountAmount = discount,

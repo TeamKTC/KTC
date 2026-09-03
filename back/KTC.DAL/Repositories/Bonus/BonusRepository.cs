@@ -17,5 +17,10 @@ namespace KTC.DAL.Repositories.Bonus
                 .OrderByDescending(x => x.CreatedDate)
                 .ToListAsync();
         }
+
+        public async Task AddAsync(BonusEntity entity)
+        {
+            await _context.Bonuses.AddAsync(entity);
+        }
     }
 }

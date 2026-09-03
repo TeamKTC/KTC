@@ -4,7 +4,7 @@ using KTC.Extensions;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using System.Security.Claims;
-using Microsoft.AspNetCore.Authorization;
+
 namespace KTC.Controllers
 {
     [ApiController]
@@ -12,59 +12,101 @@ namespace KTC.Controllers
     public class OrderController : ControllerBase
     {
         private readonly IOrderService _orderService;
+
         public OrderController(IOrderService orderService)
         {
             _orderService = orderService;
         }
+
+        [Authorize]
         [HttpPost]
-        public async Task<IActionResult> CreateOrder([FromBody] CreateOrderDto orderDto)
+        public async Task<IActionResult> CreateOrder(
+            [FromBody] CreateOrderDto orderDto)
         {
-            var response = await _orderService.CreateAsync(orderDto);
+            var userId = User.FindFirstValue(
+                ClaimTypes.NameIdentifier);
+
+            if (string.IsNullOrEmpty(userId))
+                return Unauthorized();
+
+            var response = await _orderService.CreateAsync(
+                orderDto,
+                userId);
+
             return this.ToActionResult(response);
         }
+
         [HttpPut]
-        public async Task<IActionResult> UpdateOrder([FromBody] UpdateOrderDto orderDto)
+        public async Task<IActionResult> UpdateOrder(
+            [FromBody] UpdateOrderDto orderDto)
         {
-            var response = await _orderService.UpdateAsync(orderDto);
+            var response =
+                await _orderService.UpdateAsync(orderDto);
+
             return this.ToActionResult(response);
         }
+
         [HttpDelete]
-        public async Task<IActionResult> DeleteOrder([FromQuery] string orderId)
+        public async Task<IActionResult> DeleteOrder(
+            [FromQuery] string orderId)
         {
-            var response = await _orderService.DeleteAsync(orderId);
+            var response =
+                await _orderService.DeleteAsync(orderId);
+
             return this.ToActionResult(response);
         }
+
         [HttpGet]
         public async Task<IActionResult> GetAllOrders()
         {
-            var response = await _orderService.GetAllOrders();
+            var response =
+                await _orderService.GetAllOrders();
+
             return this.ToActionResult(response);
         }
+
         [HttpGet("by-id")]
-        public async Task<IActionResult> GetOrderById([FromQuery] string orderId)
+        public async Task<IActionResult> GetOrderById(
+            [FromQuery] string orderId)
         {
-            var response = await _orderService.GetOrderById(orderId);
+            var response =
+                await _orderService.GetOrderById(orderId);
+
             return this.ToActionResult(response);
         }
-        [HttpGet("by-user-id")]
-        public async Task<IActionResult> GetOrdersByUserId([FromQuery] string userId)
-        {
-            var response = await _orderService.GetOrdersByUserId(userId);
-            return this.ToActionResult(response);
-        }
-        [HttpGet("order-items")]
-        public async Task<IActionResult> GetOrderItemsByOrderId([FromQuery] string orderId)
-        {
-            var response = await _orderService.GetOrderItemsByOrderId(orderId);
-            return this.ToActionResult(response);
-        }
+
         [Authorize]
         [HttpGet("my")]
         public async Task<IActionResult> GetMyOrders()
         {
-            var userId = User.FindFirstValue(ClaimTypes.NameIdentifier)!;
+            var userId = User.FindFirstValue(
+                ClaimTypes.NameIdentifier);
 
-            var response = await _orderService.GetOrdersByUserId(userId);
+            if (string.IsNullOrEmpty(userId))
+                return Unauthorized();
+
+            var response =
+                await _orderService.GetOrdersByUserId(userId);
+
+            return this.ToActionResult(response);
+        }
+
+        [HttpGet("by-user-id")]
+        public async Task<IActionResult> GetOrdersByUserId(
+            [FromQuery] string userId)
+        {
+            var response =
+                await _orderService.GetOrdersByUserId(userId);
+
+            return this.ToActionResult(response);
+        }
+
+        [HttpGet("order-items")]
+        public async Task<IActionResult> GetOrderItemsByOrderId(
+            [FromQuery] string orderId)
+        {
+            var response =
+                await _orderService.GetOrderItemsByOrderId(orderId);
 
             return this.ToActionResult(response);
         }

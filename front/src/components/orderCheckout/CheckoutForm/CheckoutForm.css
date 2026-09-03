@@ -1,0 +1,623 @@
+.checkout-form {
+    width: 966px;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.checkout-section {
+    width: 966px;
+    box-sizing: border-box;
+    padding: 20px 15px 12px;
+    border: 1px solid #dedede;
+    border-radius: 6px;
+    background: #fff;
+    display: flex;
+    flex-direction: column;
+}
+
+/* =========================
+   КОНТАКТНІ ДАНІ
+   ========================= */
+
+.checkout-section:nth-child(1) {
+    height: 212px;
+}
+
+/* =========================
+   ДОСТАВКА
+   ========================= */
+
+.checkout-section--delivery {
+    transition: height 0.15s ease;
+}
+
+.checkout-section--pickup {
+    height: 130px;
+}
+
+.checkout-section--expanded {
+    height: 280px;
+}
+
+/* =========================
+   ОПЛАТА
+   ========================= */
+
+.checkout-section--payment {
+    transition: height 0.15s ease;
+}
+
+.checkout-section--payment-cash {
+    height: 135px;
+}
+
+.checkout-section--payment-card {
+    height: 195px;
+}
+
+.checkout-section--payment-installment {
+    height: 220px;
+}
+
+/* =========================
+   КОМЕНТАР
+   ========================= */
+
+.checkout-section:nth-child(4) {
+    height: 115px;
+}
+
+/* =========================
+   БОНУСИ
+   ========================= */
+
+.checkout-section:nth-child(5) {
+    height: 112px;
+}
+
+/* =========================
+   ЗАГОЛОВКИ
+   ========================= */
+
+.checkout-section__title {
+    height: 20px;
+    min-height: 20px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    margin: 0;
+}
+
+.checkout-section__title h2 {
+    margin: 0;
+    font-size: 16px;
+    line-height: 20px;
+    font-weight: 600;
+    color: #303030;
+}
+
+.checkout-section__number {
+    width: 16px;
+    height: 16px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+    border: 1px solid #9da1a7;
+    border-radius: 50%;
+    font-size: 10px;
+    line-height: 1;
+    font-weight: 400;
+    color: #4c4f53;
+}
+
+/* =========================
+   ПОЛЯ
+   ========================= */
+
+.checkout-fields {
+    width: 100%;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    column-gap: 25px;
+    row-gap: 12px;
+    margin-top: 18px;
+}
+
+.checkout-field {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+}
+
+.checkout-field label {
+    font-size: 11px;
+    line-height: 14px;
+    color: #303030;
+}
+
+.checkout-field input {
+    width: 100%;
+    height: 38px;
+    box-sizing: border-box;
+    padding: 0 11px;
+    border: 1px solid #8d9298;
+    border-radius: 5px;
+    outline: none;
+    background: #fff;
+    color: #333;
+    font-size: 11px;
+}
+
+.checkout-field input::placeholder {
+    color: #53585e;
+}
+
+.checkout-field input:focus {
+    border-color: #286cff;
+}
+
+/* =========================
+   СПОСОБИ ДОСТАВКИ / ОПЛАТИ
+   ========================= */
+
+.checkout-options {
+    width: 100%;
+    display: grid;
+    gap: 14px;
+}
+
+.checkout-options--delivery {
+    grid-template-columns: 1fr 1fr 1fr;
+    margin-top: 16px;
+}
+
+.checkout-options--payment {
+    grid-template-columns: 1fr 1fr 1fr;
+    margin-top: 16px;
+}
+
+.checkout-option {
+    width: 100%;
+    height: 60px;
+    min-width: 0;
+    display: flex;
+    align-items: center;
+    position: relative;
+    padding: 0 14px;
+    box-sizing: border-box;
+    border: 1px solid #dedede;
+    border-radius: 5px;
+    background: #fff;
+    cursor: pointer;
+    text-align: left;
+    transition: border-color 0.15s ease;
+}
+
+.checkout-option:hover {
+    border-color: #b7bcc2;
+}
+
+.checkout-option--active {
+    border-color: #286cff;
+}
+
+.checkout-radio {
+    width: 13px;
+    height: 13px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+    margin-right: 11px;
+    border: 1px solid #cfd3d7;
+    border-radius: 50%;
+    box-sizing: border-box;
+}
+
+.checkout-radio span {
+    width: 7px;
+    height: 7px;
+    border-radius: 50%;
+    background: #286cff;
+}
+
+.checkout-option__icon {
+    width: 28px;
+    height: 28px;
+    flex-shrink: 0;
+    margin-right: 11px;
+    stroke-width: 1.4;
+    color: #111;
+}
+
+.checkout-option__content {
+    min-width: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 3px;
+}
+
+.checkout-option__content strong {
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    font-size: 12px;
+    line-height: 15px;
+    font-weight: 600;
+    color: #222;
+}
+
+.checkout-option__content small {
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    font-size: 10px;
+    line-height: 13px;
+    color: #62666b;
+}
+
+/* =========================
+   МІСТО
+   ========================= */
+
+.checkout-field--city {
+    width: 100%;
+    margin-top: 10px;
+}
+
+.checkout-select {
+    position: relative;
+    width: 100%;
+    height: 38px;
+    box-sizing: border-box;
+}
+
+.checkout-select select {
+    appearance: none;
+    -webkit-appearance: none;
+    width: 100%;
+    height: 38px;
+    box-sizing: border-box;
+    padding: 0 38px 0 11px;
+    border: 1px solid #8d9298;
+    border-radius: 5px;
+    outline: none;
+    background: #fff;
+    cursor: pointer;
+    color: #53585e;
+    font-size: 11px;
+}
+
+.checkout-select select:focus {
+    border-color: #286cff;
+}
+
+.checkout-select svg {
+    position: absolute;
+    right: 11px;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 17px;
+    height: 17px;
+    pointer-events: none;
+    stroke-width: 1.5;
+    color: #333;
+}
+
+/* =========================
+   ВІДДІЛЕННЯ / АДРЕСА
+   ========================= */
+
+.checkout-field--department {
+    width: 100%;
+    margin-top: 8px;
+}
+
+/* =========================
+   КОМЕНТАР
+   ========================= */
+
+.checkout-section--comment .checkout-section__title {
+    margin-bottom: 10px;
+}
+
+.checkout-section--comment textarea {
+    display: block;
+    width: 62%;
+    height: 48px;
+    min-height: 48px;
+    max-height: 48px;
+    margin: 0;
+    box-sizing: border-box;
+    padding: 0 11px;
+    resize: none;
+    border: 1px solid #8d9298;
+    border-radius: 5px;
+    outline: none;
+    background: #fff;
+    font-family: inherit;
+    font-size: 10px;
+    line-height: 48px;
+    color: #000;
+    text-align: left;
+    overflow: hidden;
+}
+
+.checkout-section--comment textarea::placeholder {
+    color: #000;
+    opacity: 1;
+    text-align: left;
+}
+
+.checkout-section--comment textarea:focus {
+    border-color: #286cff;
+}
+
+/* =========================
+   БОНУСИ
+   ========================= */
+
+.checkout-section--bonuses .checkout-section__title {
+    margin-bottom: 8px;
+}
+
+.bonus-row {
+    flex: 1;
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.bonus-checkbox {
+    display: flex;
+    align-items: flex-start;
+    position: relative;
+    cursor: pointer;
+}
+
+.bonus-checkbox input {
+    position: absolute;
+    opacity: 0;
+    pointer-events: none;
+}
+
+.bonus-checkbox__custom {
+    width: 16px;
+    height: 16px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+    margin-top: 1px;
+    border: 1px solid #c8ccd0;
+    border-radius: 3px;
+    box-sizing: border-box;
+    background: #fff;
+}
+
+.bonus-checkbox input:checked + .bonus-checkbox__custom::after {
+    content: "";
+    width: 8px;
+    height: 4px;
+    margin-top: -2px;
+    border-left: 1.5px solid #50555a;
+    border-bottom: 1.5px solid #50555a;
+    transform: rotate(-45deg);
+}
+
+.bonus-checkbox__content {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+    margin-left: 9px;
+}
+
+.bonus-checkbox__content strong {
+    font-size: 12px;
+    line-height: 15px;
+    font-weight: 600;
+    color: #222;
+}
+
+.bonus-checkbox__content small {
+    font-size: 10px;
+    line-height: 13px;
+    color: #62666b;
+}
+
+.bonus-price {
+    width: 130px;
+    height: 38px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    box-sizing: border-box;
+    border: 1px solid #dedede;
+    border-radius: 5px;
+    color: #9ba0a5;
+}
+
+.bonus-price span {
+    font-size: 10px;
+    line-height: 13px;
+}
+
+.bonus-price small {
+    font-size: 9px;
+    line-height: 12px;
+}
+
+/* =========================
+   ДОДАТКОВА ІНФОРМАЦІЯ ОПЛАТИ
+   ========================= */
+
+.payment-extra {
+    width: 100%;
+    box-sizing: border-box;
+    margin-top: 12px;
+}
+
+/* КАРТКА */
+
+.payment-extra--card {
+    height: 48px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0 12px;
+    border: 1px solid #dedede;
+    border-radius: 5px;
+    background: #fafafa;
+}
+
+.payment-extra__text {
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+}
+
+.payment-extra__text strong {
+    font-size: 11px;
+    line-height: 14px;
+    font-weight: 600;
+    color: #222;
+}
+
+.payment-extra__text span {
+    font-size: 9px;
+    line-height: 12px;
+    color: #62666b;
+}
+
+.payment-extra__cards {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+}
+
+.payment-extra__cards span {
+    height: 24px;
+    min-width: 42px;
+    padding: 0 7px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-sizing: border-box;
+    border: 1px solid #dedede;
+    border-radius: 4px;
+    background: #fff;
+    font-size: 8px;
+    font-weight: 600;
+    color: #333;
+}
+
+/* ОПЛАТА ЧАСТИНАМИ */
+
+.payment-extra--installment {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.installment-banks {
+    width: 100%;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 12px;
+}
+
+.installment-bank {
+    height: 50px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: flex-start;
+    padding: 0 12px;
+    box-sizing: border-box;
+    border: 1px solid #dedede;
+    border-radius: 5px;
+    background: #fff;
+    cursor: pointer;
+    text-align: left;
+}
+
+.installment-bank:hover {
+    border-color: #b7bcc2;
+}
+
+.installment-bank--active {
+    border-color: #286cff;
+}
+
+.installment-bank strong {
+    font-size: 11px;
+    line-height: 14px;
+    font-weight: 600;
+    color: #222;
+}
+
+.installment-bank small {
+    margin-top: 2px;
+    font-size: 9px;
+    line-height: 12px;
+    color: #62666b;
+}
+
+.installment-info {
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+}
+
+.installment-info strong {
+    font-size: 10px;
+    line-height: 13px;
+    font-weight: 600;
+    color: #303030;
+}
+
+.installment-info span {
+    font-size: 9px;
+    line-height: 12px;
+    color: #62666b;
+}
+
+/* =========================
+   АДАПТИВ
+   ========================= */
+
+@media (max-width: 1000px) {
+    .checkout-form,
+    .checkout-section {
+        width: 100%;
+    }
+}
+
+@media (max-width: 700px) {
+    .checkout-fields {
+        grid-template-columns: 1fr;
+    }
+
+    .checkout-options--delivery,
+    .checkout-options--payment {
+        grid-template-columns: 1fr;
+    }
+
+    .checkout-section:nth-child(1),
+    .checkout-section:nth-child(4),
+    .checkout-section:nth-child(5) {
+        height: auto;
+    }
+
+    .checkout-section--pickup,
+    .checkout-section--expanded,
+    .checkout-section--payment-cash,
+    .checkout-section--payment-card,
+    .checkout-section--payment-installment {
+        height: auto;
+    }
+}

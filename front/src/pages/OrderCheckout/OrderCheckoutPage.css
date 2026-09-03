@@ -1,0 +1,14 @@
+.checkout-layout {
+    display: grid;
+    grid-template-columns: 966px 700px;
+    gap: 12px;
+
+    width: 1308px;
+    margin: 0 0 16px 0;
+
+    align-items: start;
+}
+
+.checkout-layout > * {
+    min-width: 0;
+}
