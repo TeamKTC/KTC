@@ -7,7 +7,7 @@
 .picked-title {
   font-size: 26px;
   font-weight: 700;
-  color: #111827;
+  color: var(--text-h);
   margin-bottom: 20px;
 }
 

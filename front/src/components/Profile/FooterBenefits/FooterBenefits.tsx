@@ -1,3 +1,4 @@
+import { useTranslation } from "react-i18next";
 import "./FooterBenefits.css";
 import {
     Truck,
@@ -7,42 +8,43 @@ import {
 } from "lucide-react";
 
 const FooterBenefits = () => {
+    const { t } = useTranslation();
     return (
         <section className="footer-benefits">
 
             <div className="benefit">
                 <Truck size={24} />
                 <div className="benefit-text">
-                    <h4>Доставка</h4>
-                    <p>По Україні 1-3 дні</p>
-                    <span>Самовивіз з магазинів</span>
+                    <h4>{t("profile.footerBenefits.deliveryTitle")}</h4>
+                    <p>{t("profile.footerBenefits.deliveryDesc1")}</p>
+                    <span>{t("profile.footerBenefits.deliveryDesc2")}</span>
                 </div>
             </div>
 
             <div className="benefit">
                 <CreditCard size={24} />
                 <div className="benefit-text">
-                    <h4>Оплата</h4>
-                    <p>Готівкою, карткою онлайн або</p>
-                    <span>частинами до 10 платежів</span>
+                    <h4>{t("profile.footerBenefits.paymentTitle")}</h4>
+                    <p>{t("profile.footerBenefits.paymentDesc1")}</p>
+                    <span>{t("profile.footerBenefits.paymentDesc2")}</span>
                 </div>
             </div>
 
             <div className="benefit">
                 <Shield size={24} />
                 <div className="benefit-text">
-                    <h4>Гарантія</h4>
-                    <p>12 місяців офіційної гарантії</p>
-                    <span>Apple</span>
+                    <h4>{t("profile.footerBenefits.warrantyTitle")}</h4>
+                    <p>{t("profile.footerBenefits.warrantyDesc1")}</p>
+                    <span>{t("profile.footerBenefits.warrantyDesc2")}</span>
                 </div>
             </div>
 
             <div className="benefit">
                 <RotateCcw size={24} />
                 <div className="benefit-text">
-                    <h4>Повернення</h4>
-                    <p>14 днів на повернення</p>
-                    <span>товару</span>
+                    <h4>{t("profile.footerBenefits.returnTitle")}</h4>
+                    <p>{t("profile.footerBenefits.returnDesc1")}</p>
+                    <span>{t("profile.footerBenefits.returnDesc2")}</span>
                 </div>
             </div>
 

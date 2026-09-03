@@ -5,13 +5,38 @@ import { useGetProductAttributesByProductIdQuery } from "../../../store/services
 import { useGetAttributeDefinitionsByProductIdQuery } from "../../../store/services/attributeDefinitionApi";
 import { useGetBrandByIdQuery } from "../../../store/services/brandApi";
 import { useGetMediaByProductIdQuery } from "../../../store/services/mediaApi";
+import { useTranslation } from "react-i18next";
+import { useProductTranslation } from "../../../translating/productTranslation";
 
 
 interface ProductCardProps {
   product?: Product | null;
 }
 
+
+export const AttributeItem = ({ attr, definitions }: { attr: any; definitions: any }) => {
+  const attributeDef = definitions?.find((def: any) => def.id === attr.attributeDefinitionId);
+  const translatedName = useProductTranslation(attributeDef?.name ?? "Характеристика");
+
+  return (
+    <div className="characteristic">
+      <div className="characteristic-icon">
+        {/* TODO: icon */}
+      </div>
+
+      <span>
+        {translatedName}
+      </span>
+
+      <strong>
+        {attr.value}
+      </strong>
+    </div>
+  );
+};
+
 const MainComponent = ({ product }: ProductCardProps) => {
+  const { t } = useTranslation();
     const rate = Math.max(0, Math.min(5, product?.rate ?? 0));
     const { data: dataProductAttributes } = useGetProductAttributesByProductIdQuery( product?.id ?? "",{ skip: !product?.id });
     const {data : dataAttributeDefinitions} = useGetAttributeDefinitionsByProductIdQuery(product?.id ?? "", { skip: !product?.id });
@@ -76,7 +101,7 @@ const { data: brand } = useGetBrandByIdQuery(
 
         {/* Product title */}
         <h1 className="product-title">
-           {brand?.payload?.name ?? "Бренд"} {product?.name}
+           {brand?.payload?.name ?? t("forAll.brand")} {product?.name}
         </h1>
 
         {/* Rating + question */}
@@ -103,7 +128,7 @@ const { data: brand } = useGetBrandByIdQuery(
           </div>
 
           <button className="question-button">
-            Поставити запитання
+            {t("productDetails.askQuestion")}
           </button>
 
         </div>
@@ -113,12 +138,12 @@ const { data: brand } = useGetBrandByIdQuery(
         <div className="product-availability">
 
           <span>
-            {product?.quantity && product.quantity > 0 ? "В наявності" : "Немає в наявності"}
+            {product?.quantity && product.quantity > 0 ? t("productDetails.inStock") : t("productDetails.outOfStock")}
           </span>
 
           <span>
             {/* TODO: delivery information */}
-            Доставка 1-3 дні
+            {t("productDetails.deliveryTime")}
           </span>
 
         </div>
@@ -150,11 +175,11 @@ const { data: brand } = useGetBrandByIdQuery(
           <div className="bonus">
             <strong>
               {/* TODO: кількість бонусів */}
-              +___ бонусів
+              +___ {t("productDetails.bonus")}
             </strong>
 
             <span>
-              на вашу покупку
+              {t("productDetails.bonusesForPurchase")}
             </span>
           </div>
 
@@ -163,7 +188,7 @@ const { data: brand } = useGetBrandByIdQuery(
           <div className="quantity-block">
 
             <span className="quantity-label">
-              Кількість:
+              {t("productDetails.quantity")}
             </span>
 
             <div className="quantity-selector">
@@ -187,22 +212,22 @@ const { data: brand } = useGetBrandByIdQuery(
 
           {/* TODO: Add to cart */}
           <button className="btn-cart">
-            Додати в кошик
+            {t("productDetails.addToCart")}
           </button>
 
           {/* TODO: Buy now */}
           <button className="btn-buy">
-            Купити в 1 клік
+            {t("productDetails.buyOneClick")}
           </button>
 
           {/* TODO: Add to favorites */}
           <button className="btn-favorite">
-            Додати в обране
+            {t("productDetails.addToFavorites")}
           </button>
 
           {/* TODO: Compare */}
           <button className="btn-compare">
-            Порівняти
+            {t("productDetails.compare")}
           </button>
 
         </div>
@@ -214,28 +239,13 @@ const { data: brand } = useGetBrandByIdQuery(
 
           
 
-            {dataProductAttributes?.payload?.map((attr) => {
-            const attributeDef = dataAttributeDefinitions?.payload?.find(
-                (def) => def.id === attr.attributeDefinitionId
-            );
-
-                return (
-                    <div key={attr.id} className="characteristic">
-                    <div className="characteristic-icon">
-                        {/* TODO: icon */}
-                    </div>
-
-                    <span>
-                        {attributeDef?.name ?? "Характеристика"}
-                    </span>
-
-                    <strong>
-                        {attr.value}
-                    </strong>
-                    </div>
-                );
-            })}
-
+            {dataProductAttributes?.payload?.map((attr: any) => (
+              <AttributeItem
+                key={attr.id}
+                attr={attr}
+                definitions={dataAttributeDefinitions?.payload}
+              />
+            ))}
           
 
         </div>
@@ -243,7 +253,7 @@ const { data: brand } = useGetBrandByIdQuery(
 
         {/* All characteristics */}
         <button className="all-characteristics">
-          Дивитися всі характеристики
+          {t("productDetails.viewAllSpecs")}
         </button>
 
       </div>

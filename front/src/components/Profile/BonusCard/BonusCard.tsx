@@ -3,8 +3,10 @@ import {
     useGetBonusBalanceQuery,
     useGetBonusHistoryQuery,
 } from "../../../store/services/bonusApi";
+import { useTranslation } from "react-i18next";
 
 const BonusCard = () => {
+    const {t} = useTranslation();
     const {
         data: balanceData,
         isLoading: balanceLoading,
@@ -41,22 +43,21 @@ const BonusCard = () => {
     return (
         <div className="bonus-card">
 
-            <h2>Бонусна програма</h2>
+            <h2>{t("profile.bonusCard.title")}</h2>
 
             <p className="bonus-subtitle">
-                Ваш бонусний баланс
+                {t("profile.bonusCard.subtitle")}
             </p>
 
             <h1 className="bonus-count">
-                {bonusBalance} бонусів
+                {bonusBalance} {t("profile.bonusCard.bonusCount")}
             </h1>
 
             <p className="bonus-text">
-                Накопичуйте бонуси за покупки та використовуйте
-                їх для оплати 30% вартості замовлення
+                {t("profile.bonusCard.infoText", { percent: 30 })}
             </p>
 
-            <h3>Останні операції</h3>
+            <h3>{t("profile.bonusCard.recentTransactions")}</h3>
 
             {bonuses.map((bonus) => (
                 <div
@@ -81,7 +82,7 @@ const BonusCard = () => {
             ))}
 
             <button>
-                Всі операції з бонусами
+                {t("profile.bonusCard.allOperations")}
             </button>
 
         </div>

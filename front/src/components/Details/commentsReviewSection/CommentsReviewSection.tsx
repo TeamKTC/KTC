@@ -3,6 +3,7 @@ import { Star } from "lucide-react";
 import "./styles.css";
 import { useGetCommentsByProductIdQuery } from "../../../store/services/commentApi";
 import CommentCard from "../commentCard/CommentCard";
+import { useTranslation } from "react-i18next";
 
 interface ProductCardProps {
   product?: Product | null;
@@ -11,7 +12,7 @@ interface ProductCardProps {
 const CommentsReviewsSection = ({ product }: ProductCardProps) => {
     const rate = Math.max(0, Math.min(5, product?.rate ?? 0));
     const comments = useGetCommentsByProductIdQuery(product?.id ?? "", { skip: !product?.id });
-    
+    const {t} = useTranslation();
  return (
     <div className="container-fluid py-4">
       <div className="row g-4 align-items-start">
@@ -20,7 +21,7 @@ const CommentsReviewsSection = ({ product }: ProductCardProps) => {
         <div className="col-12 col-md-3 col-lg-2">
           {/* Заголовок */}
           <h2 className="fw-bold mb-2">
-            Відгуки ({product?.amountOfComments ?? 0})
+            {t("productDetails.reviews.title")} ({product?.amountOfComments ?? 0})
           </h2>
 
           {/* Загальний рейтинг і зірочки */}
@@ -42,7 +43,7 @@ const CommentsReviewsSection = ({ product }: ProductCardProps) => {
 
           {/* Текст під зірочками */}
           <div className="text-muted small mb-3">
-            на основі {product?.amountOfComments ?? 0} відгуків
+            {t("productDetails.reviews.basedOn", { count: product?.amountOfComments ?? 0 })}
           </div>
 
           {/* Гістограма оцінок (5, 4, 3, 2, 1) */}
@@ -66,7 +67,7 @@ const CommentsReviewsSection = ({ product }: ProductCardProps) => {
 
           {/* Кнопка створення відгуку */}
           <button type="button" className="btn btn-outline-primary w-100 rounded-pill fw-semibold">
-            Написати відгук
+            {t("productDetails.reviews.writeReview")}
           </button>
         </div>
 

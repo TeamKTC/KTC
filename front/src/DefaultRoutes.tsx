@@ -11,12 +11,15 @@ import DeliveryAndPaymentPage from "./pages/Delivery&Payment/Delivery&Payment";
 import WarrantyPage from "./pages/warranty/WarrantyPage";
 import AboutUsPage from "./pages/AboutUs/AboutUsPage";
 import CatalogePage from "./pages/CatalogePage/CatalogePage";
+import SettingsPage from "./pages/SettingsPage/SettingsPage";
 import OrderCheckoutPage from "./pages/OrderCheckout/OrderCheckoutPage";
 import OrderSuccessPage from "./pages/OrderSuccess/OrderSuccessPage";
 const DefaultRoutes = () => {
     const isAuthenticated = useAppSelector(
         (state) => state.auth.isAuthenticated
+        
     );
+    
 
     return (
         <Routes>
@@ -27,6 +30,7 @@ const DefaultRoutes = () => {
                     path="cataloge"
                     element={<CatalogePage />}
                 />
+                
 
                 <Route
                     path="profile"
@@ -62,6 +66,14 @@ const DefaultRoutes = () => {
                     element={
                         isAuthenticated
                             ? <FavoritesPage />
+                            : <Navigate to="/" replace />
+                    }
+                />
+                <Route
+                    path="settings"
+                    element={
+                        isAuthenticated
+                            ? <SettingsPage />
                             : <Navigate to="/" replace />
                     }
                 />

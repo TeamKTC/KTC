@@ -4,6 +4,7 @@ import { useEffect } from "react";
 import { useDispatch } from "react-redux";
 import { login } from './store/slices/authSlice'
 import DefaultRoutes from "./DefaultRoutes";
+import { ThemeProvider } from './context/ThemeContext';
 function App() {
     const dispatch = useDispatch();
 
@@ -15,9 +16,10 @@ function App() {
     }, [dispatch]);
 
     return (
-        <>
+        <ThemeProvider>
+
             <DefaultRoutes />
-        </>
+        </ThemeProvider>
     );
 }
 

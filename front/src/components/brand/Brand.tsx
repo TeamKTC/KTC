@@ -1,10 +1,12 @@
 import { useRef } from "react";
 import { useGetAllBrandsQuery } from "../../store/services/brandApi"
 import BrandCard from "./BrandCard";
+import { useTranslation } from "react-i18next";
 
 
 const Brand = () => {
     const {data, isLoading, error} = useGetAllBrandsQuery();
+    const {t} = useTranslation();
 
     const scrollContainerRef = useRef<HTMLDivElement>(null);
 
@@ -21,16 +23,16 @@ const Brand = () => {
     if (isLoading) { 
       return ( 
         <div className="recommended-products">
-            <h2>Бренди</h2>
-            <p>Завантаження...</p> 
+            <h2>{t("main.sections.brands")}</h2>
+            <p>{t("forAll.loading")}</p> 
         </div> 
       ); 
     } 
     if (error) { 
       return ( 
         <div className="recommended-products"> 
-            <h2>Бренди</h2> 
-            <p>Не вдалося завантажити бренди</p> 
+            <h2>{t("main.sections.brands")}</h2> 
+            <p>{t("forAll.failedToLoadBrands")}</p> 
         </div> 
       ); 
     }
@@ -38,7 +40,7 @@ const Brand = () => {
     return(
         <section className="container-fluid py-3">
             {/* Header */}
-            <h2 className="fs-4 fw-bold mb-3">Бренди</h2>
+            <h2 className="fs-4 fw-bold mb-3 " style={{ color: 'var(--text-h)' }}>{t("main.sections.brands")}</h2>
 
             {/* Brands Container */}
             <div className="d-flex align-items-center gap-3">

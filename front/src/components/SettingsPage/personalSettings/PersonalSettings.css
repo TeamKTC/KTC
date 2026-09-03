@@ -1,0 +1,56 @@
+.personal-card {
+  background: var(--bg);
+  border-radius: 12px;
+  padding: 24px;
+  border: 1px solid var(--border);
+  width: 100%;
+  box-sizing: border-box;
+}
+
+.personal-title {
+  font-size: 24px;
+  font-weight: 700;
+  margin-bottom: 24px;
+  color: var(--text-h) !important;
+}
+
+.personal-field {
+  margin-bottom: 12px;
+}
+
+.personal-field-last {
+  margin-bottom: 20px;
+}
+
+.personal-label {
+  display: block;
+  font-weight: 600;
+  font-size: 13px;
+  margin-bottom: 4px;
+  color: var(--text);
+}
+
+.personal-select {
+  border-radius: 8px !important;
+  border-color: #6c757d !important;
+  width: 100%;
+  font-size: 13px !important;
+  padding: 6px 12px !important;
+}
+
+.personal-actions {
+  display: flex;
+  gap: 12px;
+}
+
+.personal-btn {
+  border-radius: 8px !important;
+  font-size: 13px !important;
+  padding: 8px 12px !important;
+  flex: 1;
+}
+
+.personal-btn-secondary {
+  color: #212529 !important;
+  border-color: #6c757d !important;
+}

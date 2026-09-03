@@ -10,8 +10,10 @@ import { useAppSelector } from "../../hooks/redux";
 import Modal from "../Modal/Modal";
 import LoginPage from "../../pages/Auth/Login/LoginPage";
 import RegisterPage from "../../pages/Auth/Registr/RegisterPage";
+import { useTranslation } from "react-i18next";
 
 const Navbar = () => {
+    const { t } = useTranslation();
     const navigate = useNavigate();
 
     const isAuthenticated = useAppSelector(
@@ -51,7 +53,7 @@ const Navbar = () => {
                         <div className="d-flex gap-4">
 
                             <a href="#" className="top-link">
-                                Місто
+                                {t("navbar.topBar.city")}
                             </a>
 
                             <div
@@ -59,7 +61,7 @@ const Navbar = () => {
                                 onClick={() => navigate("/delivery")}
                                 style={{ cursor: "pointer" }}
                             >
-                                Доставка і оплата
+                                {t("navbar.topBar.deliveryAndPayment")}
                             </div>
 
                             <div
@@ -67,7 +69,7 @@ const Navbar = () => {
                                 onClick={() => navigate("/support")}
                                 style={{ cursor: "pointer" }}
                             >
-                                Підтримка
+                                {t("navbar.topBar.support")}
                             </div>
 
                             <div
@@ -75,7 +77,7 @@ const Navbar = () => {
                                 onClick={() => navigate("/warranty")}
                                 style={{ cursor: "pointer" }}
                             >
-                                Гарантія
+                                {t("navbar.topBar.warranty")}
                             </div>
 
                             <div
@@ -83,7 +85,7 @@ const Navbar = () => {
                                 onClick={() => navigate("/about")}
                                 style={{ cursor: "pointer" }}
                             >
-                                Про нас
+                                {t("navbar.topBar.aboutUs")}
                             </div>
 
                             <div
@@ -91,7 +93,7 @@ const Navbar = () => {
                                 onClick={() => navigate("/store")}
                                 style={{ cursor: "pointer" }}
                             >
-                                Магазин
+                                {t("navbar.topBar.store")}
                             </div>
 
                         </div>
@@ -106,11 +108,11 @@ const Navbar = () => {
             </div>
 
             {/* Main navbar */}
-            <div className="bg-white shadow-sm py-3">
-                <div className="container">
+            <div className="bg-{var(--bg)} shadow-sm py-3">
+                <div className="container-lower">
                     <div className="d-flex align-items-center">
 
-                        <div className="logo-placeholder me-4">
+                        <div className="logo-placeholder me-4" onClick={() => navigate("/")} style={{ cursor: "pointer" }}>
                             <Logo />
                         </div>
 
@@ -118,7 +120,7 @@ const Navbar = () => {
                             onClick={handleCatalogClick}
                             style={{ cursor: "pointer" }}>
                             <i className="bi bi-list me-2"></i>
-                            Каталог товарів
+                            {t("navbar.catalogBtn")}
                         </button>
 
                         <div className="flex-grow-1 me-4">
@@ -126,7 +128,7 @@ const Navbar = () => {
                                 <input
                                     type="text"
                                     className="form-control search-input"
-                                    placeholder="Пошук товарів..."
+                                    placeholder={t("navbar.searchPlaceholder")}
                                 />
 
                                 <button className="btn btn-light border">
@@ -139,12 +141,12 @@ const Navbar = () => {
 
                             {/* Профіль */}
                             <div
-                                className="icon-item text-decoration-none text-dark"
+                                className="icon-item text-decoration-none text-{var(--text)}"
                                 onClick={handleProfileClick}
                                 style={{ cursor: "pointer" }}
                             >
-                                <i className="bi bi-person"></i>
-                                <span>Профіль</span>
+                                <i className="bi bi-person icon" ></i>
+                                <span className="spannn">{t("navbar.profile")}</span>
                             </div>
 
                             {/* Кошик */}
@@ -153,10 +155,10 @@ const Navbar = () => {
                                 onClick={() => navigate("/cart")}
                                 style={{ cursor: "pointer" }}
                             >
-                                <i className="bi bi-cart3 position-relative">
+                                <i className="bi bi-cart3 position-relative icon">
                                     <span className="cart-badge">0</span>
                                 </i>
-                                <span>Кошик</span>
+                                <span className="spannn">{t("navbar.cart")}</span>
                             </div>
 
                             {/* Обране */}
@@ -165,8 +167,8 @@ const Navbar = () => {
                                 onClick={handleFavoritesClick}
                                 style={{ cursor: "pointer" }}
                             >
-                                <i className="bi bi-heart"></i>
-                                <span>Обране</span>
+                                <i className="bi bi-heart icon"></i>
+                                <span className="spannn">{t("navbar.favorites")}</span>
                             </div>
 
                         </div>

@@ -71,3 +71,17 @@
     padding-left: 100px;
     padding-right: 100px;
 }
+.container-lower {
+    max-width: 1880px !important;
+    padding-left: 100px;
+    padding-right: 100px;
+    
+}
+
+.spannn {
+    color: var(--text);
+}
+
+.icon {
+    color: var(--text);
+}

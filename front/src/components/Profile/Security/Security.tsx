@@ -13,8 +13,10 @@ import {
 } from "../../../store/services/authApi";
 
 import { useGetMeQuery } from "../../../store/services/userApi";
+import { useTranslation } from "react-i18next";
 
 const Security = () => {
+    const {t} = useTranslation();
     const {
         data,
         isLoading,
@@ -129,11 +131,10 @@ const Security = () => {
     return (
         <div className="security-card">
 
-            <h2>Безпека та паролі</h2>
+            <h2>{t("profile.securityProfile.title")}</h2>
 
             <p className="security-description">
-                Рекомендуємо змінювати пароль кожні
-                3-6 місяців.
+                {t("profile.securityProfile.subtitle")}
             </p>
 
             <button
@@ -142,7 +143,7 @@ const Security = () => {
                     setShowChangePassword(true)
                 }
             >
-                Змінити пароль
+                {t("profile.securityProfile.changePassword")}
             </button>
 
             <div
@@ -151,13 +152,13 @@ const Security = () => {
             >
                 <div>
                     <h4>
-                        Двоетапна перевірка
+                        {t("profile.securityProfile.twoFactorTitle")}
                     </h4>
 
                     <p>
                         {user?.twoFactorEnabled
-                            ? "Активовано"
-                            : "Не активовано"}
+                            ? t("profile.securityProfile.twoFactorActive")
+                            : t("profile.securityProfile.twoFactorNotActive")}
                     </p>
                 </div>
             </div>

@@ -1,24 +1,26 @@
 import ProductCard from "../productCard/ProductCard";
 import "./Recommended.css";
 import { useGetProductWithHighestRateQuery } from "../../store/services/productApi";
+import { useTranslation } from "react-i18next";
 
 
 
 const Recommended = () => {
     const { data, isLoading, error } = useGetProductWithHighestRateQuery(); 
+    const {t} = useTranslation();
     if (isLoading) { 
       return ( 
         <div className="recommended-products">
-            <h2>Рекомендовані товари</h2>
-            <p>Завантаження...</p> 
+            <h2>{t("forAll.recommendedProducts")}</h2>
+            <p>{t("forAll.loading")}</p> 
         </div> 
       ); 
     } 
     if (error) { 
       return ( 
         <div className="recommended-products"> 
-            <h2>Рекомендовані товари</h2> 
-            <p>Не вдалося завантажити товари</p> 
+            <h2>{t("forAll.recommendedProducts")}</h2> 
+            <p>{t("forAll.failedToLoadProducts")}</p> 
         </div> 
       ); 
     }
@@ -28,10 +30,10 @@ const Recommended = () => {
 
         {/* Header */}
         <div className="recommended-header">
-          <h2>Рекомендовані товари</h2>
+          <h2>{t("main.sections.recommended")}</h2>
 
           <button className="view-all-button">
-            Переглянути всі
+            {t("main.sections.viewAll")}
           </button>
         </div>
 

@@ -6,18 +6,20 @@ import Security from "../../components/Profile/Security/Security";
 import BonusHistory from "../../components/Profile/BonusHistory/BonusHistory";
 import BonusCard from "../../components/Profile/BonusCard/BonusCard";
 import FooterBenefits from "../../components/Profile/FooterBenefits/FooterBenefits";
+import { useTranslation } from "react-i18next";
 
 const ProfilePage = () => {
+    const {t} = useTranslation();
     return (
         <div className="profile-page">
 
           <div className="breadcrumbs">
-                <Link to="/">Головна</Link>
+                <Link to="/">{t("forAll.main")}</Link>
                 <span> &gt; </span>
-                <span>Особистий кабінет</span>
+                <span>{t("forAll.personalCabinet")}</span>
             </div>
 
-            <h1 className="profile-title">Особистий кабінет</h1>
+            <h1 className="profile-title">{t("forAll.personalCabinet")}</h1>
 
             <div className="profile-content">
 
