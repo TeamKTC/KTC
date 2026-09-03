@@ -12,6 +12,8 @@ import WarrantyPage from "./pages/warranty/WarrantyPage";
 import AboutUsPage from "./pages/AboutUs/AboutUsPage";
 import CatalogePage from "./pages/CatalogePage/CatalogePage";
 import SettingsPage from "./pages/SettingsPage/SettingsPage";
+import OrderCheckoutPage from "./pages/OrderCheckout/OrderCheckoutPage";
+import OrderSuccessPage from "./pages/OrderSuccess/OrderSuccessPage";
 const DefaultRoutes = () => {
     const isAuthenticated = useAppSelector(
         (state) => state.auth.isAuthenticated
@@ -46,8 +48,19 @@ const DefaultRoutes = () => {
                             ? <CartPage />
                             : <Navigate to="/" replace />
                     }
+
+          
                 />
 
+                <Route
+                    path="cart/checkout"
+                    element={
+                        isAuthenticated
+                            ? <OrderCheckoutPage />
+                            : <Navigate to="/" replace />
+                }
+/>
+            
                 <Route
                     path="favorites"
                     element={
@@ -76,6 +89,11 @@ const DefaultRoutes = () => {
                 <Route
                     path = "about"
                     element={<AboutUsPage />}
+                />
+
+                <Route
+                    path="order-success"
+                    element={<OrderSuccessPage />}
                 />
             </Route>
         </Routes>

@@ -17,5 +17,7 @@ namespace KTC.DAL.Repositories.User
         Task<List<UserEntity>> GetAllUsersAsync();
         Task<List<UserEntity>> SearchAsync(string search);
         Task<List<UserEntity>> GetUsersCreatedAfterAsync(DateTime date);
+
+        Task AddBonusAsync(BonusEntity bonus);
     }
 }

@@ -28,5 +28,11 @@ namespace KTC.DAL.Repositories.PromoCode
                     x.PromoCodeId == promoCodeId &&
                     x.UserId == userId);
         }
+
+        public async Task AddUsageAsync(PromoCodeUsageEntity usage)
+        {
+            await _context.PromoCodeUsages.AddAsync(usage);
+            await _context.SaveChangesAsync();
+        }
     }
 }
