@@ -522,28 +522,55 @@ namespace KTC.BLL.Services.Order
             };
         }
 
-        public async Task<ServiceResponse> GetOrdersByUserId(
+
+            public async Task<ServiceResponse> GetOrdersByUserId(
             string userId)
-        {
-            var orders = await _orderRepository
-                .GetOrdersByUserId(userId);
+                {
+                    var orders = await _orderRepository
+                        .GetOrdersByUserId(userId);
 
-            var result = orders.Select(order => new
-            {
-                id = order.Id,
-                orderNumber = order.OrderNumber,
-                date = order.Date,
-                status = order.Status,
-                totalPrice = order.TotalPrice
-            }).ToList();
+                    var result = orders.Select(order => new
+                    {
+                        id = order.Id,
+                        orderNumber = order.OrderNumber,
+                        date = order.Date,
+                        status = order.Status,
 
-            return new ServiceResponse
-            {
-                IsSuccess = true,
-                StatusCode = HttpStatusCode.OK,
-                Payload = result
-            };
-        }
+                        totalPrice = order.TotalPrice,
+
+                        usedBonuses = order.UsedBonuses,
+                        promoCodeId = order.PromoCodeId,
+                        promoDiscount = order.PromoDiscount,
+
+                        deliveryType = order.DeliveryType,
+
+                        city = order.City,
+                        department = order.Department,
+                        address = order.Address,
+
+                        paymentType = order.PaymentType,
+                        installmentBank = order.InstallmentBank,
+                        comment = order.Comment,
+
+                        items = order.Items.Select(item => new
+                        {
+                            id = item.Id,
+                            orderId = item.OrderId,
+                            productId = item.ProductId,
+                            quantity = item.Quantity,
+                            price = item.Price
+                        }).ToList()
+                    }).ToList();
+
+                    return new ServiceResponse
+                    {
+                        IsSuccess = true,
+                        StatusCode = HttpStatusCode.OK,
+                        Payload = result
+                    };
+                }
+
+
 
         public async Task<ServiceResponse> UpdateAsync(
             UpdateOrderDto dto)
@@ -572,5 +599,152 @@ namespace KTC.BLL.Services.Order
                 Message = "Замовлення успішно оновлено"
             };
         }
+
+        public async Task<ServiceResponse> CancelOrderAsync(
+            string orderId,
+            string userId)
+            {
+            var order = await _orderRepository.GetByIdAsync(orderId);
+
+            if (order == null)
+            {
+                return new ServiceResponse
+                {
+                    IsSuccess = false,
+                    StatusCode = HttpStatusCode.NotFound,
+                    Message = "Замовлення не знайдено"
+                };
+            }
+
+            if (order.UserId != userId)
+            {
+                return new ServiceResponse
+                {
+                    IsSuccess = false,
+                    StatusCode = HttpStatusCode.Forbidden,
+                    Message = "Ви не можете скасувати це замовлення"
+                };
+            }
+
+            var status = order.Status?.ToLower().Trim();
+
+            if (status != "pending" && status != "processing")
+            {
+                return new ServiceResponse
+                {
+                    IsSuccess = false,
+                    StatusCode = HttpStatusCode.BadRequest,
+                    Message = "Це замовлення вже не можна скасувати"
+                };
+            }
+
+            var user = await _userRepository.GetByIdAsync(userId);
+
+            if (user == null)
+            {
+                return new ServiceResponse
+                {
+                    IsSuccess = false,
+                    StatusCode = HttpStatusCode.NotFound,
+                    Message = "Користувача не знайдено"
+                };
+            }
+
+            if (order.UsedBonuses > 0)
+            {
+                user.BonusBalance += order.UsedBonuses;
+
+                await _userRepository.UpdateAsync(user);
+
+                var spentBonus = new BonusEntity
+                {
+                    Amount = order.UsedBonuses,
+                    OperationType = BonusOperationType.Earned,
+                    Description = "Повернення бонусів за скасоване замовлення",
+                    UserId = userId,
+                    User = user,
+                    OrderId = order.Id,
+                    Order = order
+                };
+
+                await _userRepository.AddBonusAsync(spentBonus);
+            }
+
+            foreach (var item in order.Items)
+            {
+                var product = await _productRepository
+                    .GetByIdAsync(item.ProductId);
+
+                if (product != null)
+                {
+                    product.Quantity += item.Quantity;
+
+                    if (product.SoldPerMonth >= item.Quantity)
+                    {
+                        product.SoldPerMonth -= item.Quantity;
+                    }
+                    else
+                    {
+                        product.SoldPerMonth = 0;
+                    }
+
+                    await _productRepository.UpdateAsync(product);
+                }
+            }
+
+            order.Status = "Cancelled";
+
+            await _orderRepository.UpdateAsync(order);
+
+            return new ServiceResponse
+            {
+                IsSuccess = true,
+                StatusCode = HttpStatusCode.OK,
+                Message = "Замовлення успішно скасовано"
+            };
+        }
+
+        public async Task<ServiceResponse> SetDeliveredAsync(
+            string orderId)
+        {
+            var order = await _orderRepository.GetByIdAsync(orderId);
+
+            if (order == null)
+            {
+                return new ServiceResponse
+                {
+                    IsSuccess = false,
+                    StatusCode = HttpStatusCode.NotFound,
+                    Message = "Замовлення не знайдено"
+                };
+            }
+
+            var status = order.Status?.ToLower().Trim();
+
+            if (status != "pending" && status != "processing")
+            {
+                return new ServiceResponse
+                {
+                    IsSuccess = false,
+                    StatusCode = HttpStatusCode.BadRequest,
+                    Message = "Це замовлення не можна позначити як доставлене"
+                };
+            }
+
+            order.Status = "Delivered";
+
+            await _orderRepository.UpdateAsync(order);
+
+            return new ServiceResponse
+            {
+                IsSuccess = true,
+                StatusCode = HttpStatusCode.OK,
+                Message = "Замовлення позначено як доставлене"
+            };
+        }
+
+
+
     }
+
 }

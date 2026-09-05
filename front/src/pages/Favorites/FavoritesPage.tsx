@@ -3,6 +3,7 @@ import FooterBenefits from "../../components/Profile/FooterBenefits/FooterBenefi
 import { Link } from "react-router-dom";
 import { useGetFavoritesQuery } from "../../store/services/favoriteApi";
 import FavoriteCard from "../../components/favorite/FavoriteCard";
+import "./FavoritesPage.css";
 const FavoritesPage = () => {
     const { data, isLoading, error } = useGetFavoritesQuery();
 

@@ -1,0 +1,377 @@
+.orders {
+    width: 100%;
+    font-family: Arial, sans-serif;
+}
+
+/* =========================
+   ФІЛЬТРИ
+========================= */
+
+.orders-filters {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    margin-bottom: 14px;
+}
+
+.orders-filter {
+    height: 34px;
+    padding: 0 13px;
+
+    background: #fff;
+    border: 1px solid #7f8792;
+    border-radius: 6px;
+
+    font-size: 12px;
+    color: #30343b;
+
+    cursor: pointer;
+}
+
+.orders-filter--active {
+    background: #2864e8;
+    border-color: #2864e8;
+    color: #fff;
+}
+
+/* =========================
+   ПОШУК
+========================= */
+
+.orders-search {
+    width: 100%;
+    height: 38px;
+
+    display: flex;
+    align-items: center;
+
+    border: 1px solid #7f8792;
+    border-radius: 6px;
+
+    margin-bottom: 14px;
+    padding: 0 10px 0 13px;
+
+    box-sizing: border-box;
+
+    background: #fff;
+}
+
+.orders-search input {
+    flex: 1;
+
+    width: 100%;
+    height: 100%;
+
+    border: none;
+    outline: none;
+
+    background: transparent;
+
+    font-size: 12px;
+    color: #000;
+
+    font-weight: 500;
+}
+
+.orders-search input::placeholder {
+    color: #a4aab3;
+    font-weight: 600;
+}
+
+.orders-search svg {
+    flex-shrink: 0;
+    color: #9199a5;
+}
+
+/* =========================
+   HEADER
+========================= */
+
+.orders-table-header {
+    width: 100%;
+    height: 35px;
+
+    display: grid;
+
+    grid-template-columns:
+        161px
+        110px
+        151px
+        132px
+        171px
+        1fr;
+
+    align-items: center;
+
+    padding: 0 12px;
+
+    box-sizing: border-box;
+
+    background: #e7ebf2;
+
+    border-radius: 6px;
+
+    font-size: 12px;
+    font-weight: 600;
+    color: #181b20;
+
+    margin-bottom: 14px;
+}
+
+/* =========================
+   СПИСОК
+========================= */
+
+.orders-list {
+    display: flex;
+    flex-direction: column;
+    gap: 14px;
+}
+
+/* =========================
+   РЯДОК
+========================= */
+
+.order-row {
+    width: 100%;
+    min-height: 76px;
+
+    display: grid;
+
+    grid-template-columns:
+        161px
+        110px
+        151px
+        132px
+        171px
+        1fr;
+
+    align-items: center;
+
+    padding: 0 12px;
+
+    box-sizing: border-box;
+
+    border: 1px solid #d5d9df;
+    border-radius: 6px;
+
+    background: #fff;
+
+    font-size: 12px;
+}
+
+/* =========================
+   НОМЕР
+========================= */
+
+.order-number {
+    display: flex;
+    flex-direction: column;
+    gap: 9px;
+}
+
+.order-number strong {
+    font-size: 12px;
+    color: #17191d;
+}
+
+.order-number span {
+    font-size: 11px;
+    color: #20242a;
+}
+
+/* =========================
+   ДАТА
+========================= */
+
+.order-date {
+    display: flex;
+    flex-direction: column;
+    gap: 9px;
+
+    color: #343942;
+}
+
+.order-date span {
+    font-size: 11px;
+}
+
+/* =========================
+   СТАТУС
+========================= */
+
+.orders-status {
+    display: inline-flex;
+    align-items: center;
+    gap: 7px;
+
+    height: 27px;
+
+    padding: 0 11px;
+
+    border-radius: 6px;
+
+    font-size: 11px;
+    font-weight: 600;
+
+    white-space: nowrap;
+}
+
+.orders-status-dot {
+    width: 6px;
+    height: 6px;
+
+    border-radius: 50%;
+}
+
+/* Доставлено */
+
+.orders-status--delivered {
+    background: #e1f3e7;
+    color: #087b38;
+}
+
+.orders-status--delivered .orders-status-dot {
+    background: #087b38;
+}
+
+/* В обробці */
+
+.orders-status--processing {
+    background: #fff0a9;
+    color: #d98400;
+}
+
+.orders-status--processing .orders-status-dot {
+    background: #e69a00;
+}
+
+/* Скасовано */
+
+.orders-status--cancelled {
+    background: #ffe1e1;
+    color: #e00000;
+}
+
+.orders-status--cancelled .orders-status-dot {
+    background: #e00000;
+}
+
+/* =========================
+   ЦІНА
+========================= */
+
+.order-price {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+
+.order-price strong {
+    font-size: 12px;
+    font-weight: 600;
+    color: #181b20;
+}
+
+.order-price span {
+    font-size: 11px;
+    color: #5d626b;
+}
+
+/* =========================
+   ТОВАРИ
+========================= */
+
+.order-products {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+}
+
+.order-product-images {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+}
+
+.order-product-image {
+    width: 30px;
+    height: 30px;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    border: 1px solid #d5d9df;
+    border-radius: 6px;
+
+    overflow: hidden;
+
+    background: #fff;
+}
+
+.order-product-image img {
+    width: 100%;
+    height: 100%;
+
+    object-fit: contain;
+}
+
+.order-product-more {
+    width: 30px;
+    height: 30px;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    border: 1px solid #d5d9df;
+    border-radius: 6px;
+
+    font-size: 11px;
+    color: #30343b;
+}
+
+.order-products strong {
+    font-size: 11px;
+    font-weight: 600;
+}
+
+/* =========================
+   ДІЇ
+========================= */
+
+.order-actions {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+    gap: 8px;
+
+    padding-right: 0;
+}
+
+.order-details,
+.order-action {
+    width: 87px;
+    height: 23px;
+
+    border: 1px solid #747c88;
+    border-radius: 6px;
+
+    background: #fff;
+
+    font-size: 11px;
+    color: #343942;
+
+    cursor: pointer;
+}
+
+.order-details {
+    border: none;
+    height: 20px;
+}
+
+.order-details:hover,
+.order-action:hover {
+    background: #f3f5f8;
+}
