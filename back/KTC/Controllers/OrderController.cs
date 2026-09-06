@@ -1,4 +1,5 @@
-﻿using KTC.BLL.Dto.Order;
+﻿
+using KTC.BLL.Dto.Order;
 using KTC.BLL.Services.Order;
 using KTC.Extensions;
 using Microsoft.AspNetCore.Authorization;
@@ -42,6 +43,37 @@ namespace KTC.Controllers
         {
             var response =
                 await _orderService.UpdateAsync(orderDto);
+
+            return this.ToActionResult(response);
+        }
+
+        [Authorize]
+        [HttpPut("cancel")]
+        public async Task<IActionResult> CancelOrder(
+            [FromQuery] string orderId)
+        {
+            var userId = User.FindFirstValue(
+                ClaimTypes.NameIdentifier);
+
+            if (string.IsNullOrEmpty(userId))
+                return Unauthorized();
+
+            var response =
+                await _orderService.CancelOrderAsync(
+                    orderId,
+                    userId);
+
+            return this.ToActionResult(response);
+        }
+
+        [Authorize]
+        [HttpPut("delivered")]
+        public async Task<IActionResult> SetDelivered(
+            [FromQuery] string orderId)
+        {
+            var response =
+                await _orderService.SetDeliveredAsync(
+                    orderId);
 
             return this.ToActionResult(response);
         }
@@ -112,3 +144,4 @@ namespace KTC.Controllers
         }
     }
 }
+

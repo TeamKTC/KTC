@@ -19,5 +19,13 @@ namespace KTC.BLL.Services.Order
         Task<ServiceResponse> GetOrdersByUserId(string userId);
 
         Task<ServiceResponse> GetOrderItemsByOrderId(string orderId);
+
+        Task<ServiceResponse> CancelOrderAsync(
+            string orderId,
+            string userId);
+
+        Task<ServiceResponse> SetDeliveredAsync(
+            string orderId);
     }
 }
+

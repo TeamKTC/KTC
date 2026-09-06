@@ -14,6 +14,7 @@ import CatalogePage from "./pages/CatalogePage/CatalogePage";
 import SettingsPage from "./pages/SettingsPage/SettingsPage";
 import OrderCheckoutPage from "./pages/OrderCheckout/OrderCheckoutPage";
 import OrderSuccessPage from "./pages/OrderSuccess/OrderSuccessPage";
+import OrdersPage from "./pages/Orders/OrdersPage";
 const DefaultRoutes = () => {
     const isAuthenticated = useAppSelector(
         (state) => state.auth.isAuthenticated
@@ -94,6 +95,14 @@ const DefaultRoutes = () => {
                 <Route
                     path="order-success"
                     element={<OrderSuccessPage />}
+                />
+                <Route
+                    path="orders"
+                    element={
+                        isAuthenticated
+                            ? <OrdersPage />
+                            : <Navigate to="/" replace />
+                    }
                 />
             </Route>
         </Routes>

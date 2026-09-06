@@ -15,8 +15,6 @@ import {
 
 import { NavLink, useNavigate } from "react-router-dom";
 import { useGetMeQuery } from "../../../store/services/userApi";
-import { useNavigate } from "react-router";
-import { useTranslation } from "react-i18next";
 import LogoutModal from "../../../pages/Auth/LogoutModal/LogoutModal";
 
 const Sidebar = () => {
@@ -24,17 +22,9 @@ const Sidebar = () => {
 
     const user = data?.payload;
 
-    const {t} = useTranslation();
-
-    const navigate = useNavigate();
-    const handleSettingsClick = () =>{
-        navigate("/settings")
-    }
-    const handleProfileClick =() =>{
-        navigate("/profile")
-    }
     const [showLogoutModal, setShowLogoutModal] = useState(false);
 
+    const navigate = useNavigate();
 
     const handleLogout = () => {
         localStorage.clear();
@@ -88,55 +78,6 @@ const Sidebar = () => {
 
                         <p>{user.email}</p>
 
-                <div className="bonus-text">
-                    <small>{t("profile.sidebar.bonusBalanceTitle")}</small>
-                    <h4>1 250 {t("profile.sidebar.bonusCount")}</h4>
-                    <span>{t("profile.sidebar.bonusRate")}</span>
-                </div>
-
-                <Wallet className="wallet-icon" />
-
-            </div>
-
-            <div className="menu-divider"></div>
-
-            <nav className="menu">
-
-                <a className="menu-item active" onClick={handleProfileClick}>
-                    <User />
-                    <span>{t("profile.sidebar.myProfile")}</span>
-                </a>
-
-                <a className="menu-item">
-                    <Package />
-                    <span>{t("profile.sidebar.myOrders")}</span>
-                </a>
-
-                <a className="menu-item">
-                    <Heart />
-                    <span>{t("profile.sidebar.favorites")}</span>
-                </a>
-
-                <a className="menu-item">
-                    <MapPin />
-                    <span>{t("profile.sidebar.deliveryAddresses")}</span>
-                </a>
-
-                <a className="menu-item">
-                    <Gift />
-                    <span>{t("profile.sidebar.bonuses")}</span>
-                </a>
-
-                <a className="menu-item" onClick={handleSettingsClick} >
-                    <Settings />
-                    <span>{t("profile.sidebar.settings")}</span>
-                </a>
-
-            </nav>
-
-            <div className="menu-divider"></div>
-
-            <div className="logout">
                         <span>{user.phoneNumber}</span>
                     </div>
                 </div>
@@ -155,7 +96,6 @@ const Sidebar = () => {
                     <Wallet className="wallet-icon" />
                 </div>
 
-                <span>{t("profile.sidebar.logout")}</span>
                 <div className="menu-divider"></div>
 
                 <nav className="menu">
@@ -245,4 +185,3 @@ const Sidebar = () => {
 };
 
 export default Sidebar;
-

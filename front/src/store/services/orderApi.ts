@@ -21,13 +21,10 @@ export interface Order {
     usedBonuses: number;
     promoCodeId: string | null;
     promoDiscount: number;
-
     deliveryType: string;
-
     city: string | null;
     department: string | null;
     address: string | null;
-
     paymentType: string;
     installmentBank: string | null;
     comment: string | null;
@@ -45,15 +42,11 @@ export interface CreateOrderDto {
     releaseDate?: string;
     status?: string;
     promoCodeId?: string | null;
-
     usedBonuses: number;
-
     deliveryType: string;
-
     city?: string | null;
     department?: string | null;
     address?: string | null;
-
     paymentType: string;
     installmentBank?: string | null;
     comment?: string | null;
@@ -70,6 +63,13 @@ export interface CreateOrderResponse {
         usedBonuses: number;
         totalPrice: number;
     } | null;
+    statusCode: number;
+}
+
+export interface OrderActionResponse {
+    message: string;
+    isSuccess: boolean;
+    payload: null;
     statusCode: number;
 }
 
@@ -124,6 +124,28 @@ export const orderApi = createApi({
             }),
             invalidatesTags: ["Order"],
         }),
+
+        cancelOrder: builder.mutation<
+            OrderActionResponse,
+            string
+        >({
+            query: (orderId) => ({
+                url: `order/cancel?orderId=${orderId}`,
+                method: "PUT",
+            }),
+            invalidatesTags: ["Order"],
+        }),
+
+        setDelivered: builder.mutation<
+            OrderActionResponse,
+            string
+        >({
+            query: (orderId) => ({
+                url: `order/delivered?orderId=${orderId}`,
+                method: "PUT",
+            }),
+            invalidatesTags: ["Order"],
+        }),
     }),
 });
 
@@ -131,4 +153,7 @@ export const {
     useGetMyOrdersQuery,
     useGetOrderByIdQuery,
     useCreateOrderMutation,
+    useCancelOrderMutation,
+    useSetDeliveredMutation,
 } = orderApi;
+
