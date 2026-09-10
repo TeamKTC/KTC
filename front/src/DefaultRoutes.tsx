@@ -114,7 +114,8 @@ const DefaultRoutes = () => {
                     element={
                         isAdmin
                             ? <AdminPage />
-                            : <Navigate to="/" replace />
+                            : <Navigate to="/" replace />}
+                />
 
                 <Route
                     path="store"
