@@ -17,6 +17,8 @@ import OrderSuccessPage from "./pages/OrderSuccess/OrderSuccessPage";
 import OrdersPage from "./pages/Orders/OrdersPage";
 import { useIsAdmin } from "./isAdmin/IsAdmin";
 import AdminPage from "./pages/AdminPage/AdminPage";
+import StoresPage from "./pages/Store/StoresPage";
+import SupportPage from "./pages/Support/SupportPage";
 const DefaultRoutes = () => {
     const   isAuthenticated = useAppSelector(
         (state) => state.auth.isAuthenticated
@@ -113,6 +115,17 @@ const DefaultRoutes = () => {
                         isAdmin
                             ? <AdminPage />
                             : <Navigate to="/" replace />
+
+                <Route
+                    path="store"
+                    element={
+                        <StoresPage />
+                    }
+                />
+                <Route
+                    path="support"
+                    element={
+                        <SupportPage />
                     }
                 />
             </Route>
