@@ -15,6 +15,8 @@ import SettingsPage from "./pages/SettingsPage/SettingsPage";
 import OrderCheckoutPage from "./pages/OrderCheckout/OrderCheckoutPage";
 import OrderSuccessPage from "./pages/OrderSuccess/OrderSuccessPage";
 import OrdersPage from "./pages/Orders/OrdersPage";
+import StoresPage from "./pages/Store/StoresPage";
+import SupportPage from "./pages/Support/SupportPage";
 const DefaultRoutes = () => {
     const isAuthenticated = useAppSelector(
         (state) => state.auth.isAuthenticated
@@ -102,6 +104,19 @@ const DefaultRoutes = () => {
                         isAuthenticated
                             ? <OrdersPage />
                             : <Navigate to="/" replace />
+                    }
+                />
+
+                <Route
+                    path="store"
+                    element={
+                        <StoresPage />
+                    }
+                />
+                <Route
+                    path="support"
+                    element={
+                        <SupportPage />
                     }
                 />
             </Route>
