@@ -4,6 +4,7 @@ const apiUrl = "https://localhost:7120/api/";
 
 import type {
   Category,
+  CreateCategoryDto,
   Product,
   ServiceResponse,
 } from "../../types/types";
@@ -29,7 +30,6 @@ export const categoryApi = createApi({
 
   endpoints: (build) => ({
     // GET /api/category
-    // Payload -> List<CategoryDto>
     getAllCategories: build.query<
       ServiceResponse<Category[]>,
       void
@@ -43,7 +43,6 @@ export const categoryApi = createApi({
     }),
 
     // GET /api/category/by-id?categoryId=...
-    // Payload -> CategoryDto
     getCategoryById: build.query<
       ServiceResponse<Category>,
       string
@@ -60,7 +59,6 @@ export const categoryApi = createApi({
     }),
 
     // GET /api/category/by-name?categoryName=...
-    // Payload -> CategoryDto
     getCategoryByName: build.query<
       ServiceResponse<Category>,
       string
@@ -77,7 +75,6 @@ export const categoryApi = createApi({
     }),
 
     // GET /api/category/products-by-category-name?categoryName=...
-    // Payload -> List<ProductDto>
     getProductsByCategoryName: build.query<
       ServiceResponse<Product[]>,
       string
@@ -92,6 +89,20 @@ export const categoryApi = createApi({
 
       providesTags: ["Product"],
     }),
+
+    // POST /api/category
+    createCategory: build.mutation<
+      ServiceResponse<Category>,
+      CreateCategoryDto
+    >({
+      query: (body) => ({
+        url: "category",
+        method: "POST",
+        body,
+      }),
+
+      invalidatesTags: ["Category"],
+    }),
   }),
 });
 
@@ -100,4 +111,5 @@ export const {
   useGetCategoryByIdQuery,
   useGetCategoryByNameQuery,
   useGetProductsByCategoryNameQuery,
+  useCreateCategoryMutation,
 } = categoryApi;

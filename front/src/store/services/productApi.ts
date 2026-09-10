@@ -142,6 +142,8 @@ export const productApi = createApi({
 
     // POST /api/product
     // Payload -> ProductDto
+    // POST /api/product
+    // Payload -> ProductDto
     createProduct: build.mutation<
       ServiceResponse<Product>,
       CreateProductDto
@@ -155,34 +157,32 @@ export const productApi = createApi({
           formData.append("Description", product.description);
         }
 
-        formData.append(
-          "Price",
-          product.price.toString()
-        );
+        formData.append("Price", product.price.toString());
+        formData.append("Quantity", product.quantity.toString());
+        formData.append("Rate", product.rate.toString());
+        formData.append("SoldPerMonth", product.soldPerMonth.toString());
+        formData.append("CategoryId", product.categoryId);
 
-        formData.append(
-          "Quantity",
-          product.quantity.toString()
-        );
+        // ДОДАНО: Відсутній BrandId
+        if (product.brandId) {
+          formData.append("BrandId", product.brandId);
+        }
 
-        formData.append(
-          "Rate",
-          product.rate.toString()
-        );
+        // ДОДАНО: Необов'язкове поле OldPrice
+        if (product.oldPrice !== null && product.oldPrice !== undefined) {
+          formData.append("OldPrice", product.oldPrice.toString());
+        }
 
-        formData.append(
-          "SoldPerMonth",
-          product.soldPerMonth.toString()
-        );
+        // ДОДАНО: AmountOfComments
+        if (product.amountOfComments !== undefined && product.amountOfComments !== null) {
+          formData.append("AmountOfComments", product.amountOfComments.toString());
+        }
 
-        formData.append(
-          "CategoryId",
-          product.categoryId
-        );
-
-        product.files.forEach((file) => {
-          formData.append("Files", file);
-        });
+        if (product.files && product.files.length > 0) {
+          product.files.forEach((file) => {
+            formData.append("Files", file);
+          });
+        }
 
         return {
           url: "product",
@@ -193,7 +193,6 @@ export const productApi = createApi({
 
       invalidatesTags: ["Product"],
     }),
-
     // PUT /api/product
     // Payload -> ProductDto
     updateProduct: build.mutation<

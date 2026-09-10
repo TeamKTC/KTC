@@ -2,6 +2,7 @@ import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
 const apiUrl = "https://localhost:7120/api/";
 
 import type {
+  CreateProductAttributeDto,
   Product,
   ProductAttribute,
   ServiceResponse,
@@ -129,6 +130,19 @@ export const productAttributeApi = createApi({
 
       providesTags: ["ProductAttribute"],
     }),
+
+    // POST /api/product-attribute
+    createProductAttribute: build.mutation<
+      ServiceResponse<ProductAttribute>,
+      CreateProductAttributeDto
+    >({
+      query: (createProductAttributeDto) => ({
+        url: "product-attribute",
+        method: "POST",
+        body: createProductAttributeDto
+      }),
+      invalidatesTags: ["ProductAttribute"]
+    }),
   }),
 });
 
@@ -139,4 +153,5 @@ export const {
   useGetProductAttributesByAttributeDefinitionIdQuery,
   useGetProductAttributesByRangeOfValueQuery,
   useGetProductAttributesByStringValueQuery,
+  useCreateProductAttributeMutation
 } = productAttributeApi;

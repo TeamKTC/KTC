@@ -17,6 +17,7 @@ using KTC.BLL.Services.OrderItem;
 using KTC.BLL.Services.Product;
 using KTC.BLL.Services.ProductAttribute;
 using KTC.BLL.Services.PromoCode;
+using KTC.BLL.Services.Role;
 using KTC.BLL.Services.TwoFactor;
 using KTC.BLL.Services.User;
 using KTC.BLL.Settings;
@@ -39,6 +40,7 @@ using KTC.DAL.Repositories.OrderItem;
 using KTC.DAL.Repositories.Product;
 using KTC.DAL.Repositories.ProductAttribute;
 using KTC.DAL.Repositories.PromoCode;
+using KTC.DAL.Repositories.Roles;
 using KTC.DAL.Repositories.User;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Identity;
@@ -128,6 +130,7 @@ builder.Services.AddScoped<IBrandRepository, BrandRepository>();
 builder.Services.AddScoped<IBonusRepository, BonusRepository>();
 builder.Services.AddScoped<IFavoriteRepository, FavoriteRepository>();
 builder.Services.AddScoped<IPromoCodeRepository, PromoCodeRepository>();
+builder.Services.AddScoped<IRolesRepository, RolesRepository>();
 
 // Add service
 builder.Services.AddScoped<IEmailService, EmailService>();
@@ -152,6 +155,7 @@ builder.Services.AddScoped<IMediaService, MediaService>();
 builder.Services.AddMemoryCache();
 builder.Services.AddScoped<TwoFactorService>();
 builder.Services.AddScoped<IPromoCodeService, PromoCodeService>();
+builder.Services.AddScoped<IRoleService, RoleService>();
 
 
 builder.Services.AddEndpointsApiExplorer();

@@ -1,0 +1,60 @@
+/* Основна картка-контейнер */
+.custom-card {
+  background-color: #ffffff;
+  border: 1px solid #e2e8f0;
+  border-radius: 12px;
+  padding: 32px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.03);
+}
+
+.custom-title {
+  font-weight: 700;
+  font-size: 1.5rem;
+  color: #000000;
+  margin-bottom: 24px;
+}
+
+/* Синя рамка для інпутів, селектів та текстових областей */
+.custom-input {
+  border: 1.5px solid #3b82f6 !important;
+  border-radius: 6px !important;
+  padding: 10px 14px !important;
+  color: #1e293b;
+}
+
+.custom-input:focus {
+  border-color: #2563eb !important;
+  box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.25) !important;
+}
+
+/* Кнопка "Зберегти" (Заповнена синя) */
+.btn-blue-submit {
+  background-color: #2563eb !important;
+  border-color: #2563eb !important;
+  color: #ffffff !important;
+  border-radius: 6px !important;
+  padding: 10px 24px !important;
+  font-weight: 500;
+  transition: background-color 0.2s ease;
+}
+
+.btn-blue-submit:hover {
+  background-color: #1d4ed8 !important;
+  border-color: #1d4ed8 !important;
+}
+
+/* Кнопка "Скасувати" (Контурна синя) */
+.btn-blue-outline {
+  background-color: transparent !important;
+  border: 1.5px solid #3b82f6 !important;
+  color: #2563eb !important;
+  border-radius: 6px !important;
+  padding: 10px 24px !important;
+  font-weight: 500;
+  transition: all 0.2s ease;
+}
+
+.btn-blue-outline:hover {
+  background-color: #f0f6ff !important;
+  color: #1d4ed8 !important;
+}

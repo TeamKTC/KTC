@@ -16,9 +16,11 @@ import {
 import { NavLink, useNavigate } from "react-router-dom";
 import { useGetMeQuery } from "../../../store/services/userApi";
 import LogoutModal from "../../../pages/Auth/LogoutModal/LogoutModal";
+import { useTranslation } from "react-i18next";
 
 const Sidebar = () => {
     const { data, isLoading, error } = useGetMeQuery();
+    const {t} = useTranslation();
 
     const user = data?.payload;
 
@@ -84,13 +86,13 @@ const Sidebar = () => {
 
                 <div className="bonus-card-mini">
                     <div className="bonus-text">
-                        <small>Бонусний баланс</small>
+                        <small>{t("profile.sidebar.bonusBalanceTitle")}</small>
 
                         <h4>
-                            {user.bonusBalance.toLocaleString("uk-UA")} бонусів
+                            {user.bonusBalance.toLocaleString("uk-UA")} {t("profile.sidebar.bonusCount")}
                         </h4>
 
-                        <span>1 бонус = 1 грн</span>
+                        <span>{t("profile.sidebar.bonusRate")}</span>
                     </div>
 
                     <Wallet className="wallet-icon" />
@@ -107,7 +109,7 @@ const Sidebar = () => {
                         }
                     >
                         <User />
-                        <span>Мій профіль</span>
+                        <span>{t("profile.sidebar.myProfile")}</span>
                     </NavLink>
 
                     <NavLink
@@ -117,7 +119,7 @@ const Sidebar = () => {
                         }
                     >
                         <Package />
-                        <span>Мої замовлення</span>
+                        <span>{t("profile.sidebar.myOrders")}</span>
                     </NavLink>
 
                     <NavLink
@@ -127,7 +129,7 @@ const Sidebar = () => {
                         }
                     >
                         <Heart />
-                        <span>Обране</span>
+                        <span>{t("profile.sidebar.favorites")}</span>
                     </NavLink>
 
                     <NavLink
@@ -137,7 +139,7 @@ const Sidebar = () => {
                         }
                     >
                         <MapPin />
-                        <span>Адреси доставки</span>
+                        <span>{t("profile.sidebar.deliveryAddresses")}</span>
                     </NavLink>
 
                     <NavLink
@@ -147,7 +149,7 @@ const Sidebar = () => {
                         }
                     >
                         <Gift />
-                        <span>Бонуси</span>
+                        <span>{t("profile.sidebar.bonuses")}</span>
                     </NavLink>
 
                     <NavLink
@@ -157,7 +159,7 @@ const Sidebar = () => {
                         }
                     >
                         <Settings />
-                        <span>Налаштування</span>
+                        <span>{t("profile.sidebar.settings")}</span>
                     </NavLink>
 
                 </nav>
@@ -169,7 +171,7 @@ const Sidebar = () => {
                     onClick={() => setShowLogoutModal(true)}
                 >
                     <LogOut />
-                    <span>Вийти</span>
+                    <span>{t("profile.sidebar.logout")}</span>
                 </div>
 
             </aside>

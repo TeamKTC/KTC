@@ -15,14 +15,17 @@ import SettingsPage from "./pages/SettingsPage/SettingsPage";
 import OrderCheckoutPage from "./pages/OrderCheckout/OrderCheckoutPage";
 import OrderSuccessPage from "./pages/OrderSuccess/OrderSuccessPage";
 import OrdersPage from "./pages/Orders/OrdersPage";
+import { useIsAdmin } from "./isAdmin/IsAdmin";
+import AdminPage from "./pages/AdminPage/AdminPage";
 import StoresPage from "./pages/Store/StoresPage";
 import SupportPage from "./pages/Support/SupportPage";
 const DefaultRoutes = () => {
-    const isAuthenticated = useAppSelector(
+    const   isAuthenticated = useAppSelector(
         (state) => state.auth.isAuthenticated
         
     );
-    
+
+    const isAdmin = useIsAdmin();
 
     return (
         <Routes>
@@ -62,7 +65,7 @@ const DefaultRoutes = () => {
                             ? <OrderCheckoutPage />
                             : <Navigate to="/" replace />
                 }
-/>
+                />
             
                 <Route
                     path="favorites"
@@ -106,6 +109,12 @@ const DefaultRoutes = () => {
                             : <Navigate to="/" replace />
                     }
                 />
+                <Route
+                    path="admin"
+                    element={
+                        isAdmin
+                            ? <AdminPage />
+                            : <Navigate to="/" replace />
 
                 <Route
                     path="store"

@@ -66,16 +66,13 @@
     justify-content: center;
     align-items: center;
 }
-.container {
-    max-width: 1880px !important;
-    padding-left: 100px;
-    padding-right: 100px;
-}
+.container,
 .container-lower {
-    max-width: 1880px !important;
-    padding-left: 100px;
-    padding-right: 100px;
-    
+  max-width: 1880px !important;
+  margin-left: auto !important;  /* Центрує блок */
+  margin-right: auto !important; /* Центрує блок */
+  padding-left: 100px;
+  padding-right: 100px;
 }
 
 .spannn {

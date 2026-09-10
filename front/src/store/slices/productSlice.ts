@@ -12,6 +12,7 @@ const initialProduct: Product = {
   soldPerMonth: 0,
   categoryId: "",
   brandId: "",
+  amountOfComments: 0,
 };
 
 const ProductSlice = createSlice({
@@ -29,6 +30,7 @@ const ProductSlice = createSlice({
       state.soldPerMonth = action.payload.soldPerMonth;
       state.categoryId = action.payload.categoryId;
       state.brandId = action.payload.brandId;
+      state.amountOfComments = action.payload.amountOfComments;
     },
 
     productClear(state) {
@@ -41,6 +43,7 @@ const ProductSlice = createSlice({
       state.soldPerMonth = 0;
       state.categoryId = "";
       state.brandId ="";
+      state.amountOfComments = 0;
     },
   },
 });
