@@ -3,6 +3,7 @@ const apiUrl = "https://localhost:7120/api/";
 
 import type {
   AttributeDefinition,
+  CreateAttributeDefinitionDto,
   ServiceResponse,
 } from "../../types/types";
 
@@ -108,6 +109,19 @@ export const attributeDefinitionApi = createApi({
 
       providesTags: ["AttributeDefinition"],
     }),
+
+    // POST /api/attribute-definition
+    createAttributeDefinition: build.mutation<
+      ServiceResponse<AttributeDefinition>,
+      CreateAttributeDefinitionDto
+    >({
+      query: (createAttributeDefinitionDto) => ({
+        url: "attribute-definition",
+        method: "POST",
+        body: createAttributeDefinitionDto,
+      }),
+      invalidatesTags: ["AttributeDefinition"],
+    }),
   }),
 });
 
@@ -117,4 +131,5 @@ export const {
   useGetAttributeDefinitionByNameQuery,
   useGetAttributeDefinitionsByProductIdQuery,
   useGetAttributeDefinitionsByTypeQuery,
+  useCreateAttributeDefinitionMutation,
 } = attributeDefinitionApi;

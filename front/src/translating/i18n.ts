@@ -181,6 +181,7 @@ const resources = {
         },
       },
       navbar: {
+        admin: "Адмін",
         topBar: {
           city: "Місто",
           deliveryAndPayment: "Доставка і оплата",
@@ -428,6 +429,7 @@ const resources = {
         }
       },
       navbar: {
+        admin: "Admin",
         topBar: {
           city: "City",
           deliveryAndPayment: "Delivery & Payment",

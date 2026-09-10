@@ -18,6 +18,7 @@ namespace KTC.DAL.Repositories
         {
             await _context.Set<TEntity>().AddAsync(entity);
             await _context.SaveChangesAsync();
+            
         }
 
         public async Task CreateRangeAsync(params TEntity[] entitties)

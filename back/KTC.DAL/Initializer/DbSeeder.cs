@@ -24,6 +24,11 @@ namespace KTC.DAL.Initializer
             {
                 await roleManager.CreateAsync(new IdentityRole("User"));
             }
+            if (!await roleManager.RoleExistsAsync("Admin"))
+            {
+                await roleManager.CreateAsync(new IdentityRole("Admin"));
+            }
+
             var categoryId = Guid.NewGuid().ToString();
             var userId = Guid.NewGuid().ToString();
             var productId = Guid.NewGuid().ToString();

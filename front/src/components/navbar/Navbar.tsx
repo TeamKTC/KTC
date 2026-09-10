@@ -11,6 +11,7 @@ import Modal from "../Modal/Modal";
 import LoginPage from "../../pages/Auth/Login/LoginPage";
 import RegisterPage from "../../pages/Auth/Registr/RegisterPage";
 import { useTranslation } from "react-i18next";
+import { useIsAdmin } from "../../isAdmin/IsAdmin";
 
 const Navbar = () => {
     const { t } = useTranslation();
@@ -42,6 +43,8 @@ const Navbar = () => {
     const handleCatalogClick = () => {
         navigate("/cataloge");
     }
+
+    const isAdmin = useIsAdmin();
 
     return (
         <>
@@ -110,7 +113,7 @@ const Navbar = () => {
             {/* Main navbar */}
             <div className="bg-{var(--bg)} shadow-sm py-3">
                 <div className="container-lower">
-                    <div className="d-flex align-items-center">
+                    <div className="d-flex align-items-center justify-content-between w-100">
 
                         <div className="logo-placeholder me-4" onClick={() => navigate("/")} style={{ cursor: "pointer" }}>
                             <Logo />
@@ -170,7 +173,16 @@ const Navbar = () => {
                                 <i className="bi bi-heart icon"></i>
                                 <span className="spannn">{t("navbar.favorites")}</span>
                             </div>
-
+                            {isAdmin ? (
+                                <div
+                                    className="icon-item"
+                                    onClick={() => navigate("/admin")}
+                                    style={{ cursor: "pointer" }}
+                                >
+                                    <i className="bi bi-shield icon"></i>
+                                    <span className="spannn">{t("navbar.admin")}</span>
+                                </div>
+                            ) : null}
                         </div>
 
                     </div>

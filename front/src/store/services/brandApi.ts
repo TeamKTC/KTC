@@ -1,10 +1,10 @@
-
 import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
 
 const apiUrl = "https://localhost:7120/api/";
 
 import type {
   Brand,
+  CreateBrandDto,
   Product,
   ServiceResponse,
 } from "../../types/types";
@@ -31,7 +31,6 @@ export const brandApi = createApi({
   endpoints: (build) => ({
 
     // GET /api/brand
-    // Payload -> List<BrandDto>
     getAllBrands: build.query<
       ServiceResponse<Brand[]>,
       void
@@ -45,7 +44,6 @@ export const brandApi = createApi({
     }),
 
     // GET /api/brand/by-id?brandId=...
-    // Payload -> BrandDto
     getBrandById: build.query<
       ServiceResponse<Brand>,
       string
@@ -62,7 +60,6 @@ export const brandApi = createApi({
     }),
 
     // GET /api/brand/all-products?brandId=...
-    // Payload -> List<ProductDto>
     getAllProductsByBrandId: build.query<
       ServiceResponse<Product[]>,
       string
@@ -77,6 +74,19 @@ export const brandApi = createApi({
 
       providesTags: ["Brand"],
     }),
+
+    // POST /api/brand
+    createBrand: build.mutation<
+      ServiceResponse<Brand>,
+      CreateBrandDto | FormData
+    >({
+      query: (body) => ({
+        url: "brand",
+        method: "POST",
+        body,
+      }),
+      invalidatesTags: ["Brand"],
+    }),
   }),
 });
 
@@ -84,6 +94,5 @@ export const {
   useGetAllBrandsQuery,
   useGetBrandByIdQuery,
   useGetAllProductsByBrandIdQuery,
+  useCreateBrandMutation,
 } = brandApi;
-
-

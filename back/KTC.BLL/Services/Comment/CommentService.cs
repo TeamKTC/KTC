@@ -47,7 +47,8 @@ namespace KTC.BLL.Services.Comment
             entity.User = user;
 
             await _commentRepository.CreateAsync(entity);
-
+            product.AmountOfComments++;
+            await _productRepository.UpdateAsync(product);
             return new ServiceResponse
             {
                 IsSuccess = true,

@@ -30,6 +30,7 @@ export interface CreateProductDto {
   files: File[];
   brandId: string;
   oldPrice?: number | null;
+  amountOfComments?: number;
 }
 
 export interface UpdateProductDto {
@@ -51,13 +52,27 @@ export interface Brand  {
   description: string;
 };
 
+export interface CreateBrandDto {
+  name: string;
+  description: string;
+}
+
 export interface Category  {
   id: string;
   name: string;
 };
 
+export interface CreateCategoryDto {
+  name: string;
+}
+
 export interface AttributeDefinition {
   id: string;
+  name: string;
+  type: string;
+}
+
+export interface CreateAttributeDefinitionDto {
   name: string;
   type: string;
 }
@@ -68,6 +83,13 @@ export interface ProductAttribute {
   attributeDefinitionId: string;
   value: string;
 }
+
+export interface CreateProductAttributeDto{
+  productId: string;
+  attributeDefinitionId: string;
+  value: string;
+}
+
 export interface Favorite {
     productId: string;
 }
