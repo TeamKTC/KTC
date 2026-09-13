@@ -9,12 +9,22 @@ namespace KTC.DAL.Repositories.Bonus
         {
         }
 
-        public Task<List<BonusEntity>> GetByUserIdAsync(string userId)
+        public async Task<List<BonusEntity>> GetByUserIdAsync(string userId)
         {
-            return _context.Bonuses
+            return await _context.Bonuses
                 .Include(x => x.Order)
                 .Where(x => x.UserId == userId)
                 .OrderByDescending(x => x.CreatedDate)
+                .ToListAsync();
+        }
+
+        public async Task<List<BonusEntity>> GetLast10ByUserIdAsync(string userId)
+        {
+            return await _context.Bonuses
+                .Include(x => x.Order)
+                .Where(x => x.UserId == userId)
+                .OrderByDescending(x => x.CreatedDate)
+                .Take(10)
                 .ToListAsync();
         }
 

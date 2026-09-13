@@ -20,22 +20,54 @@ namespace KTC.API.Controllers
         [HttpGet]
         public async Task<IActionResult> GetHistory()
         {
-            var userId = User.FindFirstValue(ClaimTypes.NameIdentifier)!;
+            var userId = User.FindFirstValue(
+                ClaimTypes.NameIdentifier);
 
-            var result = await _bonusService.GetUserBonuses(userId);
+            if (string.IsNullOrEmpty(userId))
+                return Unauthorized();
 
-            return StatusCode((int)result.StatusCode, result);
+            var result = await _bonusService
+                .GetUserBonuses(userId);
+
+            return StatusCode(
+                (int)result.StatusCode,
+                result);
+        }
+
+        [Authorize]
+        [HttpGet("last10")]
+        public async Task<IActionResult> GetLast10()
+        {
+            var userId = User.FindFirstValue(
+                ClaimTypes.NameIdentifier);
+
+            if (string.IsNullOrEmpty(userId))
+                return Unauthorized();
+
+            var result = await _bonusService
+                .GetLast10UserBonuses(userId);
+
+            return StatusCode(
+                (int)result.StatusCode,
+                result);
         }
 
         [Authorize]
         [HttpGet("balance")]
         public async Task<IActionResult> GetBalance()
         {
-            var userId = User.FindFirstValue(ClaimTypes.NameIdentifier)!;
+            var userId = User.FindFirstValue(
+                ClaimTypes.NameIdentifier);
 
-            var result = await _bonusService.GetBonusBalance(userId);
+            if (string.IsNullOrEmpty(userId))
+                return Unauthorized();
 
-            return StatusCode((int)result.StatusCode, result);
+            var result = await _bonusService
+                .GetBonusBalance(userId);
+
+            return StatusCode(
+                (int)result.StatusCode,
+                result);
         }
     }
 }

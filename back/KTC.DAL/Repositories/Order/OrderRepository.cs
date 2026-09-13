@@ -53,5 +53,15 @@ namespace KTC.DAL.Repositories.Order
                 throw;
             }
         }
+        public async Task<List<OrderEntity>> GetLast7OrdersByUserIdAsync(string userId)
+        {
+            return await _context.Orders
+                .Where(x => x.UserId == userId)
+                .OrderByDescending(x => x.Date)
+                .Take(7)
+                .Include(x => x.Items)
+                .ToListAsync();
+        }
     }
+
 }

@@ -16,6 +16,7 @@ import logo from "../../../foto/fotoktcnorm.png";
 import { useNavigate } from "react-router-dom";
 
 import TwoFactorModal from "../TwoFactorModal/TwoFactorModal";
+import ForgotPasswordModal from "../ForgotPasswordModa/ForgotPasswordModal";
 
 interface LoginPageProps {
     onClose: () => void;
@@ -41,31 +42,22 @@ export default function LoginPage({
 
     const [challenge, setChallenge] = useState<string | null>(null);
 
+    const [showForgotPassword, setShowForgotPassword] =
+        useState(false);
 
     const handleLogin = async () => {
-
         try {
-
             const result = await loginRequest({
                 login: userLogin,
                 password,
             }).unwrap();
 
-
-            // Якщо потрібна двофакторна автентифікація
             if (result.payload.challenge) {
-
-                setChallenge(
-                    result.payload.challenge
-                );
-
+                setChallenge(result.payload.challenge);
                 return;
             }
 
-
-            // Звичайний вхід без 2FA
             if (result.payload.token) {
-
                 dispatch(
                     login(result.payload.token)
                 );
@@ -76,33 +68,26 @@ export default function LoginPage({
 
                 navigate("/profile");
             }
-
         } catch {
-
             alert("Неправильний логін або пароль");
         }
     };
 
-
     const handleVerifyTwoFactor = async (
         code: string
     ) => {
-
         if (!challenge) {
             return;
         }
 
         try {
-
             const result =
                 await verifyTwoFactor({
                     challenge,
                     code,
                 }).unwrap();
 
-
             if (result.payload.token) {
-
                 dispatch(
                     login(result.payload.token)
                 );
@@ -115,17 +100,17 @@ export default function LoginPage({
 
                 navigate("/profile");
             }
-
         } catch {
-
             alert("Неправильний або протермінований код");
         }
     };
 
+    const handleForgotPassword = () => {
+        setShowForgotPassword(true);
+    };
 
     return (
         <>
-
             <div className="login-card">
 
                 <button
@@ -134,7 +119,6 @@ export default function LoginPage({
                 >
                     ✕
                 </button>
-
 
                 <div className="logo">
 
@@ -156,11 +140,9 @@ export default function LoginPage({
 
                 </div>
 
-
                 <h1 className="login-title">
                     Увійдіть в акаунт
                 </h1>
-
 
                 <input
                     className="login-input"
@@ -172,7 +154,6 @@ export default function LoginPage({
                     }
                 />
 
-
                 <input
                     className="password-input"
                     type="password"
@@ -182,7 +163,6 @@ export default function LoginPage({
                         setPassword(e.target.value)
                     }
                 />
-
 
                 <div className="options">
 
@@ -197,13 +177,14 @@ export default function LoginPage({
 
                     </label>
 
-
-                    <a href="#">
-                        Забули пароль?
-                    </a>
+            <span 
+                className="forgot-password-link"
+                onClick={handleForgotPassword}
+            >
+                Забули пароль?
+            </span>         
 
                 </div>
-
 
                 <button
                     className="login-btn"
@@ -211,7 +192,6 @@ export default function LoginPage({
                 >
                     Увійти
                 </button>
-
 
                 <div className="divider">
 
@@ -224,7 +204,6 @@ export default function LoginPage({
                     <span></span>
 
                 </div>
-
 
                 <div className="social-buttons">
 
@@ -240,7 +219,6 @@ export default function LoginPage({
 
                     </button>
 
-
                     <button>
 
                         <img
@@ -254,7 +232,6 @@ export default function LoginPage({
                     </button>
 
                 </div>
-
 
                 <p className="register">
 
@@ -270,9 +247,7 @@ export default function LoginPage({
 
             </div>
 
-
             {challenge && (
-
                 <TwoFactorModal
                     challenge={challenge}
                     onVerify={handleVerifyTwoFactor}
@@ -280,9 +255,18 @@ export default function LoginPage({
                         setChallenge(null)
                     }
                 />
-
             )}
 
+            {showForgotPassword && (
+            <ForgotPasswordModal
+             onClose={() =>
+             setShowForgotPassword(false)
+            }
+            onBackToLogin={() =>
+            setShowForgotPassword(false)
+        }
+    />
+)}
         </>
     );
 }

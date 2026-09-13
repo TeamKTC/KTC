@@ -7,6 +7,8 @@ namespace KTC.BLL.Services.Bonus
     {
         Task<ServiceResponse> GetUserBonuses(string userId);
 
+        Task<ServiceResponse> GetLast10UserBonuses(string userId);
+
         Task<ServiceResponse> GetBonusBalance(string userId);
     }
 }

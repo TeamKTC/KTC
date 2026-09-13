@@ -64,6 +64,50 @@ interface ChangePasswordRequest {
     newPassword: string;
 }
 
+interface ForgotPasswordRequest {
+    login: string;
+}
+
+interface ForgotPasswordPayload {
+    challenge: string;
+}
+
+interface ForgotPasswordResponse {
+    message: string;
+    isSuccess: boolean;
+    payload: ForgotPasswordPayload;
+    statusCode: number;
+}
+
+interface VerifyResetCodeRequest {
+    challenge: string;
+    code: string;
+}
+
+interface VerifyResetCodePayload {
+    challenge: string;
+}
+
+interface VerifyResetCodeResponse {
+    message: string;
+    isSuccess: boolean;
+    payload: VerifyResetCodePayload;
+    statusCode: number;
+}
+
+interface ResetPasswordRequest {
+    challenge: string;
+    code: string;
+    newPassword: string;
+}
+
+interface ResetPasswordResponse {
+    message: string;
+    isSuccess: boolean;
+    payload: null;
+    statusCode: number;
+}
+
 export const authApi = createApi({
     reducerPath: "authApi",
 
@@ -85,7 +129,10 @@ export const authApi = createApi({
     }),
 
     endpoints: (builder) => ({
-        login: builder.mutation<LoginResponse, LoginRequest>({
+        login: builder.mutation<
+            LoginResponse,
+            LoginRequest
+        >({
             query: (body) => ({
                 url: "auth/login",
                 method: "POST",
@@ -167,6 +214,39 @@ export const authApi = createApi({
                 body,
             }),
         }),
+
+        forgotPassword: builder.mutation<
+            ForgotPasswordResponse,
+            ForgotPasswordRequest
+        >({
+            query: (body) => ({
+                url: "auth/forgot-password",
+                method: "POST",
+                body,
+            }),
+        }),
+
+        verifyResetCode: builder.mutation<
+            VerifyResetCodeResponse,
+            VerifyResetCodeRequest
+        >({
+            query: (body) => ({
+                url: "auth/verify-reset-code",
+                method: "POST",
+                body,
+            }),
+        }),
+
+        resetPassword: builder.mutation<
+            ResetPasswordResponse,
+            ResetPasswordRequest
+        >({
+            query: (body) => ({
+                url: "auth/reset-password",
+                method: "POST",
+                body,
+            }),
+        }),
     }),
 });
 
@@ -182,4 +262,8 @@ export const {
     useConfirmDisableTwoFactorMutation,
 
     useChangePasswordMutation,
+
+    useForgotPasswordMutation,
+    useVerifyResetCodeMutation,
+    useResetPasswordMutation,
 } = authApi;

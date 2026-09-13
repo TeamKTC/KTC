@@ -25,7 +25,21 @@ namespace KTC.BLL.Services.Bonus
 
         public async Task<ServiceResponse> GetUserBonuses(string userId)
         {
-            var bonuses = await _bonusRepository.GetByUserIdAsync(userId);
+            var bonuses = await _bonusRepository
+                .GetByUserIdAsync(userId);
+
+            return new ServiceResponse
+            {
+                IsSuccess = true,
+                StatusCode = HttpStatusCode.OK,
+                Payload = _mapper.Map<List<BonusDto>>(bonuses)
+            };
+        }
+
+        public async Task<ServiceResponse> GetLast10UserBonuses(string userId)
+        {
+            var bonuses = await _bonusRepository
+                .GetLast10ByUserIdAsync(userId);
 
             return new ServiceResponse
             {
