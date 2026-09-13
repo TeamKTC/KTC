@@ -78,6 +78,7 @@ export const orderApi = createApi({
 
     baseQuery: fetchBaseQuery({
         baseUrl: "https://localhost:7120/api/",
+
         prepareHeaders: (headers, { getState }) => {
             const token = (getState() as RootState).auth.token;
 
@@ -97,6 +98,11 @@ export const orderApi = createApi({
     endpoints: (builder) => ({
         getMyOrders: builder.query<OrdersResponse, void>({
             query: () => "order/my",
+            providesTags: ["Order"],
+        }),
+
+        getMyLast7Orders: builder.query<OrdersResponse, void>({
+            query: () => "order/my/last7",
             providesTags: ["Order"],
         }),
 
@@ -151,9 +157,9 @@ export const orderApi = createApi({
 
 export const {
     useGetMyOrdersQuery,
+    useGetMyLast7OrdersQuery,
     useGetOrderByIdQuery,
     useCreateOrderMutation,
     useCancelOrderMutation,
     useSetDeliveredMutation,
 } = orderApi;
-

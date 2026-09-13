@@ -37,7 +37,10 @@ export const bonusApi = createApi({
             const token = (getState() as RootState).auth.token;
 
             if (token) {
-                headers.set("Authorization", `Bearer ${token}`);
+                headers.set(
+                    "Authorization",
+                    `Bearer ${token}`
+                );
             }
 
             return headers;
@@ -49,6 +52,10 @@ export const bonusApi = createApi({
             query: () => "Bonus",
         }),
 
+        getLast10BonusHistory: builder.query<BonusHistoryResponse, void>({
+            query: () => "Bonus/last10",
+        }),
+
         getBonusBalance: builder.query<BonusBalanceResponse, void>({
             query: () => "Bonus/balance",
         }),
@@ -57,5 +64,6 @@ export const bonusApi = createApi({
 
 export const {
     useGetBonusHistoryQuery,
+    useGetLast10BonusHistoryQuery,
     useGetBonusBalanceQuery,
 } = bonusApi;

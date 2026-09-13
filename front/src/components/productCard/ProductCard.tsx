@@ -248,34 +248,25 @@ const ProductCard = ({ product }: ProductCardProps) => {
                 </div>
 
                 <button
-                    className={`product-cart ${
-                        isInCart
-                            ? "product-cart--active"
-                            : ""
-                    }`}
-                    type="button"
-                    aria-label={
-                        isInCart
-                            ? "Видалити з кошика"
-                            : "Додати в кошик"
-                    }
-                    onClick={handleCartClick}
-                    disabled={isCartLoading}
-                >
-                    <ShoppingCart
-                        size={18}
-                        fill={
+                        className={`favorite-cart ${
+                            isInCart ? "favorite-cart--active" : ""
+                        }`}
+                        type="button"
+                        aria-label={
                             isInCart
-                                ? "#2E6CF6"
-                                : "none"
+                                ? "Товар уже в кошику"
+                                : "Додати в кошик"
                         }
-                        color={
-                            isInCart
-                                ? "#2E6CF6"
-                                : "currentColor"
-                        }
-                    />
-                </button>
+                        onClick={handleCartClick}
+                        disabled={isCartLoading}
+                    >
+                        <ShoppingCart
+                            size={18}
+                            fill={isInCart ? "#1D4ED8" : "none"}
+                            color={isInCart ? "#1D4ED8" : "currentColor"}
+                        />
+
+                        </button>
             </div>
         </div>
     );

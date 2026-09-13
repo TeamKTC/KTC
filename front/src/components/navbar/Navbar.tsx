@@ -12,6 +12,7 @@ import LoginPage from "../../pages/Auth/Login/LoginPage";
 import RegisterPage from "../../pages/Auth/Registr/RegisterPage";
 import { useTranslation } from "react-i18next";
 import { useIsAdmin } from "../../isAdmin/IsAdmin";
+import { useGetCartQuery } from "../../store/services/cartApi";
 
 const Navbar = () => {
     const { t } = useTranslation();
@@ -45,6 +46,10 @@ const Navbar = () => {
     }
 
     const isAdmin = useIsAdmin();
+    const { data: cartData } = useGetCartQuery();
+
+const cartItemsCount =
+    cartData?.payload?.items?.length ?? 0;
 
     return (
         <>
@@ -159,7 +164,7 @@ const Navbar = () => {
                                 style={{ cursor: "pointer" }}
                             >
                                 <i className="bi bi-cart3 position-relative icon">
-                                    <span className="cart-badge">0</span>
+                                    <span className="cart-badge">{cartItemsCount}</span>
                                 </i>
                                 <span className="spannn">{t("navbar.cart")}</span>
                             </div>

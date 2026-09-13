@@ -1,4 +1,5 @@
-﻿using Microsoft.Extensions.Caching.Memory;
+﻿
+using Microsoft.Extensions.Caching.Memory;
 using System.Security.Cryptography;
 using System.Text;
 
@@ -30,7 +31,8 @@ namespace KTC.BLL.Services.TwoFactor
             {
                 UserId = userId,
                 CodeHash = HashCode(code),
-                Attempts = 0
+                Attempts = 0,
+                Verified = false
             };
 
             _cache.Set(
@@ -43,12 +45,14 @@ namespace KTC.BLL.Services.TwoFactor
 
         public TwoFactorData? GetChallenge(string challenge)
         {
-            return _cache.Get<TwoFactorData>($"2fa:{challenge}");
+            return _cache.Get<TwoFactorData>(
+                $"2fa:{challenge}");
         }
 
         public bool VerifyCode(
             string challenge,
-            string code)
+            string code,
+            bool removeOnSuccess = true)
         {
             var data = GetChallenge(challenge);
 
@@ -64,13 +68,21 @@ namespace KTC.BLL.Services.TwoFactor
             }
 
             if (data.CodeHash != HashCode(code))
-            {
                 return false;
+
+            data.Verified = true;
+
+            if (removeOnSuccess)
+            {
+                _cache.Remove($"2fa:{challenge}");
             }
 
-            _cache.Remove($"2fa:{challenge}");
-
             return true;
+        }
+
+        public void RemoveChallenge(string challenge)
+        {
+            _cache.Remove($"2fa:{challenge}");
         }
 
         private string HashCode(string code)
@@ -89,5 +101,8 @@ namespace KTC.BLL.Services.TwoFactor
         public string CodeHash { get; set; } = default!;
 
         public int Attempts { get; set; }
+
+        public bool Verified { get; set; }
     }
 }
+

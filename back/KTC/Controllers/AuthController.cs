@@ -3,6 +3,7 @@ using KTC.BLL.Services;
 using KTC.Extensions;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using static System.Net.Mime.MediaTypeNames;
 
 namespace KTC.Controllers
 {
@@ -21,6 +22,7 @@ namespace KTC.Controllers
         public async Task<IActionResult> Register(RegisterDto dto)
         {
             var response = await _authService.Register(dto);
+
             return this.ToActionResult(response);
         }
 
@@ -28,6 +30,7 @@ namespace KTC.Controllers
         public async Task<IActionResult> Login(LoginDto dto)
         {
             var response = await _authService.Login(dto);
+
             return this.ToActionResult(response);
         }
 
@@ -36,7 +39,11 @@ namespace KTC.Controllers
             string email,
             string token)
         {
-            var response = await _authService.ConfirmEmail(email, token);
+            var response = await _authService.ConfirmEmail(
+                email,
+                token
+            );
+
             return this.ToActionResult(response);
         }
 
@@ -48,10 +55,14 @@ namespace KTC.Controllers
 
             foreach (var claim in User.Claims)
             {
-                Console.WriteLine($"{claim.Type}: {claim.Value}");
+                Console.WriteLine(
+                    $"{claim.Type}: {claim.Value}"
+                );
             }
 
-            var response = await _authService.SendConfirmationEmail(User);
+            var response = await _authService.SendConfirmationEmail(
+                User
+            );
 
             return this.ToActionResult(response);
         }
@@ -112,7 +123,7 @@ namespace KTC.Controllers
         [Authorize]
         [HttpPost("change-password")]
         public async Task<IActionResult> ChangePassword(
-        [FromBody] ChangePasswordDto dto)
+            [FromBody] ChangePasswordDto dto)
         {
             var response = await _authService.ChangePassword(
                 User,
@@ -122,6 +133,31 @@ namespace KTC.Controllers
             return this.ToActionResult(response);
         }
 
+        [HttpPost("forgot-password")]
+        public async Task<IActionResult> ForgotPassword(
+            [FromBody] ForgotPasswordDto dto)
+        {
+            var response = await _authService.ForgotPassword(dto);
 
+            return this.ToActionResult(response);
+        }
+
+        [HttpPost("verify-reset-code")]
+        public async Task<IActionResult> VerifyResetCode(
+            [FromBody] VerifyResetCodeDto dto)
+        {
+            var response = await _authService.VerifyResetCode(dto);
+
+            return this.ToActionResult(response);
+        }
+
+        [HttpPost("reset-password")]
+        public async Task<IActionResult> ResetPassword(
+            [FromBody] ResetPasswordDto dto)
+        {
+            var response = await _authService.ResetPassword(dto);
+
+            return this.ToActionResult(response);
+        }
     }
 }

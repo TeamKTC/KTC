@@ -12,5 +12,7 @@ namespace KTC.DAL.Repositories.Order
         Task CreateOrderWithItemsAsync(
             OrderEntity order,
             List<OrderItemEntity> items);
+
+        Task<List<OrderEntity>> GetLast7OrdersByUserIdAsync(string userId);
     }
 }

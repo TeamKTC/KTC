@@ -142,6 +142,21 @@ namespace KTC.Controllers
 
             return this.ToActionResult(response);
         }
+        [Authorize]
+        [HttpGet("my/last7")]
+        public async Task<IActionResult> GetMyLast7Orders()
+        {
+            var userId = User.FindFirstValue(
+                ClaimTypes.NameIdentifier);
+
+            if (string.IsNullOrEmpty(userId))
+                return Unauthorized();
+
+            var response = await _orderService
+                .GetLast7OrdersByUserId(userId);
+
+            return this.ToActionResult(response);
+        }
     }
 }
 

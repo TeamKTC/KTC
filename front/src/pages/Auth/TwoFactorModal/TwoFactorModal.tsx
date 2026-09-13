@@ -3,10 +3,10 @@ import "./TwoFactorModal.css";
 import { Lock } from "lucide-react";
 
 interface TwoFactorModalProps {
+    challenge: string;
     onVerify: (code: string) => Promise<void>;
     onClose: () => void;
 }
-
 export default function TwoFactorModal({
     onVerify,
     onClose,

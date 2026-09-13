@@ -2,6 +2,8 @@ import { Heart, ShoppingCart } from "lucide-react";
 import type { Product } from "../../types/types";
 import "./FavoriteCard.css";
 
+import { useNavigate } from "react-router-dom";
+
 import { useDeleteFavoriteMutation } from "../../store/services/favoriteApi";
 
 import {
@@ -18,30 +20,39 @@ interface FavoriteCardProps {
 }
 
 const FavoriteCard = ({ product }: FavoriteCardProps) => {
+    const navigate = useNavigate();
+
     // =========================
     // MEDIA
     // =========================
 
-    const { data: mediaData } = useGetMediaByProductIdQuery(product.id, {
-        skip: !product.id,
-    });
+    const { data: mediaData } =
+        useGetMediaByProductIdQuery(product.id, {
+            skip: !product.id,
+        });
 
     // =========================
     // ВИДАЛЕННЯ З ОБРАНОГО
     // =========================
 
-    const [deleteFavorite, { isLoading: isDeletingFavorite }] =
-        useDeleteFavoriteMutation();
+    const [
+        deleteFavorite,
+        { isLoading: isDeletingFavorite },
+    ] = useDeleteFavoriteMutation();
 
     // =========================
     // КОШИК
     // =========================
 
-    const [createCartItem, { isLoading: isAddingToCart }] =
-        useCreateCartItemMutation();
+    const [
+        createCartItem,
+        { isLoading: isAddingToCart },
+    ] = useCreateCartItemMutation();
 
-    const [deleteCartItem, { isLoading: isDeletingFromCart }] =
-        useDeleteCartItemMutation();
+    const [
+        deleteCartItem,
+        { isLoading: isDeletingFromCart },
+    ] = useDeleteCartItemMutation();
 
     const {
         data: cartData,
@@ -58,6 +69,14 @@ const FavoriteCard = ({ product }: FavoriteCardProps) => {
 
     const isCartLoading =
         isAddingToCart || isDeletingFromCart;
+
+    // =========================
+    // ВІДКРИТТЯ ТОВАРУ
+    // =========================
+
+    const handleCardClick = () => {
+        navigate(`/details/${product.id}`);
+    };
 
     // =========================
     // ВИДАЛИТИ З ОБРАНОГО
@@ -96,8 +115,9 @@ const FavoriteCard = ({ product }: FavoriteCardProps) => {
         event.stopPropagation();
 
         try {
-            // Спочатку отримуємо актуальний кошик
-            const freshCartResponse = await refetchCart();
+            // Отримуємо актуальний кошик
+            const freshCartResponse =
+                await refetchCart();
 
             const freshCart =
                 freshCartResponse.data?.payload;
@@ -141,13 +161,14 @@ const FavoriteCard = ({ product }: FavoriteCardProps) => {
                 cartId: freshCart.id,
                 productId: product.id,
                 quantity: 1,
-                createdDate: new Date().toISOString(),
+                createdDate:
+                    new Date().toISOString(),
             }).unwrap();
 
             await refetchCart();
 
             alert(
-                `🛒 "${product.name}" додано до кошика!`
+                `🛒 "${product.name}" додано до кошика.`
             );
         } catch (error) {
             console.error(
@@ -170,13 +191,17 @@ const FavoriteCard = ({ product }: FavoriteCardProps) => {
         "https://ktcmediafoto.blob.core.windows.net/media/bba3a6c4-d6aa-40df-9eea-e93fd141074d.png";
 
     return (
-        <div className="favorite-card">
-
+        <div
+            className="favorite-card"
+            onClick={handleCardClick}
+            style={{ cursor: "pointer" }}
+        >
             {/* FAVORITE */}
 
             <button
                 className="favorite-heart"
                 type="button"
+                aria-label="Видалити з обраного"
                 onClick={handleFavoriteClick}
                 disabled={isDeletingFavorite}
             >
@@ -199,9 +224,7 @@ const FavoriteCard = ({ product }: FavoriteCardProps) => {
             {/* CONTENT */}
 
             <div className="favorite-content">
-
                 <div className="favorite-header">
-
                     <div className="favorite-title-block">
                         <div className="favorite-title">
                             {product.name}{" "}
@@ -213,33 +236,27 @@ const FavoriteCard = ({ product }: FavoriteCardProps) => {
 
                     <button
                         className={`favorite-cart ${
-                            isInCart
-                                ? "favorite-cart--active"
-                                : ""
+                            isInCart ? "favorite-cart--active" : ""
                         }`}
                         type="button"
+                        aria-label={
+                            isInCart
+                                ? "Товар уже в кошику"
+                                : "Додати в кошик"
+                        }
                         onClick={handleCartClick}
                         disabled={isCartLoading}
                     >
                         <ShoppingCart
                             size={18}
-                            fill={
-                                isInCart
-                                    ? "#2E6CF6"
-                                    : "none"
-                            }
-                            color={
-                                isInCart
-                                    ? "#2E6CF6"
-                                    : "currentColor"
-                            }
+                            fill={isInCart ? "#1D4ED8" : "none"}
+                            color={isInCart ? "#1D4ED8" : "currentColor"}
                         />
-                    </button>
 
-                </div>
+                        </button>
+                                    </div>
 
                 <div className="favorite-info">
-
                     <div className="favorite-price">
                         {product.price.toLocaleString(
                             "uk-UA"
@@ -256,9 +273,7 @@ const FavoriteCard = ({ product }: FavoriteCardProps) => {
                         )}{" "}
                         грн/міс
                     </div>
-
                 </div>
-
             </div>
         </div>
     );

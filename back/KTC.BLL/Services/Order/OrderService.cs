@@ -7,6 +7,7 @@ using KTC.DAL.Repositories.Order;
 using KTC.DAL.Repositories.Product;
 using KTC.DAL.Repositories.PromoCode;
 using KTC.DAL.Repositories.User;
+using Microsoft.EntityFrameworkCore;
 using System.Net;
 
 namespace KTC.BLL.Services.Order
@@ -743,7 +744,51 @@ namespace KTC.BLL.Services.Order
             };
         }
 
+        public async Task<ServiceResponse> GetLast7OrdersByUserId(string userId)
+        {
+            var orders = await _orderRepository
+                .GetLast7OrdersByUserIdAsync(userId);
 
+            var result = orders.Select(order => new
+            {
+                id = order.Id,
+                orderNumber = order.OrderNumber,
+                date = order.Date,
+                status = order.Status,
+
+                totalPrice = order.TotalPrice,
+
+                usedBonuses = order.UsedBonuses,
+                promoCodeId = order.PromoCodeId,
+                promoDiscount = order.PromoDiscount,
+
+                deliveryType = order.DeliveryType,
+
+                city = order.City,
+                department = order.Department,
+                address = order.Address,
+
+                paymentType = order.PaymentType,
+                installmentBank = order.InstallmentBank,
+                comment = order.Comment,
+
+                items = order.Items.Select(item => new
+                {
+                    id = item.Id,
+                    orderId = item.OrderId,
+                    productId = item.ProductId,
+                    quantity = item.Quantity,
+                    price = item.Price
+                }).ToList()
+            }).ToList();
+
+            return new ServiceResponse
+            {
+                IsSuccess = true,
+                StatusCode = HttpStatusCode.OK,
+                Payload = result
+            };
+        }
 
     }
 

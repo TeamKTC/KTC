@@ -51,7 +51,7 @@
         height: 44px;
         background: #fff;
         color: #000;
-
+        margin-left: 35px;
         border: 1px solid #2563EB;
         border-radius: 12px;
 
@@ -117,12 +117,14 @@
         position: relative;
         margin: 0;
         vertical-align: middle;
-        top: -14px;
+        transform: translateY(-19px);
+
     }
 
     input[type="checkbox"]:checked {
         background: #5B5B5B;
         border-color: #5B5B5B;
+        
     }
 
     input[type="checkbox"]:checked::after {
@@ -149,6 +151,7 @@
 
         font-size: 16px;
 
+        margin-left: 80px;
 
         cursor: pointer;
 
@@ -278,5 +281,9 @@
 }
 
 .register span {
+    cursor: pointer;
+}
+
+.forgot-password-link {
     cursor: pointer;
 }

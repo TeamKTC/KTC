@@ -1,19 +1,21 @@
 import "./BonusHistory.css";
 import { useNavigate } from "react-router-dom";
-import { useGetMyOrdersQuery } from "../../../store/services/orderApi";
+import {
+    useGetMyLast7OrdersQuery,
+} from "../../../store/services/orderApi";
 import { useTranslation } from "react-i18next";
 
 const BonusHistory = () => {
     const navigate = useNavigate();
+    const { t } = useTranslation();
 
     const {
         data,
         isLoading,
         error,
-    } = useGetMyOrdersQuery();
+    } = useGetMyLast7OrdersQuery();
 
     const orders = data?.payload ?? [];
-    const { t } = useTranslation();
 
     if (isLoading) {
         return (
@@ -34,33 +36,62 @@ const BonusHistory = () => {
                     <h2>Мої замовлення</h2>
                 </div>
 
-                <p>Не вдалося завантажити замовлення</p>
-
+                <p>
+                    Не вдалося завантажити замовлення
+                </p>
             </div>
         );
     }
 
     return (
         <div className="bonus-history">
-            <div className="history-header">
-                <h2>{t("profile.bonusHistory.title")}</h2>
 
-               
+            <div className="history-header">
+                <h2>
+                    {t(
+                        "profile.bonusHistory.title"
+                    )}
+                </h2>
+
                 <button
                     type="button"
-                    onClick={() => navigate("/orders")}
+                    onClick={() =>
+                        navigate("/orders")
+                    }
                 >
-                    {t("profile.bonusHistory.viewAll")}
+                    {t(
+                        "profile.bonusHistory.viewAll"
+                    )}
                 </button>
             </div>
 
             <table>
                 <thead>
                     <tr>
-                        <th>{t("profile.bonusHistory.orderNumber")}</th>
-                        <th>{t("profile.bonusHistory.date")}</th>
-                        <th>{t("profile.bonusHistory.status")}</th>
-                        <th>{t("profile.bonusHistory.amount")}</th>
+                        <th>
+                            {t(
+                                "profile.bonusHistory.orderNumber"
+                            )}
+                        </th>
+
+                        <th>
+                            {t(
+                                "profile.bonusHistory.date"
+                            )}
+                        </th>
+
+                        <th>
+                            {t(
+                                "profile.bonusHistory.status"
+                            )}
+                        </th>
+
+                        <th>
+                            {t(
+                                "profile.bonusHistory.amount"
+                            )}
+                        </th>
+
                         <th></th>
                     </tr>
                 </thead>
@@ -79,7 +110,10 @@ const BonusHistory = () => {
                             }}
                         >
                             <td>
-                                №{order.orderNumber}
+                                №
+                                {
+                                    order.orderNumber
+                                }
                             </td>
 
                             <td>
@@ -97,7 +131,8 @@ const BonusHistory = () => {
                             </td>
 
                             <td>
-                                {order.totalPrice != null
+                                {order.totalPrice !=
+                                null
                                     ? `${order.totalPrice.toLocaleString(
                                           "uk-UA"
                                       )} грн`
@@ -111,8 +146,10 @@ const BonusHistory = () => {
                     ))}
                 </tbody>
             </table>
+
         </div>
     );
 };
 
 export default BonusHistory;
+

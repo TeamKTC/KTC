@@ -58,27 +58,18 @@ public class AuthService
             "Акаунт успішно створено",
             $@"
             <h2>Вітаємо, {user.FirstName}!</h2>
-
             <p>Ваш акаунт успішно створено.</p>
-
+            <p>Ви вже можете користуватися нашим сайтом.</p>
             <p>
-                Ви вже можете користуватися нашим сайтом.
-            </p>
-
-            <p>
-                Для отримання сповіщень про замовлення, відновлення доступу 
-                та додаткової безпеки акаунта рекомендуємо підтвердити 
+                Для отримання сповіщень про замовлення, відновлення доступу
+                та додаткової безпеки акаунта рекомендуємо підтвердити
                 електронну пошту.
             </p>
-
             <p>
-                Підтвердити Email можна у вашому особистому кабінеті, 
+                Підтвердити Email можна у вашому особистому кабінеті,
                 натиснувши кнопку <b>«Підтвердити Email»</b>.
             </p>
-
-            <p>
-                Дякуємо, що користуєтесь нашим сайтом!
-            </p>"
+            <p>Дякуємо, що користуєтесь нашим сайтом!</p>"
         );
 
         return new ServiceResponse
@@ -113,8 +104,6 @@ public class AuthService
             };
         }
 
-
-
         var result = await _signInManager.CheckPasswordSignInAsync(
             user,
             dto.Password,
@@ -130,7 +119,6 @@ public class AuthService
             };
         }
 
-        // Якщо у користувача увімкнена двофакторна автентифікація
         if (user.TwoFactorEnabled)
         {
             if (string.IsNullOrEmpty(user.Email))
@@ -149,29 +137,20 @@ public class AuthService
                 user.Id,
                 code);
 
-
             await _emailService.SendEmailAsync(
                 user.Email,
                 "Код двофакторної автентифікації",
                 $@"
                 <h2>Код підтвердження</h2>
-
                 <p>Ви намагаєтесь увійти до свого акаунта.</p>
-
                 <p>Ваш код підтвердження:</p>
-
                 <h1 style='font-size: 32px; letter-spacing: 8px;'>
                     {code}
                 </h1>
-
-                <p>
-                    Код дійсний протягом <b>5 хвилин</b>.
-                </p>
-
-                <p>
-                    Якщо це були не ви, просто проігноруйте цей лист.
-                </p>"
+                <p>Код дійсний протягом <b>5 хвилин</b>.</p>
+                <p>Якщо це були не ви, просто проігноруйте цей лист.</p>"
             );
+
             return new ServiceResponse
             {
                 IsSuccess = true,
@@ -184,7 +163,6 @@ public class AuthService
                 StatusCode = HttpStatusCode.OK
             };
         }
-
 
         var token = await _jwtService.GenerateToken(user);
 
@@ -224,7 +202,6 @@ public class AuthService
             };
         }
 
-        // Отримуємо challenge
         var challenge = _twoFactorService.GetChallenge(dto.Challenge);
 
         if (challenge == null)
@@ -237,7 +214,6 @@ public class AuthService
             };
         }
 
-        // Перевіряємо код
         var isValid = _twoFactorService.VerifyCode(
             dto.Challenge,
             dto.Code);
@@ -252,7 +228,6 @@ public class AuthService
             };
         }
 
-        // Знаходимо користувача
         var user = await _userManager.FindByIdAsync(
             challenge.UserId);
 
@@ -266,7 +241,6 @@ public class AuthService
             };
         }
 
-        // Тільки після успішної 2FA видаємо JWT
         var token = await _jwtService.GenerateToken(user);
 
         return new ServiceResponse
@@ -324,8 +298,6 @@ public class AuthService
         var userId = principal.FindFirstValue(
             ClaimTypes.NameIdentifier);
 
-        Console.WriteLine($"UserId: {userId}");
-
         if (string.IsNullOrEmpty(userId))
         {
             return new ServiceResponse
@@ -337,11 +309,6 @@ public class AuthService
         }
 
         var user = await _userManager.FindByIdAsync(userId);
-
-        Console.WriteLine(
-            user == null
-                ? "USER NULL"
-                : $"USER: {user.Email}");
 
         if (user == null)
         {
@@ -376,12 +343,10 @@ public class AuthService
             "Підтвердження електронної пошти",
             $@"
             <h2>Підтвердження Email</h2>
-
             <p>
                 Натисніть кнопку нижче для підтвердження
                 електронної пошти.
             </p>
-
             <p>
                 <a href='{confirmationLink}'
                    style='background:#0d6efd;
@@ -401,9 +366,12 @@ public class AuthService
             StatusCode = HttpStatusCode.OK
         };
     }
-    public async Task<ServiceResponse> EnableTwoFactor(ClaimsPrincipal principal)
+
+    public async Task<ServiceResponse> EnableTwoFactor(
+        ClaimsPrincipal principal)
     {
-        var userId = principal.FindFirstValue(ClaimTypes.NameIdentifier);
+        var userId = principal.FindFirstValue(
+            ClaimTypes.NameIdentifier);
 
         if (string.IsNullOrEmpty(userId))
         {
@@ -437,23 +405,29 @@ public class AuthService
             };
         }
 
+        if (string.IsNullOrWhiteSpace(user.Email))
+        {
+            return new ServiceResponse
+            {
+                IsSuccess = false,
+                Message = "Email is required for two-factor authentication",
+                StatusCode = HttpStatusCode.BadRequest
+            };
+        }
+
         var token = await _userManager.GenerateTwoFactorTokenAsync(
             user,
             TokenOptions.DefaultEmailProvider
         );
 
         await _emailService.SendEmailAsync(
-            user.Email!,
+            user.Email,
             "Код активації двофакторної автентифікації",
             $@"
             <h2>Активація двофакторної автентифікації</h2>
-
             <p>Ваш код:</p>
-
             <h1>{token}</h1>
-
-            <p>Код дійсний протягом обмеженого часу.</p>
-        "
+            <p>Код дійсний протягом обмеженого часу.</p>"
         );
 
         return new ServiceResponse
@@ -465,10 +439,11 @@ public class AuthService
     }
 
     public async Task<ServiceResponse> ConfirmEnableTwoFactor(
-    ClaimsPrincipal principal,
-    string code)
+        ClaimsPrincipal principal,
+        string code)
     {
-        var userId = principal.FindFirstValue(ClaimTypes.NameIdentifier);
+        var userId = principal.FindFirstValue(
+            ClaimTypes.NameIdentifier);
 
         if (string.IsNullOrEmpty(userId))
         {
@@ -501,7 +476,17 @@ public class AuthService
                 StatusCode = HttpStatusCode.BadRequest
             };
         }
-        Console.WriteLine($"CODE FROM FRONT: [{code}]");
+
+        if (string.IsNullOrWhiteSpace(code))
+        {
+            return new ServiceResponse
+            {
+                IsSuccess = false,
+                Message = "Code is required",
+                StatusCode = HttpStatusCode.BadRequest
+            };
+        }
+
         var isValid = await _userManager.VerifyTwoFactorTokenAsync(
             user,
             TokenOptions.DefaultEmailProvider,
@@ -528,11 +513,11 @@ public class AuthService
         };
     }
 
-    public async Task<ServiceResponse> DisableTwoFactor(ClaimsPrincipal principal)
+    public async Task<ServiceResponse> DisableTwoFactor(
+        ClaimsPrincipal principal)
     {
         var userId = principal.FindFirstValue(
-            ClaimTypes.NameIdentifier
-        );
+            ClaimTypes.NameIdentifier);
 
         if (string.IsNullOrEmpty(userId))
         {
@@ -562,6 +547,16 @@ public class AuthService
             {
                 IsSuccess = false,
                 Message = "Two-factor authentication is already disabled",
+                StatusCode = HttpStatusCode.BadRequest
+            };
+        }
+
+        if (string.IsNullOrWhiteSpace(user.Email))
+        {
+            return new ServiceResponse
+            {
+                IsSuccess = false,
+                Message = "Email is required for two-factor authentication",
                 StatusCode = HttpStatusCode.BadRequest
             };
         }
@@ -572,17 +567,16 @@ public class AuthService
         );
 
         await _emailService.SendEmailAsync(
-            user.Email!,
+            user.Email,
             "Код деактивації двофакторної автентифікації",
             $@"
             <h2>Деактивація двофакторної автентифікації</h2>
-
             <p>Ваш код підтвердження:</p>
-
             <h1>{token}</h1>
-
-            <p>Якщо ви не запитували деактивацію 2FA, проігноруйте цей лист.</p>
-        "
+            <p>
+                Якщо ви не запитували деактивацію 2FA,
+                проігноруйте цей лист.
+            </p>"
         );
 
         return new ServiceResponse
@@ -593,14 +587,12 @@ public class AuthService
         };
     }
 
-
     public async Task<ServiceResponse> ConfirmDisableTwoFactor(
-    ClaimsPrincipal principal,
-    string code)
+        ClaimsPrincipal principal,
+        string code)
     {
         var userId = principal.FindFirstValue(
-            ClaimTypes.NameIdentifier
-        );
+            ClaimTypes.NameIdentifier);
 
         if (string.IsNullOrEmpty(userId))
         {
@@ -634,8 +626,15 @@ public class AuthService
             };
         }
 
-        Console.WriteLine($"CODE FROM FRONT: [{code}]");
-        Console.WriteLine($"CODE LENGTH: {code?.Length}");
+        if (string.IsNullOrWhiteSpace(code))
+        {
+            return new ServiceResponse
+            {
+                IsSuccess = false,
+                Message = "Code is required",
+                StatusCode = HttpStatusCode.BadRequest
+            };
+        }
 
         var isValid = await _userManager.VerifyTwoFactorTokenAsync(
             user,
@@ -662,11 +661,13 @@ public class AuthService
             StatusCode = HttpStatusCode.OK
         };
     }
+
     public async Task<ServiceResponse> ChangePassword(
-    ClaimsPrincipal principal,
-    ChangePasswordDto dto)
+        ClaimsPrincipal principal,
+        ChangePasswordDto dto)
     {
-        var userId = principal.FindFirstValue(ClaimTypes.NameIdentifier);
+        var userId = principal.FindFirstValue(
+            ClaimTypes.NameIdentifier);
 
         if (string.IsNullOrEmpty(userId))
         {
@@ -716,4 +717,242 @@ public class AuthService
             StatusCode = HttpStatusCode.OK
         };
     }
+
+    public async Task<ServiceResponse> ForgotPassword(ForgotPasswordDto dto)
+    {
+        if (string.IsNullOrWhiteSpace(dto.Login))
+        {
+            return new ServiceResponse
+            {
+                IsSuccess = false,
+                Message = "Email or phone number is required",
+                StatusCode = HttpStatusCode.BadRequest
+            };
+        }
+
+        UserEntity? user;
+
+        if (dto.Login.Contains("@"))
+        {
+            user = await _userManager.FindByEmailAsync(dto.Login);
+        }
+        else
+        {
+            user = await _userManager.Users
+                .FirstOrDefaultAsync(x => x.PhoneNumber == dto.Login);
+        }
+
+        if (user == null || string.IsNullOrWhiteSpace(user.Email))
+        {
+            return new ServiceResponse
+            {
+                IsSuccess = true,
+                Message = "If this account exists, a reset code has been sent",
+                StatusCode = HttpStatusCode.OK
+            };
+        }
+
+        var code = _twoFactorService.GenerateCode();
+
+        var challenge = _twoFactorService.CreateChallenge(
+            user.Id,
+            code
+        );
+
+        await _emailService.SendEmailAsync(
+            user.Email,
+            "Відновлення пароля",
+            $@"
+        <h2>Відновлення пароля</h2>
+
+        <p>Ви запросили відновлення пароля.</p>
+
+        <p>Ваш код підтвердження:</p>
+
+        <h1 style='font-size:36px;letter-spacing:10px;'>
+            {code}
+        </h1>
+
+        <p>
+            Код дійсний протягом <b>5 хвилин</b>.
+        </p>
+
+        <p>
+            Якщо ви не запитували відновлення пароля,
+            просто проігноруйте цей лист.
+        </p>"
+        );
+
+        return new ServiceResponse
+        {
+            IsSuccess = true,
+            Message = "Reset code sent",
+            Payload = new
+            {
+                Challenge = challenge
+            },
+            StatusCode = HttpStatusCode.OK
+        };
+    }
+
+public async Task<ServiceResponse> VerifyResetCode(
+    VerifyResetCodeDto dto)
+    {
+        if (string.IsNullOrWhiteSpace(dto.Challenge))
+        {
+            return new ServiceResponse
+            {
+                IsSuccess = false,
+                Message = "Challenge is required",
+                StatusCode = HttpStatusCode.BadRequest
+            };
+        }
+
+        if (string.IsNullOrWhiteSpace(dto.Code))
+        {
+            return new ServiceResponse
+            {
+                IsSuccess = false,
+                Message = "Code is required",
+                StatusCode = HttpStatusCode.BadRequest
+            };
+        }
+
+        var challenge = _twoFactorService.GetChallenge(
+            dto.Challenge);
+
+        if (challenge == null)
+        {
+            return new ServiceResponse
+            {
+                IsSuccess = false,
+                Message = "Code expired or challenge is invalid",
+                StatusCode = HttpStatusCode.BadRequest
+            };
+        }
+
+        var valid = _twoFactorService.VerifyCode(
+            dto.Challenge,
+            dto.Code,
+            false
+        );
+
+        if (!valid)
+        {
+            return new ServiceResponse
+            {
+                IsSuccess = false,
+                Message = "Invalid verification code",
+                StatusCode = HttpStatusCode.BadRequest
+            };
+        }
+
+        return new ServiceResponse
+        {
+            IsSuccess = true,
+            Message = "Code verified",
+            Payload = new
+            {
+                Challenge = dto.Challenge
+            },
+            StatusCode = HttpStatusCode.OK
+        };
+    }
+
+
+
+
+public async Task<ServiceResponse> ResetPassword(
+    ResetPasswordDto dto)
+    {
+        if (string.IsNullOrWhiteSpace(dto.Challenge))
+        {
+            return new ServiceResponse
+            {
+                IsSuccess = false,
+                Message = "Challenge is required",
+                StatusCode = HttpStatusCode.BadRequest
+            };
+        }
+
+        if (string.IsNullOrWhiteSpace(dto.NewPassword))
+        {
+            return new ServiceResponse
+            {
+                IsSuccess = false,
+                Message = "New password is required",
+                StatusCode = HttpStatusCode.BadRequest
+            };
+        }
+
+        var challenge = _twoFactorService.GetChallenge(
+            dto.Challenge);
+
+        if (challenge == null)
+        {
+            return new ServiceResponse
+            {
+                IsSuccess = false,
+                Message = "Code expired or challenge is invalid",
+                StatusCode = HttpStatusCode.BadRequest
+            };
+        }
+
+        if (!challenge.Verified)
+        {
+            return new ServiceResponse
+            {
+                IsSuccess = false,
+                Message = "Verification required",
+                StatusCode = HttpStatusCode.BadRequest
+            };
+        }
+
+        var user = await _userManager.FindByIdAsync(
+            challenge.UserId);
+
+        if (user == null)
+        {
+            return new ServiceResponse
+            {
+                IsSuccess = false,
+                Message = "User not found",
+                StatusCode = HttpStatusCode.NotFound
+            };
+        }
+
+        var token = await _userManager.GeneratePasswordResetTokenAsync(
+            user);
+
+        var result = await _userManager.ResetPasswordAsync(
+            user,
+            token,
+            dto.NewPassword
+        );
+
+        if (!result.Succeeded)
+        {
+            return new ServiceResponse
+            {
+                IsSuccess = false,
+                Message = string.Join(
+                    ", ",
+                    result.Errors.Select(x => x.Description)
+                ),
+                StatusCode = HttpStatusCode.BadRequest
+            };
+        }
+
+        _twoFactorService.RemoveChallenge(
+            dto.Challenge);
+
+        return new ServiceResponse
+        {
+            IsSuccess = true,
+            Message = "Password reset successfully",
+            StatusCode = HttpStatusCode.OK
+        };
+    }
+
+
 }
