@@ -1,0 +1,56 @@
+.profile-page {
+
+
+    background: var(--bg);
+}
+
+.profile-content {
+    display: grid;
+    grid-template-columns: 414px 524px 594px;
+    gap: 24px;
+}
+
+
+
+.breadcrumbs {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    margin-bottom: 12px;
+
+    font-size: 11px;
+    color: #8A8A8A;
+}
+
+.breadcrumbs a {
+    color: #8A8A8A;
+    text-decoration: none;
+}
+
+.breadcrumbs a:hover {
+    text-decoration: underline;
+}
+
+.profile-title {
+    margin: 0 0 24px;
+    font-size: 24px !important;
+    font-weight: 700;
+    text-align: left !important;
+    width: fit-content;  
+    color: var(--text-h) !important;   
+}
+
+.profile-content {
+  display: grid;
+  grid-template-columns: 414px 1fr 1fr; /* Колоноки будуть гармонійно ділити вільний простір */
+  gap: 24px;
+  align-items: start;
+}
+
+.center-column,
+.right-column {
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+  min-width: 400px; /* Не дасть колонці стиснутися менше за норму */
+}

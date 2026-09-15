@@ -4,6 +4,7 @@ import type { CreateProductDto } from "../../../types/types";
 import { useGetAllCategoriesQuery } from "../../../store/services/categoryApi";
 import { useGetAllBrandsQuery } from "../../../store/services/brandApi";
 import "./CreateProductComponent.css"; // Імпортуємо стилі
+import ProductList from "../listsOf/Products/ProductsList";
 
 const CreateProductComponent: React.FC = () => {
   const [createProduct, { isLoading }] = useCreateProductMutation();
@@ -249,6 +250,7 @@ const CreateProductComponent: React.FC = () => {
           </div>
         </form>
       </div>
+      <ProductList/>
     </div>
   );
 };

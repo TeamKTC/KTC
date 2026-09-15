@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import { useCreateBrandMutation } from "../../../store/services/brandApi";
 import type { CreateBrandDto } from "../../../types/types";
 import "./CreateBrandComponent.css";
+import BrandsList from "../listsOf/Brands/BrandsList";
 
 const CreateBrandComponent: React.FC = () => {
   const [createBrand, { isLoading }] = useCreateBrandMutation();
@@ -95,6 +96,7 @@ const CreateBrandComponent: React.FC = () => {
           </div>
         </form>
       </div>
+      <BrandsList/>
     </div>
   );
 };

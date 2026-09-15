@@ -19,6 +19,7 @@ import { useIsAdmin } from "./isAdmin/IsAdmin";
 import AdminPage from "./pages/AdminPage/AdminPage";
 import StoresPage from "./pages/Store/StoresPage";
 import SupportPage from "./pages/Support/SupportPage";
+import CreditCardPage from "./pages/CreditCardPage/CreditCardPage";
 const DefaultRoutes = () => {
     const   isAuthenticated = useAppSelector(
         (state) => state.auth.isAuthenticated
@@ -127,6 +128,14 @@ const DefaultRoutes = () => {
                     path="support"
                     element={
                         <SupportPage />
+                    }
+                />
+                <Route
+                    path="credit-card"
+                     element={
+                        isAuthenticated
+                            ? <CreditCardPage />
+                            : <Navigate to="/" replace />
                     }
                 />
             </Route>

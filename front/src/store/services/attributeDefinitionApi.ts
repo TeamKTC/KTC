@@ -122,6 +122,20 @@ export const attributeDefinitionApi = createApi({
       }),
       invalidatesTags: ["AttributeDefinition"],
     }),
+    //DELETE /api/attributeDefinition
+    deleteAttributeDefinition: build.mutation<
+      ServiceResponse<unknown>,
+      string
+    >({
+      query: (attributeDefinitionId) =>({
+        url: "attribute-definition",
+        method: "DELETE",
+        params: {
+          attributeDefinitionId
+        },
+      }),
+       invalidatesTags: ["AttributeDefinition"],
+    }),
   }),
 });
 
@@ -132,4 +146,5 @@ export const {
   useGetAttributeDefinitionsByProductIdQuery,
   useGetAttributeDefinitionsByTypeQuery,
   useCreateAttributeDefinitionMutation,
+  useDeleteAttributeDefinitionMutation
 } = attributeDefinitionApi;

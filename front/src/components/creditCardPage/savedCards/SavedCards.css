@@ -1,0 +1,200 @@
+.container {
+  max-width: 672px;
+  margin: 0 auto;
+  padding: 16px;
+  color: #1f2937;
+}
+
+.header {
+  margin-bottom: 24px;
+}
+
+.title {
+  font-size: 1.5rem;
+  font-weight: 700;
+  margin: 0;
+}
+
+.subtitle {
+  font-size: 0.875rem;
+  color: #6b7280;
+  margin-top: 4px;
+}
+
+.cards-list {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  margin-bottom: 24px;
+}
+
+.card-item {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 16px;
+  background-color: #ffffff;
+  border: 1px solid #e5e7eb;
+  border-radius: 12px;
+  box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
+  transition: border-color 0.2s;
+}
+
+.card-item:hover {
+  border-color: #d1d5db;
+}
+
+.card-left {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+}
+
+/* --- Оновлений контейнер та бейджі логотипів --- */
+
+.logo-wrapper {
+  width: 58px;
+  height: 38px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+
+/* Visa: Синій прямокутник з білим текстом */
+.visa-badge {
+  width: 100%;
+  height: 100%;
+  background-color: #1a1f71;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 8px;
+}
+
+.visa-text {
+  color: #ffffff;
+  font-weight: 900;
+  font-style: italic;
+  font-size: 1.125rem;
+  letter-spacing: 0.05em;
+  font-family: Arial, sans-serif;
+  user-select: none;
+}
+
+/* Mastercard: Білий прямокутник із сірою рамкою */
+.mastercard-badge {
+  width: 100%;
+  height: 100%;
+  background-color: #ffffff;
+  border: 1px solid #e5e7eb;
+  border-radius: 8px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.mastercard-logo {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+  width: 28px;
+  height: 18px;
+}
+
+.mc-circle {
+  width: 18px;
+  height: 18px;
+  border-radius: 50%;
+  position: absolute;
+}
+
+.mc-red {
+  background-color: #eb001b;
+  left: 0;
+}
+
+.mc-yellow {
+  background-color: #f79e1b;
+  right: 0;
+  mix-blend-mode: multiply;
+}
+
+/* --- Деталі картки та кнопки --- */
+
+.card-details {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 32px;
+  font-size: 0.875rem;
+}
+
+.card-number {
+  font-weight: 600;
+  color: #111827;
+}
+
+.card-holder {
+  color: #6b7280;
+  margin-top: 4px;
+}
+
+.label {
+  color: #9ca3af;
+  font-weight: 500;
+}
+
+.expiry-date {
+  font-weight: 500;
+  color: #111827;
+  margin-top: 4px;
+}
+
+.card-right {
+  display: flex;
+  align-items: center;
+  gap: 24px;
+}
+
+.main-badge {
+  font-size: 0.875rem;
+  font-weight: 500;
+  color: #2563eb;
+}
+
+.delete-btn {
+  background: none;
+  border: none;
+  color: #9ca3af;
+  cursor: pointer;
+  padding: 4px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: color 0.2s;
+}
+
+.delete-btn:hover {
+  color: #ef4444;
+}
+
+.add-btn {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  padding: 12px;
+  background-color: #2563eb;
+  color: #ffffff;
+  font-weight: 500;
+  border: none;
+  border-radius: 12px;
+  cursor: pointer;
+  transition: background-color 0.2s;
+}
+
+.add-btn:hover {
+  background-color: #1d4ed8;
+}

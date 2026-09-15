@@ -7,6 +7,7 @@ using KTC.BLL.Services.Cart;
 using KTC.BLL.Services.CartItem;
 using KTC.BLL.Services.Catagory;
 using KTC.BLL.Services.Comment;
+using KTC.BLL.Services.CreditCard;
 using KTC.BLL.Services.Email;
 using KTC.BLL.Services.Favorite;
 using KTC.BLL.Services.Jwt;
@@ -32,6 +33,7 @@ using KTC.DAL.Repositories.Cart;
 using KTC.DAL.Repositories.CartItem;
 using KTC.DAL.Repositories.Category;
 using KTC.DAL.Repositories.Comment;
+using KTC.DAL.Repositories.CreditCard;
 using KTC.DAL.Repositories.Interfaces;
 using KTC.DAL.Repositories.Media;
 using KTC.DAL.Repositories.Notification;
@@ -131,6 +133,7 @@ builder.Services.AddScoped<IBonusRepository, BonusRepository>();
 builder.Services.AddScoped<IFavoriteRepository, FavoriteRepository>();
 builder.Services.AddScoped<IPromoCodeRepository, PromoCodeRepository>();
 builder.Services.AddScoped<IRolesRepository, RolesRepository>();
+builder.Services.AddScoped<ICreditCardRepository, CreditCardRepository>();
 
 // Add service
 builder.Services.AddScoped<IEmailService, EmailService>();
@@ -156,6 +159,7 @@ builder.Services.AddMemoryCache();
 builder.Services.AddScoped<TwoFactorService>();
 builder.Services.AddScoped<IPromoCodeService, PromoCodeService>();
 builder.Services.AddScoped<IRoleService, RoleService>();
+builder.Services.AddScoped<ICreditCardService, CreditCardService>();
 
 
 builder.Services.AddEndpointsApiExplorer();

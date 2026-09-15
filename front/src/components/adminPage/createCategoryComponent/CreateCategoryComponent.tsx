@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import { useCreateCategoryMutation } from "../../../store/services/categoryApi";
 import type { CreateCategoryDto } from "../../../types/types";
 import "./CreateCategoryComponent.css";
+import CategoriesList from "../listsOf/Categories/CategoriesList";
 
 const CreateCategoryComponent: React.FC = () => {
   const [createCategory, { isLoading }] = useCreateCategoryMutation();
@@ -76,6 +77,7 @@ const CreateCategoryComponent: React.FC = () => {
           </div>
         </form>
       </div>
+      <CategoriesList/>
     </div>
   );
 };

@@ -87,6 +87,21 @@ export const brandApi = createApi({
       }),
       invalidatesTags: ["Brand"],
     }),
+
+    //DELETE /api/brand
+    deleteBrand: build.mutation<
+      ServiceResponse<unknown>,
+      string
+    >({
+      query: (brandId) =>({
+        url: "brand",
+        method: "DELETE",
+        params: {
+          brandId
+        },
+      }),
+       invalidatesTags: ["Brand"],
+    }),
   }),
 });
 
@@ -95,4 +110,5 @@ export const {
   useGetBrandByIdQuery,
   useGetAllProductsByBrandIdQuery,
   useCreateBrandMutation,
+  useDeleteBrandMutation,
 } = brandApi;
