@@ -1,8 +1,15 @@
 import { useTranslation } from 'react-i18next';
 import './PrivacySettings.css';
+import { useNavigate } from 'react-router-dom';
 
 const PrivacySettings = () => {
    const { t } = useTranslation();
+  const navigate = useNavigate();
+   
+  const hadleCreditCardButton = () =>{
+    navigate("/credit-card")
+  }
+
 
   return (
     <div className="privacy-card">
@@ -19,9 +26,7 @@ const PrivacySettings = () => {
         <button 
           type="button" 
           className="privacy-btn privacy-btn-blue"
-          onClick={() => {
-            /* Обробник керування картками */
-          }}
+          onClick={hadleCreditCardButton}
         >
           {t('settings.privacy.manageCards')}
         </button>
