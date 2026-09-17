@@ -1,162 +1,162 @@
 ﻿
-using KTC.BLL.Dto.Order;
-using KTC.BLL.Services.Order;
-using KTC.Extensions;
-using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Mvc;
-using System.Security.Claims;
+    using KTC.BLL.Dto.Order;
+    using KTC.BLL.Services.Order;
+    using KTC.Extensions;
+    using Microsoft.AspNetCore.Authorization;
+    using Microsoft.AspNetCore.Mvc;
+    using System.Security.Claims;
 
-namespace KTC.Controllers
-{
-    [ApiController]
-    [Route("api/order")]
-    public class OrderController : ControllerBase
+    namespace KTC.Controllers
     {
-        private readonly IOrderService _orderService;
-
-        public OrderController(IOrderService orderService)
+        [ApiController]
+        [Route("api/order")]
+        public class OrderController : ControllerBase
         {
-            _orderService = orderService;
-        }
+            private readonly IOrderService _orderService;
 
-        [Authorize]
-        [HttpPost]
-        public async Task<IActionResult> CreateOrder(
-            [FromBody] CreateOrderDto orderDto)
-        {
-            var userId = User.FindFirstValue(
-                ClaimTypes.NameIdentifier);
+            public OrderController(IOrderService orderService)
+            {
+                _orderService = orderService;
+            }
 
-            if (string.IsNullOrEmpty(userId))
-                return Unauthorized();
+            [Authorize]
+            [HttpPost]
+            public async Task<IActionResult> CreateOrder(
+                [FromBody] CreateOrderDto orderDto)
+            {
+                var userId = User.FindFirstValue(
+                    ClaimTypes.NameIdentifier);
 
-            var response = await _orderService.CreateAsync(
-                orderDto,
-                userId);
+                if (string.IsNullOrEmpty(userId))
+                    return Unauthorized();
 
-            return this.ToActionResult(response);
-        }
-
-        [HttpPut]
-        public async Task<IActionResult> UpdateOrder(
-            [FromBody] UpdateOrderDto orderDto)
-        {
-            var response =
-                await _orderService.UpdateAsync(orderDto);
-
-            return this.ToActionResult(response);
-        }
-
-        [Authorize]
-        [HttpPut("cancel")]
-        public async Task<IActionResult> CancelOrder(
-            [FromQuery] string orderId)
-        {
-            var userId = User.FindFirstValue(
-                ClaimTypes.NameIdentifier);
-
-            if (string.IsNullOrEmpty(userId))
-                return Unauthorized();
-
-            var response =
-                await _orderService.CancelOrderAsync(
-                    orderId,
+                var response = await _orderService.CreateAsync(
+                    orderDto,
                     userId);
 
-            return this.ToActionResult(response);
-        }
+                return this.ToActionResult(response);
+            }
 
-        [Authorize]
-        [HttpPut("delivered")]
-        public async Task<IActionResult> SetDelivered(
-            [FromQuery] string orderId)
-        {
-            var response =
-                await _orderService.SetDeliveredAsync(
-                    orderId);
+            [HttpPut]
+            public async Task<IActionResult> UpdateOrder(
+                [FromBody] UpdateOrderDto orderDto)
+            {
+                var response =
+                    await _orderService.UpdateAsync(orderDto);
 
-            return this.ToActionResult(response);
-        }
+                return this.ToActionResult(response);
+            }
 
-        [HttpDelete]
-        public async Task<IActionResult> DeleteOrder(
-            [FromQuery] string orderId)
-        {
-            var response =
-                await _orderService.DeleteAsync(orderId);
+            [Authorize]
+            [HttpPut("cancel")]
+            public async Task<IActionResult> CancelOrder(
+                [FromQuery] string orderId)
+            {
+                var userId = User.FindFirstValue(
+                    ClaimTypes.NameIdentifier);
 
-            return this.ToActionResult(response);
-        }
+                if (string.IsNullOrEmpty(userId))
+                    return Unauthorized();
 
-        [HttpGet]
-        public async Task<IActionResult> GetAllOrders()
-        {
-            var response =
-                await _orderService.GetAllOrders();
+                var response =
+                    await _orderService.CancelOrderAsync(
+                        orderId,
+                        userId);
 
-            return this.ToActionResult(response);
-        }
+                return this.ToActionResult(response);
+            }
 
-        [HttpGet("by-id")]
-        public async Task<IActionResult> GetOrderById(
-            [FromQuery] string orderId)
-        {
-            var response =
-                await _orderService.GetOrderById(orderId);
+            [Authorize]
+            [HttpPut("delivered")]
+            public async Task<IActionResult> SetDelivered(
+                [FromQuery] string orderId)
+            {
+                var response =
+                    await _orderService.SetDeliveredAsync(
+                        orderId);
 
-            return this.ToActionResult(response);
-        }
+                return this.ToActionResult(response);
+            }
 
-        [Authorize]
-        [HttpGet("my")]
-        public async Task<IActionResult> GetMyOrders()
-        {
-            var userId = User.FindFirstValue(
-                ClaimTypes.NameIdentifier);
+            [HttpDelete]
+            public async Task<IActionResult> DeleteOrder(
+                [FromQuery] string orderId)
+            {
+                var response =
+                    await _orderService.DeleteAsync(orderId);
 
-            if (string.IsNullOrEmpty(userId))
-                return Unauthorized();
+                return this.ToActionResult(response);
+            }
 
-            var response =
-                await _orderService.GetOrdersByUserId(userId);
+            [HttpGet]
+            public async Task<IActionResult> GetAllOrders()
+            {
+                var response =
+                    await _orderService.GetAllOrders();
 
-            return this.ToActionResult(response);
-        }
+                return this.ToActionResult(response);
+            }
 
-        [HttpGet("by-user-id")]
-        public async Task<IActionResult> GetOrdersByUserId(
-            [FromQuery] string userId)
-        {
-            var response =
-                await _orderService.GetOrdersByUserId(userId);
+            [HttpGet("by-id")]
+            public async Task<IActionResult> GetOrderById(
+                [FromQuery] string orderId)
+            {
+                var response =
+                    await _orderService.GetOrderById(orderId);
 
-            return this.ToActionResult(response);
-        }
+                return this.ToActionResult(response);
+            }
 
-        [HttpGet("order-items")]
-        public async Task<IActionResult> GetOrderItemsByOrderId(
-            [FromQuery] string orderId)
-        {
-            var response =
-                await _orderService.GetOrderItemsByOrderId(orderId);
+            [Authorize]
+            [HttpGet("my")]
+            public async Task<IActionResult> GetMyOrders()
+            {
+                var userId = User.FindFirstValue(
+                    ClaimTypes.NameIdentifier);
 
-            return this.ToActionResult(response);
-        }
-        [Authorize]
-        [HttpGet("my/last7")]
-        public async Task<IActionResult> GetMyLast7Orders()
-        {
-            var userId = User.FindFirstValue(
-                ClaimTypes.NameIdentifier);
+                if (string.IsNullOrEmpty(userId))
+                    return Unauthorized();
 
-            if (string.IsNullOrEmpty(userId))
-                return Unauthorized();
+                var response =
+                    await _orderService.GetOrdersByUserId(userId);
 
-            var response = await _orderService
-                .GetLast7OrdersByUserId(userId);
+                return this.ToActionResult(response);
+            }
 
-            return this.ToActionResult(response);
+            [HttpGet("by-user-id")]
+            public async Task<IActionResult> GetOrdersByUserId(
+                [FromQuery] string userId)
+            {
+                var response =
+                    await _orderService.GetOrdersByUserId(userId);
+
+                return this.ToActionResult(response);
+            }
+
+            [HttpGet("order-items")]
+            public async Task<IActionResult> GetOrderItemsByOrderId(
+                [FromQuery] string orderId)
+            {
+                var response =
+                    await _orderService.GetOrderItemsByOrderId(orderId);
+
+                return this.ToActionResult(response);
+            }
+            [Authorize]
+            [HttpGet("my/last7")]
+            public async Task<IActionResult> GetMyLast7Orders()
+            {
+                var userId = User.FindFirstValue(
+                    ClaimTypes.NameIdentifier);
+
+                if (string.IsNullOrEmpty(userId))
+                    return Unauthorized();
+
+                var response = await _orderService
+                    .GetLast7OrdersByUserId(userId);
+
+                return this.ToActionResult(response);
+            }
         }
     }
-}
 

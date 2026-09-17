@@ -3,6 +3,7 @@ using System;
 using KTC.DAL;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 
@@ -11,9 +12,11 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace KTC.DAL.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    partial class AppDbContextModelSnapshot : ModelSnapshot
+    [Migration("20260916162138_add-urlfoto-brand")]
+    partial class addurlfotobrand
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -202,52 +205,6 @@ namespace KTC.DAL.Migrations
                     b.HasIndex("UserId");
 
                     b.ToTable("Comments");
-                });
-
-            modelBuilder.Entity("KTC.DAL.Entities.CreaditCardEntity", b =>
-                {
-                    b.Property<string>("Id")
-                        .HasColumnType("text");
-
-                    b.Property<string>("CVV")
-                        .IsRequired()
-                        .HasColumnType("text");
-
-                    b.Property<string>("CardNumber")
-                        .IsRequired()
-                        .HasColumnType("text");
-
-                    b.Property<DateTime>("CreatedDate")
-                        .HasColumnType("timestamp with time zone");
-
-                    b.Property<bool>("IsMain")
-                        .HasColumnType("boolean");
-
-                    b.Property<string>("Name")
-                        .IsRequired()
-                        .HasColumnType("text");
-
-                    b.Property<string>("NameAndSurname")
-                        .IsRequired()
-                        .HasColumnType("text");
-
-                    b.Property<string>("PaymentSystem")
-                        .IsRequired()
-                        .HasColumnType("text");
-
-                    b.Property<string>("Termin")
-                        .IsRequired()
-                        .HasColumnType("text");
-
-                    b.Property<string>("UserId")
-                        .IsRequired()
-                        .HasColumnType("text");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("UserId");
-
-                    b.ToTable("CreaditCards");
                 });
 
             modelBuilder.Entity("KTC.DAL.Entities.FavoriteEntity", b =>
@@ -886,17 +843,6 @@ namespace KTC.DAL.Migrations
                     b.Navigation("User");
                 });
 
-            modelBuilder.Entity("KTC.DAL.Entities.CreaditCardEntity", b =>
-                {
-                    b.HasOne("KTC.DAL.Entities.UserEntity", "User")
-                        .WithMany("CreaditCards")
-                        .HasForeignKey("UserId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("User");
-                });
-
             modelBuilder.Entity("KTC.DAL.Entities.FavoriteEntity", b =>
                 {
                     b.HasOne("KTC.DAL.Entities.ProductEntity", "Product")
@@ -1144,8 +1090,6 @@ namespace KTC.DAL.Migrations
                     b.Navigation("Carts");
 
                     b.Navigation("Comments");
-
-                    b.Navigation("CreaditCards");
 
                     b.Navigation("Notifications");
 

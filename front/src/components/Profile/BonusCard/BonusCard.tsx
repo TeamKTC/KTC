@@ -4,7 +4,7 @@ import {
     useGetLast10BonusHistoryQuery,
 } from "../../../store/services/bonusApi";
 import { useTranslation } from "react-i18next";
-
+import { useNavigate } from "react-router-dom";
 const BonusCard = () => {
     const { t } = useTranslation();
 
@@ -22,7 +22,7 @@ const BonusCard = () => {
 
     const bonusBalance =
         balanceData?.payload.bonusBalance ?? 0;
-
+    const navigate = useNavigate();
     const bonuses =
         historyData?.payload ?? [];
 
@@ -98,10 +98,11 @@ const BonusCard = () => {
                 </div>
             ))}
 
-            <button>
-                {t(
-                    "profile.bonusCard.allOperations"
-                )}
+                <button
+            type="button"
+            onClick={() => navigate("/bonus-history")}
+            >
+            {t("profile.bonusCard.allOperations")}
             </button>
 
         </div>

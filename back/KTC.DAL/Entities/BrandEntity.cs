@@ -1,9 +1,11 @@
-﻿namespace KTC.DAL.Entities
-{
-    public class BrandEntity : BaseEntity
+﻿    namespace KTC.DAL.Entities
     {
-        public string Name { get; set; } = default!;
-        public string? Description { get; set; }
-        public ICollection<ProductEntity> Products { get; set; } = [];
+        public class BrandEntity : BaseEntity
+        {
+            public string Name { get; set; } = default!;
+            public string? Description { get; set; }
+            public ICollection<ProductEntity> Products { get; set; } = [];
+
+            public string? LogoUrl { get; set; }
     }
-}
+    }

@@ -487,12 +487,11 @@ const Orders = () => {
                                 >
                                     <div className="order-row">
                                         <div className="order-number">
-                                            <strong>
-                                                №
-                                                {
-                                                    order.orderNumber
-                                                }
-                                            </strong>
+                                <strong>
+                                    № {order.orderNumber.slice(0, 4)}
+                                    <br />
+                                    {order.orderNumber.slice(4)}
+                                </strong>
 
                                             <span>
                                                 Доставка:{" "}

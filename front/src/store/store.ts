@@ -4,7 +4,7 @@ import { notificationApi } from "./services/notificationApi";
 import { authApi } from "./services/authApi";
 import { userApi } from "./services/userApi";
 import { cartItemApi } from "./services/cartItemApi";
-import {cartApi} from "./services/cartApi";
+import { cartApi } from "./services/cartApi";
 import { productApi } from "./services/productApi";
 import { brandApi } from "./services/brandApi";
 import { categoryApi } from "./services/categoryApi";
@@ -13,10 +13,12 @@ import { productAttributeApi } from "./services/productAttributeApi";
 import { favoriteApi } from "./services/favoriteApi";
 import { bonusApi } from "./services/bonusApi";
 import { orderApi } from "./services/orderApi";
+import { orderItemApi } from "./services/orderItemApi";
 import { commentApi } from "./services/commentApi";
 import { mediaApi } from "./services/mediaApi";
 import { promoCodeApi } from "./services/promoCodeApi";
 import { roleApi } from "./services/roleApi";
+
 import { creditCardApi } from "./services/creditCardApi";
 export const store = configureStore({
     reducer: {
@@ -35,6 +37,7 @@ export const store = configureStore({
         [favoriteApi.reducerPath]: favoriteApi.reducer,
         [bonusApi.reducerPath]: bonusApi.reducer,
         [orderApi.reducerPath]: orderApi.reducer,
+        [orderItemApi.reducerPath]: orderItemApi.reducer,
         [commentApi.reducerPath]: commentApi.reducer,
         [mediaApi.reducerPath]: mediaApi.reducer,
         [promoCodeApi.reducerPath]: promoCodeApi.reducer,
@@ -58,9 +61,11 @@ export const store = configureStore({
             .concat(favoriteApi.middleware)
             .concat(bonusApi.middleware)
             .concat(orderApi.middleware)
+            .concat(orderItemApi.middleware)
             .concat(commentApi.middleware)
             .concat(mediaApi.middleware)
             .concat(promoCodeApi.middleware)
+            .concat(roleApi.middleware),
             .concat(roleApi.middleware)
             .concat(creditCardApi.middleware)
 });

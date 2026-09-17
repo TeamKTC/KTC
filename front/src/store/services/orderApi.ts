@@ -37,6 +37,13 @@ export interface OrdersResponse {
     statusCode: number;
 }
 
+export interface OrderByIdResponse {
+    message: string;
+    isSuccess: boolean;
+    payload: Order | null;
+    statusCode: number;
+}
+
 export interface CreateOrderDto {
     date?: string;
     releaseDate?: string;
@@ -96,28 +103,35 @@ export const orderApi = createApi({
     tagTypes: ["Order"],
 
     endpoints: (builder) => ({
-        getMyOrders: builder.query<OrdersResponse, void>({
+
+        // Всі мої замовлення
+        getMyOrders: builder.query<
+            OrdersResponse,
+            void
+        >({
             query: () => "order/my",
             providesTags: ["Order"],
         }),
 
-        getMyLast7Orders: builder.query<OrdersResponse, void>({
+
+        getMyLast7Orders: builder.query<
+            OrdersResponse,
+            void
+        >({
             query: () => "order/my/last7",
             providesTags: ["Order"],
         }),
 
+
         getOrderById: builder.query<
-            {
-                message: string;
-                isSuccess: boolean;
-                payload: Order | null;
-                statusCode: number;
-            },
+            OrderByIdResponse,
             string
         >({
-            query: (id) => `order/${id}`,
+            query: (orderId) =>
+                `order/by-id?orderId=${orderId}`,
             providesTags: ["Order"],
         }),
+
 
         createOrder: builder.mutation<
             CreateOrderResponse,
@@ -131,6 +145,7 @@ export const orderApi = createApi({
             invalidatesTags: ["Order"],
         }),
 
+
         cancelOrder: builder.mutation<
             OrderActionResponse,
             string
@@ -141,6 +156,7 @@ export const orderApi = createApi({
             }),
             invalidatesTags: ["Order"],
         }),
+
 
         setDelivered: builder.mutation<
             OrderActionResponse,

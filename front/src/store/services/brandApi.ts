@@ -1,13 +1,13 @@
 import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
 
-const apiUrl = "https://localhost:7120/api/";
-
 import type {
   Brand,
   CreateBrandDto,
   Product,
   ServiceResponse,
 } from "../../types/types";
+
+const apiUrl = "https://localhost:7120/api/";
 
 export const brandApi = createApi({
   reducerPath: "brandApi",
@@ -29,12 +29,8 @@ export const brandApi = createApi({
   tagTypes: ["Brand"],
 
   endpoints: (build) => ({
-
     // GET /api/brand
-    getAllBrands: build.query<
-      ServiceResponse<Brand[]>,
-      void
-    >({
+    getAllBrands: build.query<ServiceResponse<Brand[]>, void>({
       query: () => ({
         url: "brand",
         method: "GET",
@@ -44,10 +40,7 @@ export const brandApi = createApi({
     }),
 
     // GET /api/brand/by-id?brandId=...
-    getBrandById: build.query<
-      ServiceResponse<Brand>,
-      string
-    >({
+    getBrandById: build.query<ServiceResponse<Brand>, string>({
       query: (brandId) => ({
         url: "brand/by-id",
         method: "GET",
@@ -71,8 +64,6 @@ export const brandApi = createApi({
           brandId,
         },
       }),
-
-      providesTags: ["Brand"],
     }),
 
     // POST /api/brand
@@ -85,6 +76,7 @@ export const brandApi = createApi({
         method: "POST",
         body,
       }),
+
       invalidatesTags: ["Brand"],
     }),
 
