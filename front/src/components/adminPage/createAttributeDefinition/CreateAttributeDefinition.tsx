@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import { useCreateAttributeDefinitionMutation } from "../../../store/services/attributeDefinitionApi";
 import type { CreateAttributeDefinitionDto } from "../../../types/types";
+import AttributeDefinitionsList from "../listsOf/Attributes/AttributesList";
 
 const CreateAttributeDefinitionComponent: React.FC = () => {
   const [createAttributeDefinition, { isLoading }] =
@@ -93,6 +94,7 @@ const CreateAttributeDefinitionComponent: React.FC = () => {
           </div>
         </form>
       </div>
+      <AttributeDefinitionsList/>
     </div>
   );
 };

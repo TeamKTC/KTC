@@ -26,6 +26,7 @@ public class AppDbContext : IdentityDbContext<UserEntity>
     public DbSet<FavoriteEntity> Favorites { get; set; }
     public DbSet<PromoCodeEntity> PromoCodes { get; set; }
     public DbSet<PromoCodeUsageEntity> PromoCodeUsages { get; set; }
+    public DbSet<CreditCardEntity> CreaditCards { get; set; }
     protected override void OnModelCreating(ModelBuilder builder)
     {
         base.OnModelCreating(builder);
@@ -223,5 +224,14 @@ public class AppDbContext : IdentityDbContext<UserEntity>
         builder.Entity<PromoCodeEntity>()
             .HasIndex(x => x.Code)
             .IsUnique();
+
+        // =======================
+        // CREDIT CARD
+        // =======================
+        builder.Entity<CreditCardEntity>()
+            .HasOne(x => x.User)
+            .WithMany(x => x.CreaditCards)
+            .HasForeignKey(x => x.UserId)
+            .OnDelete(DeleteBehavior.Cascade);
     }
 }

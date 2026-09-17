@@ -1,0 +1,42 @@
+.productList {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.productCard {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 12px 16px;
+  background-color: #ffffff;
+  border: 1px solid #e5e7eb;
+  border-radius: 16px;
+  box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
+  transition: box-shadow 0.2s ease-in-out;
+}
+
+.productCard:hover {
+  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+}
+
+.productContent {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+}
+
+/* Компактний розмір для фото */
+.productImage {
+  width: 48px;
+  height: 48px;
+  object-fit: contain;
+  border-radius: 6px;
+  flex-shrink: 0;
+}
+
+.productTitle {
+  font-weight: 600;
+  color: #111827;
+  font-size: 16px;
+}

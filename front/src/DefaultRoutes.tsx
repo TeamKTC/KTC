@@ -25,6 +25,7 @@ import StoresPage from "./pages/Store/StoresPage";
 import SupportPage from "./pages/Support/SupportPage";
 import OrderDetails from "./components/Profile/OrderDetails/OrderDetails";
 import BonusHistoryPage from "./pages/BonusHistoryPage/BonusHistoryPage";
+import CreditCardPage from "./pages/CreditCardPage/CreditCardPage";
 const DefaultRoutes = () => {
     const isAuthenticated = useAppSelector(
         (state) => state.auth.isAuthenticated
@@ -195,6 +196,14 @@ const DefaultRoutes = () => {
                 <Route
                     path="bonus-history"
                     element={<BonusHistoryPage />}
+                />
+                <Route
+                    path="credit-card"
+                     element={
+                        isAuthenticated
+                            ? <CreditCardPage />
+                            : <Navigate to="/" replace />
+                    }
                 />
             </Route>
         </Routes>

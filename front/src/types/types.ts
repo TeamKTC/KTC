@@ -127,3 +127,26 @@ export interface MediaFile {
   size: number;
   type: string;
 }
+
+export interface CreditCardDto{
+  id: string;
+  paymentSystem: string;
+  cardNumber: string;
+  nameAndSurname: string;
+  cVV: string
+  termin: string;
+  name: string;
+  isMain: boolean;
+  userId: string;
+}
+
+export interface CreateCreditCardDto{
+  paymentSystem: string;
+  cardNumber: string;
+  nameAndSurname: string;
+  cVV: string
+  termin: string;
+  name: string;
+  isMain: boolean;
+  userId: string;
+}
