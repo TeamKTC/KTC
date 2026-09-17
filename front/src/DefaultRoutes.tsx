@@ -1,9 +1,13 @@
 import DefLayouts from "./components/layouts/DefLayouts";
 import { useAppSelector } from "./hooks/redux";
-import { Route, Routes } from "react-router";
+import {
+    Route,
+    Routes,
+    Navigate,
+} from "react-router-dom";
+
 import HomePage from "./pages/HomePage/HomePage";
 import ProfilePage from "./pages/Profile/ProfilePage";
-import { Navigate } from "react-router-dom";
 import CartPage from "./pages/Cart/CartPage";
 import DetailsPage from "./pages/DetailsPage/DetailsPage";
 import FavoritesPage from "./pages/Favorites/FavoritesPage";
@@ -19,10 +23,11 @@ import { useIsAdmin } from "./isAdmin/IsAdmin";
 import AdminPage from "./pages/AdminPage/AdminPage";
 import StoresPage from "./pages/Store/StoresPage";
 import SupportPage from "./pages/Support/SupportPage";
+import OrderDetails from "./components/Profile/OrderDetails/OrderDetails";
+import BonusHistoryPage from "./pages/BonusHistoryPage/BonusHistoryPage";
 const DefaultRoutes = () => {
-    const   isAuthenticated = useAppSelector(
+    const isAuthenticated = useAppSelector(
         (state) => state.auth.isAuthenticated
-        
     );
 
     const isAdmin = useIsAdmin();
@@ -31,69 +36,101 @@ const DefaultRoutes = () => {
         <Routes>
             <Route path="/" element={<DefLayouts />}>
                 <Route index element={<HomePage />} />
-                <Route path="/details/:id" element={<DetailsPage />} />
+
+                <Route
+                    path="details/:id"
+                    element={<DetailsPage />}
+                />
+
                 <Route
                     path="cataloge"
                     element={<CatalogePage />}
                 />
-                
 
                 <Route
                     path="profile"
                     element={
-                        isAuthenticated
-                            ? <ProfilePage />
-                            : <Navigate to="/" replace />
+                        isAuthenticated ? (
+                            <ProfilePage />
+                        ) : (
+                            <Navigate
+                                to="/"
+                                replace
+                            />
+                        )
                     }
                 />
 
                 <Route
                     path="cart"
                     element={
-                        isAuthenticated
-                            ? <CartPage />
-                            : <Navigate to="/" replace />
+                        isAuthenticated ? (
+                            <CartPage />
+                        ) : (
+                            <Navigate
+                                to="/"
+                                replace
+                            />
+                        )
                     }
-
-          
                 />
 
                 <Route
                     path="cart/checkout"
                     element={
-                        isAuthenticated
-                            ? <OrderCheckoutPage />
-                            : <Navigate to="/" replace />
-                }
+                        isAuthenticated ? (
+                            <OrderCheckoutPage />
+                        ) : (
+                            <Navigate
+                                to="/"
+                                replace
+                            />
+                        )
+                    }
                 />
-            
+
                 <Route
                     path="favorites"
                     element={
-                        isAuthenticated
-                            ? <FavoritesPage />
-                            : <Navigate to="/" replace />
+                        isAuthenticated ? (
+                            <FavoritesPage />
+                        ) : (
+                            <Navigate
+                                to="/"
+                                replace
+                            />
+                        )
                     }
                 />
+
                 <Route
                     path="settings"
                     element={
-                        isAuthenticated
-                            ? <SettingsPage />
-                            : <Navigate to="/" replace />
+                        isAuthenticated ? (
+                            <SettingsPage />
+                        ) : (
+                            <Navigate
+                                to="/"
+                                replace
+                            />
+                        )
                     }
                 />
 
                 <Route
                     path="delivery"
-                    element={<DeliveryAndPaymentPage />}
+                    element={
+                        <DeliveryAndPaymentPage />
+                    }
                 />
+
                 <Route
                     path="warranty"
                     element={<WarrantyPage />}
                 />
+
                 <Route
-                    path = "about"
+                    path="about"
                     element={<AboutUsPage />}
                 />
 
@@ -101,33 +138,63 @@ const DefaultRoutes = () => {
                     path="order-success"
                     element={<OrderSuccessPage />}
                 />
+
+                {/* Всі замовлення */}
                 <Route
                     path="orders"
                     element={
-                        isAuthenticated
-                            ? <OrdersPage />
-                            : <Navigate to="/" replace />
+                        isAuthenticated ? (
+                            <OrdersPage />
+                        ) : (
+                            <Navigate
+                                to="/"
+                                replace
+                            />
+                        )
                     }
                 />
+
+                {/* Конкретне замовлення */}
+                <Route
+                    path="orders/:id"
+                    element={
+                        isAuthenticated ? (
+                            <OrderDetails />
+                        ) : (
+                            <Navigate
+                                to="/"
+                                replace
+                            />
+                        )
+                    }
+                />
+
                 <Route
                     path="admin"
                     element={
-                        isAdmin
-                            ? <AdminPage />
-                            : <Navigate to="/" replace />}
+                        isAdmin ? (
+                            <AdminPage />
+                        ) : (
+                            <Navigate
+                                to="/"
+                                replace
+                            />
+                        )
+                    }
                 />
 
                 <Route
                     path="store"
-                    element={
-                        <StoresPage />
-                    }
+                    element={<StoresPage />}
                 />
+
                 <Route
                     path="support"
-                    element={
-                        <SupportPage />
-                    }
+                    element={<SupportPage />}
+                />
+                <Route
+                    path="bonus-history"
+                    element={<BonusHistoryPage />}
                 />
             </Route>
         </Routes>

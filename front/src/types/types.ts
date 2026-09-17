@@ -46,15 +46,17 @@ export interface UpdateProductDto {
   oldPrice?: number | null;
 }
 
-export interface Brand  {
+export interface Brand {
   id: string;
   name: string;
   description: string;
-};
+  logoUrl: string | null;
+}
 
 export interface CreateBrandDto {
   name: string;
   description: string;
+  logoUrl?: string | null;
 }
 
 export interface Category  {

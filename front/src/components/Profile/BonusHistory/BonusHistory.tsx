@@ -17,6 +17,30 @@ const BonusHistory = () => {
 
     const orders = data?.payload ?? [];
 
+    const getStatus = (status?: string): string => {
+        switch (status?.toLowerCase().trim()) {
+            case "pending":
+                return "В обробці";
+
+            case "processing":
+                return "Обробляється";
+
+            case "delivered":
+            case "completed":
+                return "Виконано";
+
+            case "cancelled":
+            case "canceled":
+                return "Скасовано";
+
+            case "shipped":
+                return "Відправлено";
+
+            default:
+                return status || "Не вказано";
+        }
+    };
+
     if (isLoading) {
         return (
             <div className="bonus-history">
@@ -45,7 +69,6 @@ const BonusHistory = () => {
 
     return (
         <div className="bonus-history">
-
             <div className="history-header">
                 <h2>
                     {t(
@@ -127,7 +150,9 @@ const BonusHistory = () => {
                             </td>
 
                             <td>
-                                {order.status}
+                                {getStatus(
+                                    order.status
+                                )}
                             </td>
 
                             <td>
@@ -146,10 +171,8 @@ const BonusHistory = () => {
                     ))}
                 </tbody>
             </table>
-
         </div>
     );
 };
 
 export default BonusHistory;
-

@@ -211,7 +211,7 @@ const handleApplyRange = (attrId: string) => {
                               </div>
 
                               {uniqueValues.length > 0 && (
-                                <div className="d-flex flex-column gap-2 style-scrollbar" style={{ maxHeight: '180px', overflowY: 'auto' }}>
+                                <div className="d-flex flex-column gap-2 style-scrollbar" style={{ maxHeight: '180px' }}>
                                   {uniqueValues.map((val) => (
                                     <div className="form-check d-flex justify-content-between align-items-center me-2" key={val}>
                                       <div>
@@ -219,6 +219,7 @@ const handleApplyRange = (attrId: string) => {
                                           className="form-check-input me-2"
                                           type="checkbox"
                                           id={`opt-${attr.id}-${val}`}
+                                          style={{ marginTop: '16px' }}
                                           onChange={(e) => handleStringFilterChange(attr.id, val, e.target.checked)}
                                         />
                                         <label className="form-check-label small" htmlFor={`opt-${attr.id}-${val}`}>
@@ -246,7 +247,7 @@ const handleApplyRange = (attrId: string) => {
                                 <i className="bi bi-search position-absolute top-50 end-0 translate-middle-y me-2 text-muted small"></i>
                               </div>
 
-                              <div className="d-flex flex-column gap-2 style-scrollbar" style={{ maxHeight: '220px', overflowY: 'auto' }}>
+                              <div className="d-flex flex-column gap-2 style-scrollbar" style={{ maxHeight: '220px'}}>
                                 {filteredValues.map((val) => {
                                   // === ЗМІНА: 6. Перевірка, чи вибраний цей чекбокс ===
                                   const isChecked = selectedStringFilter?.attributeId === attr.id && selectedStringFilter?.value === val;
@@ -259,6 +260,7 @@ const handleApplyRange = (attrId: string) => {
                                           type="checkbox"
                                           id={`opt-${attr.id}-${val}`}
                                           checked={isChecked}
+                                          style={{ marginTop: '16px' }}
                                           onChange={(e) => handleStringFilterChange(attr.id, val, e.target.checked)}
                                         />
                                         <label className="form-check-label small" htmlFor={`opt-${attr.id}-${val}`}>

@@ -1,0 +1,97 @@
+.bonus-history-page {
+    width: 100%;
+    padding: 24px;
+    box-sizing: border-box;
+    background: #fff;
+}
+
+.bonus-history-header {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    margin-bottom: 24px;
+}
+
+.bonus-history-header button {
+    width: 34px;
+    height: 34px;
+    padding: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border: 1px solid #ddd;
+    border-radius: 6px;
+    background: #fff;
+    cursor: pointer;
+}
+
+.bonus-history-header h1 {
+    margin: 0;
+    font-size: 24px;
+    font-weight: 600;
+    color: #222;
+}
+
+.bonus-history-list {
+    width: 100%;
+    border: 1px solid #e1e1e1;
+    border-radius: 6px;
+    overflow: hidden;
+}
+
+.bonus-history-item {
+    display: grid;
+    grid-template-columns: 180px 1fr 120px;
+    align-items: center;
+    gap: 20px;
+    min-height: 64px;
+    padding: 0 18px;
+    border-bottom: 1px solid #e8e8e8;
+}
+
+.bonus-history-item:last-child {
+    border-bottom: none;
+}
+
+.bonus-history-item span {
+    font-size: 14px;
+    color: #444;
+}
+
+.bonus-history-item .bonus-plus {
+    color: #16803c;
+    font-weight: 600;
+}
+
+.bonus-history-item .bonus-minus {
+    color: #d32f2f;
+    font-weight: 600;
+}
+
+.bonus-history-item span:last-child {
+    color: #888;
+    text-align: right;
+}
+
+.bonus-history-header button {
+    color: #222;
+    font-size: 30px;
+    line-height: 1;
+}
+
+.bonus-history-header button svg {
+    color: #222;
+    stroke: #222;
+}
+
+.bonus-history-close:hover {
+    color: #362e2e;
+}
+.bonus-history-header button {
+    transition: opacity 0.2s ease, background 0.2s ease;
+}
+
+.bonus-history-header button:hover {
+    background: #f5f5f5;
+    opacity: 0.7;
+}

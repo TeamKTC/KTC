@@ -204,6 +204,6 @@ app.UseAuthorization();
 
 app.MapControllers();
 
-app.Seed();
+await app.Seed();
 
 app.Run();
